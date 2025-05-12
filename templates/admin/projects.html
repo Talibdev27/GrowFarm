@@ -74,6 +74,9 @@
             <div class="card mb-4">
                 <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
                     <h5 class="mb-0">Projects List</h5>
+                    <a href="{{ url_for('admin_create_project') }}" class="btn btn-success btn-sm">
+                        <i class="fas fa-plus me-1"></i> Add New Project
+                    </a>
                 </div>
                 <div class="card-body">
                     {% if projects %}

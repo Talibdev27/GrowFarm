@@ -575,6 +575,82 @@ def register_routes(app):
     def admin_project_details(project_id):
         project = Project.query.get_or_404(project_id)
         return render_template('admin/project_details.html', project=project)
+        
+    @app.route('/admin/project/create', methods=['GET', 'POST'])
+    @login_required
+    @admin_required
+    def admin_create_project():
+        farmers = Farmer.query.all()
+        
+        if request.method == 'POST':
+            # Get form data
+            farmer_id = request.form.get('farmer_id')
+            title = request.form.get('title')
+            description = request.form.get('description')
+            location = request.form.get('location')
+            funding_goal = float(request.form.get('funding_goal'))
+            current_funding = float(request.form.get('current_funding', 0))
+            duration_months = int(request.form.get('duration_months'))
+            expected_roi = float(request.form.get('expected_roi'))
+            risk_level = request.form.get('risk_level')
+            category = request.form.get('category')
+            status = request.form.get('status')
+            
+            # Create new project
+            project = Project()
+            project.farmer_id = farmer_id
+            project.title = title
+            project.description = description
+            project.location = location
+            project.funding_goal = funding_goal
+            project.current_funding = current_funding
+            project.duration_months = duration_months
+            project.expected_roi = expected_roi
+            project.risk_level = risk_level
+            project.category = category
+            project.status = status
+            
+            # Additional info
+            project.image_url = request.form.get('image_url')
+            project.tags = request.form.get('tags')
+            project.overview = request.form.get('overview')
+            project.regional_significance = request.form.get('regional_significance')
+            project.why_investment = request.form.get('why_investment')
+            project.documents = request.form.get('documents')
+            
+            # Financial details
+            min_investment = request.form.get('min_investment')
+            if min_investment:
+                project.min_investment = float(min_investment)
+                
+            price_per_unit = request.form.get('price_per_unit')
+            if price_per_unit:
+                project.price_per_unit = float(price_per_unit)
+            
+            # Land details
+            total_acres = request.form.get('total_acres')
+            if total_acres:
+                project.total_acres = float(total_acres)
+                
+            estimated_ownership_duration = request.form.get('estimated_ownership_duration')
+            if estimated_ownership_duration:
+                project.estimated_ownership_duration = int(estimated_ownership_duration)
+                
+            project.investment_type = request.form.get('investment_type')
+            
+            # Set dates
+            project.start_date = datetime.utcnow()
+            # Calculate end date based on duration
+            if project.duration_months:
+                end_date = project.start_date + timedelta(days=30 * project.duration_months)
+                project.end_date = end_date
+            
+            db.session.add(project)
+            db.session.commit()
+            flash('Project created successfully', 'success')
+            return redirect(url_for('admin_projects'))
+            
+        return render_template('admin/create_project.html', farmers=farmers)
     
     @app.route('/admin/project/<int:project_id>/edit', methods=['GET', 'POST'])
     @login_required
