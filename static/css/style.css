@@ -24,31 +24,65 @@ body {
 
 /* Navbar Styles */
 .navbar {
-    background-color: transparent;
-    position: absolute;
+    position: fixed;
+    top: 0;
+    left: 0;
     width: 100%;
     z-index: 1000;
     padding: 1rem 0;
+    transition: all 0.3s ease;
+}
+
+.navbar-transparent {
+    background-color: transparent;
+}
+
+.navbar-scrolled {
+    background-color: white;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
 .navbar-brand {
     font-weight: 700;
+    transition: color 0.3s;
+}
+
+.navbar-transparent .navbar-brand {
     color: white;
 }
 
-.nav-link {
+.navbar-scrolled .navbar-brand {
+    color: #4a9c98;
+}
+
+.navbar-transparent .nav-link {
     color: white;
+}
+
+.navbar-scrolled .nav-link {
+    color: #333;
+}
+
+.nav-link {
     font-weight: 500;
     padding: 0.5rem 1.2rem !important;
     transition: color 0.3s;
 }
 
-.nav-link:hover {
+.navbar-transparent .nav-link:hover {
     color: rgba(255, 255, 255, 0.7);
 }
 
-.navbar-nav .nav-link.active {
+.navbar-scrolled .nav-link:hover {
+    color: #4a9c98;
+}
+
+.navbar-transparent .navbar-nav .nav-link.active {
     color: #72c1c1;
+}
+
+.navbar-scrolled .navbar-nav .nav-link.active {
+    color: #4a9c98;
 }
 
 .btn-success {
@@ -62,16 +96,30 @@ body {
     background-color: #3b7d7a;
 }
 
-.btn-outline-light {
+.navbar-transparent .btn-outline-light {
     color: white;
     border-color: rgba(255, 255, 255, 0.5);
-    border-radius: 4px;
-    padding: 0.5rem 1.5rem;
 }
 
-.btn-outline-light:hover {
+.navbar-scrolled .btn-outline-light {
+    color: #4a9c98;
+    border-color: #4a9c98;
+}
+
+.btn-outline-light {
+    border-radius: 4px;
+    padding: 0.5rem 1.5rem;
+    transition: all 0.3s;
+}
+
+.navbar-transparent .btn-outline-light:hover {
     background-color: rgba(255, 255, 255, 0.1);
     color: white;
+}
+
+.navbar-scrolled .btn-outline-light:hover {
+    background-color: rgba(74, 156, 152, 0.1);
+    color: #3b7d7a;
 }
 
 /* Typography */
