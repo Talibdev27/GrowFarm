@@ -36,7 +36,9 @@
                 <!-- Project Image -->
                 <div class="card border-0 shadow-sm mb-4">
                     <div class="card-body p-0">
-                        {% if project.category == 'Crops' %}
+                        {% if project.image_url %}
+                            <div class="project-image" style="background: url('{{ project.image_url }}'); background-size: cover; background-position: center;"></div>
+                        {% elif project.category == 'Crops' %}
                             <div class="project-image" style="background: url('https://images.unsplash.com/photo-1628352081568-06c0a8d75457?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1350&q=80'); background-size: cover; background-position: center;"></div>
                         {% elif project.category == 'Livestock' %}
                             <div class="project-image" style="background: url('https://images.unsplash.com/photo-1596733430284-f7437764b1a9?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1350&q=80'); background-size: cover; background-position: center;"></div>
@@ -183,10 +185,6 @@
                     <div class="card-body">
                         <h4 class="card-title">Project Timeline</h4>
                         <ul class="list-group list-group-flush">
-                            <li class="list-group-item d-flex justify-content-between align-items-center px-0">
-                                <span>Start Date</span>
-                                <span class="fw-bold">{{ project.start_date.strftime('%Y-%m-%d') }}</span>
-                            </li>
                             <li class="list-group-item d-flex justify-content-between align-items-center px-0">
                                 <span>Start Date</span>
                                 <span class="fw-bold">{{ project.start_date.strftime('%Y-%m-%d') }}</span>
