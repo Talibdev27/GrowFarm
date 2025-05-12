@@ -1,0 +1,152 @@
+{% extends 'base.html' %}
+
+{% block title %}Admin - Edit Project{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="row mb-4">
+        <div class="col-md-8">
+            <h1>Edit Project</h1>
+        </div>
+        <div class="col-md-4 text-end">
+            <a href="{{ url_for('admin_projects') }}" class="btn btn-secondary">
+                <i class="fas fa-arrow-left me-2"></i> Back to Projects
+            </a>
+            <a href="{{ url_for('admin_project_details', project_id=project.id) }}" class="btn btn-primary">
+                <i class="fas fa-eye me-2"></i> View Details
+            </a>
+        </div>
+    </div>
+    
+    <div class="row">
+        <div class="col-md-8 mx-auto">
+            <div class="card">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0">Edit Project Information</h5>
+                </div>
+                <div class="card-body">
+                    <form action="{{ url_for('admin_edit_project', project_id=project.id) }}" method="post">
+                        <div class="mb-3">
+                            <label for="title" class="form-label">Project Title</label>
+                            <input type="text" class="form-control" id="title" name="title" value="{{ project.title }}" required>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="description" class="form-label">Project Description</label>
+                            <textarea class="form-control" id="description" name="description" rows="5" required>{{ project.description }}</textarea>
+                        </div>
+                        
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label for="funding_goal" class="form-label">Funding Goal ($)</label>
+                                <input type="number" class="form-control" id="funding_goal" name="funding_goal" value="{{ project.funding_goal }}" min="1" step="0.01" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="current_funding" class="form-label">Current Funding ($)</label>
+                                <input type="number" class="form-control" id="current_funding" name="current_funding" value="{{ project.current_funding }}" min="0" step="0.01" required>
+                            </div>
+                        </div>
+                        
+                        <div class="row mb-3">
+                            <div class="col-md-4">
+                                <label for="duration_months" class="form-label">Duration (months)</label>
+                                <input type="number" class="form-control" id="duration_months" name="duration_months" value="{{ project.duration_months }}" min="1" max="60" required>
+                            </div>
+                            <div class="col-md-4">
+                                <label for="expected_roi" class="form-label">Expected ROI (%)</label>
+                                <input type="number" class="form-control" id="expected_roi" name="expected_roi" value="{{ project.expected_roi }}" min="0" max="100" step="0.01" required>
+                            </div>
+                            <div class="col-md-4">
+                                <label for="risk_level" class="form-label">Risk Level</label>
+                                <select class="form-select" id="risk_level" name="risk_level" required>
+                                    <option value="Low" {% if project.risk_level == 'Low' %}selected{% endif %}>Low</option>
+                                    <option value="Medium" {% if project.risk_level == 'Medium' %}selected{% endif %}>Medium</option>
+                                    <option value="High" {% if project.risk_level == 'High' %}selected{% endif %}>High</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label for="category" class="form-label">Category</label>
+                                <select class="form-select" id="category" name="category" required>
+                                    <option value="Crops" {% if project.category == 'Crops' %}selected{% endif %}>Crops</option>
+                                    <option value="Livestock" {% if project.category == 'Livestock' %}selected{% endif %}>Livestock</option>
+                                    <option value="Dairy" {% if project.category == 'Dairy' %}selected{% endif %}>Dairy</option>
+                                    <option value="Organic" {% if project.category == 'Organic' %}selected{% endif %}>Organic</option>
+                                    <option value="Sustainable" {% if project.category == 'Sustainable' %}selected{% endif %}>Sustainable</option>
+                                    <option value="Agroforestry" {% if project.category == 'Agroforestry' %}selected{% endif %}>Agroforestry</option>
+                                    <option value="Other" {% if project.category == 'Other' %}selected{% endif %}>Other</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="status" class="form-label">Status</label>
+                                <select class="form-select" id="status" name="status" required>
+                                    <option value="Open" {% if project.status == 'Open' %}selected{% endif %}>Open</option>
+                                    <option value="Funded" {% if project.status == 'Funded' %}selected{% endif %}>Funded</option>
+                                    <option value="Completed" {% if project.status == 'Completed' %}selected{% endif %}>Completed</option>
+                                    <option value="Cancelled" {% if project.status == 'Cancelled' %}selected{% endif %}>Cancelled</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-primary">Save Changes</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            
+            <div class="card mt-4">
+                <div class="card-header bg-info text-white">
+                    <h5 class="mb-0">Investments</h5>
+                </div>
+                <div class="card-body">
+                    {% if project.investments.count() > 0 %}
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Investor</th>
+                                    <th>Amount</th>
+                                    <th>Date</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for investment in project.investments %}
+                                <tr>
+                                    <td>{{ investment.id }}</td>
+                                    <td>{{ investment.investor.full_name }}</td>
+                                    <td>${{ investment.amount }}</td>
+                                    <td>{{ investment.date.strftime('%Y-%m-%d') }}</td>
+                                    <td>
+                                        <span class="badge 
+                                            {% if investment.status == 'Pending' %}bg-warning text-dark
+                                            {% elif investment.status == 'Confirmed' %}bg-primary
+                                            {% elif investment.status == 'Completed' %}bg-success
+                                            {% else %}bg-secondary{% endif %}">
+                                            {{ investment.status }}
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <a href="{{ url_for('admin_investment_details', investment_id=investment.id) }}" class="btn btn-sm btn-info">
+                                            <i class="fas fa-eye"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    {% else %}
+                    <p class="text-muted">No investments found for this project.</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

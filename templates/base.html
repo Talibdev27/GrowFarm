@@ -60,6 +60,12 @@
                                 {% if current_user.role == 'farmer' %}
                                     <li><a class="dropdown-item" href="{{ url_for('create_project') }}">Create Project</a></li>
                                 {% endif %}
+                                {% if current_user.is_admin %}
+                                    <li><hr class="dropdown-divider"></li>
+                                    <li><a class="dropdown-item" href="{{ url_for('admin_dashboard') }}">
+                                        <i class="fas fa-cog me-2"></i> Admin Dashboard
+                                    </a></li>
+                                {% endif %}
                                 <li><hr class="dropdown-divider"></li>
                                 <li><a class="dropdown-item" href="{{ url_for('logout') }}">Logout</a></li>
                             </ul>

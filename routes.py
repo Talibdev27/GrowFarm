@@ -663,6 +663,86 @@ def register_routes(app):
         db.session.commit()
         flash('Investment status updated successfully', 'success')
         return redirect(url_for('admin_investments'))
+        
+    @app.route('/admin/investment/<int:investment_id>/delete', methods=['POST'])
+    @login_required
+    @admin_required
+    def admin_delete_investment(investment_id):
+        investment = Investment.query.get_or_404(investment_id)
+        
+        # Update the project's current funding
+        project = investment.project
+        project.current_funding -= investment.amount
+        if project.current_funding < 0:
+            project.current_funding = 0
+            
+        # Delete the investment
+        db.session.delete(investment)
+        db.session.commit()
+        
+        flash('Investment deleted successfully', 'success')
+        return redirect(url_for('admin_investments'))
+        
+    @app.route('/admin/project/<int:project_id>/update-status', methods=['POST'])
+    @login_required
+    @admin_required
+    def admin_update_project_status(project_id):
+        project = Project.query.get_or_404(project_id)
+        
+        status = request.form.get('status')
+        project.status = status
+        
+        # If project is marked as completed, set end date
+        if status == 'Completed' and not project.end_date:
+            project.end_date = datetime.utcnow()
+            
+        db.session.commit()
+        flash('Project status updated successfully', 'success')
+        return redirect(url_for('admin_project_details', project_id=project.id))
+        
+    @app.route('/admin/user/<int:user_id>/edit-farmer-profile', methods=['POST'])
+    @login_required
+    @admin_required
+    def admin_edit_farmer_profile(user_id):
+        user = User.query.get_or_404(user_id)
+        
+        if not user.farmer:
+            flash('User does not have a farmer profile', 'danger')
+            return redirect(url_for('admin_edit_user', user_id=user.id))
+            
+        farmer = user.farmer
+        farmer.farm_name = request.form.get('farm_name')
+        farmer.farm_location = request.form.get('farm_location')
+        farmer.description = request.form.get('description')
+        farmer.experience_years = request.form.get('experience_years')
+        farmer.specialization = request.form.get('specialization')
+        farmer.phone = request.form.get('phone')
+        
+        db.session.commit()
+        flash('Farmer profile updated successfully', 'success')
+        return redirect(url_for('admin_edit_user', user_id=user.id))
+        
+    @app.route('/admin/user/<int:user_id>/edit-investor-profile', methods=['POST'])
+    @login_required
+    @admin_required
+    def admin_edit_investor_profile(user_id):
+        user = User.query.get_or_404(user_id)
+        
+        if not user.investor:
+            flash('User does not have an investor profile', 'danger')
+            return redirect(url_for('admin_edit_user', user_id=user.id))
+            
+        investor = user.investor
+        investor.full_name = request.form.get('full_name')
+        investor.bio = request.form.get('bio')
+        investor.investment_focus = request.form.get('investment_focus')
+        investor.min_investment = request.form.get('min_investment')
+        investor.max_investment = request.form.get('max_investment')
+        investor.phone = request.form.get('phone')
+        
+        db.session.commit()
+        flash('Investor profile updated successfully', 'success')
+        return redirect(url_for('admin_edit_user', user_id=user.id))
     
     @app.route('/admin/reports')
     @login_required
