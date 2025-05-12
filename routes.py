@@ -1,12 +1,26 @@
-from flask import render_template, redirect, url_for, flash, request, abort
+from flask import render_template, redirect, url_for, flash, request, abort, jsonify, send_file
 from flask_login import login_user, current_user, logout_user, login_required
 from datetime import datetime, timedelta
+from functools import wraps
+from sqlalchemy import func, desc
+import io
+import csv
 from app import db
 from models import User, Farmer, Investor, Project, Investment, Message
 from forms import (LoginForm, RegistrationForm, FarmerProfileForm, InvestorProfileForm, 
                    ProjectForm, InvestmentForm, ContactForm, MessageForm)
 
 def register_routes(app):
+    
+    # Admin access decorator
+    def admin_required(f):
+        @wraps(f)
+        def decorated_function(*args, **kwargs):
+            if not current_user.is_authenticated or not current_user.is_admin:
+                flash('You do not have permission to access this page.', 'danger')
+                return redirect(url_for('index'))
+            return f(*args, **kwargs)
+        return decorated_function
     
     @app.route('/')
     def index():
@@ -373,3 +387,462 @@ def register_routes(app):
     @app.errorhandler(500)
     def server_error(e):
         return render_template('error.html', error_code=500, error_message="Server Error"), 500
+        
+    # Admin Routes
+    @app.route('/admin')
+    @login_required
+    @admin_required
+    def admin_dashboard():
+        # Get statistics for dashboard
+        stats = {
+            'users': User.query.count(),
+            'farmers': Farmer.query.count(),
+            'investors': Investor.query.count(),
+            'projects': Project.query.count(),
+            'funded_projects': Project.query.filter_by(status='Funded').count(),
+            'total_investment': Investment.query.with_entities(func.sum(Investment.amount)).scalar() or 0,
+            'avg_investment': db.session.query(func.avg(Investment.amount)).scalar() or 0
+        }
+        
+        # Recent activities (placeholder - would be replaced with actual activity tracking)
+        recent_activities = [
+            {
+                'timestamp': datetime.utcnow() - timedelta(hours=i),
+                'username': f"User{i}",
+                'action': action,
+                'details': f"Details about {action.lower()}"
+            } 
+            for i, action in enumerate([
+                'New Registration', 
+                'Project Created', 
+                'Investment Made', 
+                'Profile Updated', 
+                'Message Sent'
+            ], 1)
+        ]
+        
+        # Get recent users and projects
+        new_users = User.query.order_by(User.created_at.desc()).limit(5).all()
+        recent_projects = Project.query.order_by(Project.created_at.desc()).limit(5).all()
+        
+        return render_template('admin/dashboard.html', 
+                              stats=stats, 
+                              recent_activities=recent_activities,
+                              new_users=new_users,
+                              recent_projects=recent_projects)
+    
+    @app.route('/admin/users')
+    @login_required
+    @admin_required
+    def admin_users():
+        page = request.args.get('page', 1, type=int)
+        per_page = 10
+        
+        # Apply filters
+        query = User.query
+        
+        role = request.args.get('role')
+        if role:
+            query = query.filter(User.role == role)
+            
+        search = request.args.get('search')
+        if search:
+            query = query.filter(
+                (User.username.ilike(f'%{search}%')) |
+                (User.email.ilike(f'%{search}%'))
+            )
+        
+        # Get paginated results
+        users = query.order_by(User.created_at.desc()).paginate(page=page, per_page=per_page)
+        
+        return render_template('admin/users.html', users=users.items, pagination=users)
+    
+    @app.route('/admin/user/<int:user_id>')
+    @login_required
+    @admin_required
+    def admin_user_details(user_id):
+        user = User.query.get_or_404(user_id)
+        return render_template('admin/user_details.html', user=user)
+    
+    @app.route('/admin/user/<int:user_id>/edit', methods=['GET', 'POST'])
+    @login_required
+    @admin_required
+    def admin_edit_user(user_id):
+        user = User.query.get_or_404(user_id)
+        
+        if request.method == 'POST':
+            user.username = request.form.get('username')
+            user.email = request.form.get('email')
+            user.role = request.form.get('role')
+            user.is_admin = 'is_admin' in request.form
+            
+            if request.form.get('password'):
+                user.set_password(request.form.get('password'))
+                
+            db.session.commit()
+            flash('User updated successfully', 'success')
+            return redirect(url_for('admin_users'))
+            
+        return render_template('admin/edit_user.html', user=user)
+    
+    @app.route('/admin/user/add', methods=['POST'])
+    @login_required
+    @admin_required
+    def admin_add_user():
+        username = request.form.get('username')
+        email = request.form.get('email')
+        password = request.form.get('password')
+        role = request.form.get('role')
+        is_admin = 'is_admin' in request.form
+        
+        # Check if user already exists
+        if User.query.filter_by(username=username).first() or User.query.filter_by(email=email).first():
+            flash('Username or email already exists', 'danger')
+            return redirect(url_for('admin_users'))
+        
+        user = User(
+            username=username,
+            email=email,
+            role=role,
+            is_admin=is_admin,
+            created_at=datetime.utcnow()
+        )
+        user.set_password(password)
+        
+        db.session.add(user)
+        db.session.commit()
+        
+        # Create related profile
+        if role == 'farmer':
+            farmer = Farmer(user_id=user.id, farm_name="New Farm", farm_location="Location")
+            db.session.add(farmer)
+        elif role == 'investor':
+            investor = Investor(user_id=user.id, full_name=username)
+            db.session.add(investor)
+            
+        db.session.commit()
+        flash('User added successfully', 'success')
+        return redirect(url_for('admin_users'))
+    
+    @app.route('/admin/user/<int:user_id>/delete', methods=['POST'])
+    @login_required
+    @admin_required
+    def admin_delete_user(user_id):
+        user = User.query.get_or_404(user_id)
+        
+        if user.id == current_user.id:
+            flash('You cannot delete your own account', 'danger')
+            return redirect(url_for('admin_users'))
+            
+        db.session.delete(user)
+        db.session.commit()
+        flash('User deleted successfully', 'success')
+        return redirect(url_for('admin_users'))
+    
+    @app.route('/admin/projects')
+    @login_required
+    @admin_required
+    def admin_projects():
+        page = request.args.get('page', 1, type=int)
+        per_page = 10
+        
+        # Apply filters
+        query = Project.query
+        
+        status = request.args.get('status')
+        if status:
+            query = query.filter(Project.status == status)
+            
+        category = request.args.get('category')
+        if category:
+            query = query.filter(Project.category == category)
+            
+        search = request.args.get('search')
+        if search:
+            query = query.filter(
+                (Project.title.ilike(f'%{search}%')) |
+                (Project.description.ilike(f'%{search}%'))
+            )
+        
+        # Get paginated results
+        projects = query.order_by(Project.created_at.desc()).paginate(page=page, per_page=per_page)
+        
+        return render_template('admin/projects.html', projects=projects.items, pagination=projects)
+    
+    @app.route('/admin/project/<int:project_id>')
+    @login_required
+    @admin_required
+    def admin_project_details(project_id):
+        project = Project.query.get_or_404(project_id)
+        return render_template('admin/project_details.html', project=project)
+    
+    @app.route('/admin/project/<int:project_id>/edit', methods=['GET', 'POST'])
+    @login_required
+    @admin_required
+    def admin_edit_project(project_id):
+        project = Project.query.get_or_404(project_id)
+        
+        if request.method == 'POST':
+            project.title = request.form.get('title')
+            project.description = request.form.get('description')
+            project.funding_goal = float(request.form.get('funding_goal'))
+            project.current_funding = float(request.form.get('current_funding', 0))
+            project.duration_months = int(request.form.get('duration_months'))
+            project.expected_roi = float(request.form.get('expected_roi'))
+            project.risk_level = request.form.get('risk_level')
+            project.category = request.form.get('category')
+            project.status = request.form.get('status')
+            
+            db.session.commit()
+            flash('Project updated successfully', 'success')
+            return redirect(url_for('admin_projects'))
+            
+        return render_template('admin/edit_project.html', project=project)
+    
+    @app.route('/admin/project/<int:project_id>/delete', methods=['POST'])
+    @login_required
+    @admin_required
+    def admin_delete_project(project_id):
+        project = Project.query.get_or_404(project_id)
+        
+        db.session.delete(project)
+        db.session.commit()
+        flash('Project deleted successfully', 'success')
+        return redirect(url_for('admin_projects'))
+    
+    @app.route('/admin/investments')
+    @login_required
+    @admin_required
+    def admin_investments():
+        page = request.args.get('page', 1, type=int)
+        per_page = 10
+        
+        # Apply filters
+        query = Investment.query
+        
+        status = request.args.get('status')
+        if status:
+            query = query.filter(Investment.status == status)
+            
+        min_amount = request.args.get('min_amount', type=float)
+        if min_amount:
+            query = query.filter(Investment.amount >= min_amount)
+            
+        max_amount = request.args.get('max_amount', type=float)
+        if max_amount:
+            query = query.filter(Investment.amount <= max_amount)
+            
+        search = request.args.get('search')
+        if search:
+            query = query.join(Investor).join(User, Investor.user_id == User.id).join(Project).filter(
+                (User.username.ilike(f'%{search}%')) |
+                (Project.title.ilike(f'%{search}%'))
+            )
+        
+        # Get paginated results
+        investments = query.order_by(Investment.date.desc()).paginate(page=page, per_page=per_page)
+        
+        return render_template('admin/investments.html', investments=investments.items, pagination=investments)
+    
+    @app.route('/admin/investment/<int:investment_id>')
+    @login_required
+    @admin_required
+    def admin_investment_details(investment_id):
+        investment = Investment.query.get_or_404(investment_id)
+        return render_template('admin/investment_details.html', investment=investment)
+    
+    @app.route('/admin/investment/<int:investment_id>/update', methods=['POST'])
+    @login_required
+    @admin_required
+    def admin_update_investment_status(investment_id):
+        investment = Investment.query.get_or_404(investment_id)
+        
+        status = request.form.get('status')
+        investment.status = status
+        
+        db.session.commit()
+        flash('Investment status updated successfully', 'success')
+        return redirect(url_for('admin_investments'))
+    
+    @app.route('/admin/reports')
+    @login_required
+    @admin_required
+    def admin_reports():
+        # Get date range for filtering
+        end_date = request.args.get('end_date')
+        end_date = datetime.strptime(end_date, '%Y-%m-%d') if end_date else datetime.utcnow()
+        
+        start_date = request.args.get('start_date')
+        start_date = datetime.strptime(start_date, '%Y-%m-%d') if start_date else end_date - timedelta(days=30)
+        
+        # User growth data (last 6 months)
+        months = 6
+        labels = []
+        farmer_data = []
+        investor_data = []
+        
+        for i in range(months, 0, -1):
+            month_date = datetime.utcnow() - timedelta(days=30*i)
+            month_label = month_date.strftime('%b %Y')
+            labels.append(month_label)
+            
+            farmer_count = Farmer.query.join(User).filter(
+                User.created_at < month_date
+            ).count()
+            farmer_data.append(farmer_count)
+            
+            investor_count = Investor.query.join(User).filter(
+                User.created_at < month_date
+            ).count()
+            investor_data.append(investor_count)
+            
+        # Investment distribution by category
+        investment_categories = []
+        investment_distribution = []
+        
+        category_totals = db.session.query(
+            Project.category, 
+            func.sum(Investment.amount).label('total')
+        ).join(Investment).group_by(Project.category).order_by(desc('total')).all()
+        
+        for category, total in category_totals:
+            investment_categories.append(category)
+            investment_distribution.append(float(total))
+            
+        # Project distribution by category
+        project_categories = []
+        project_distribution = []
+        
+        project_counts = db.session.query(
+            Project.category, 
+            func.count(Project.id).label('count')
+        ).group_by(Project.category).order_by(desc('count')).all()
+        
+        for category, count in project_counts:
+            project_categories.append(category)
+            project_distribution.append(count)
+            
+        # Monthly investment trends (last 12 months)
+        monthly_labels = []
+        monthly_investments = []
+        
+        for i in range(12, 0, -1):
+            month_date = datetime.utcnow() - timedelta(days=30*i)
+            next_month = month_date + timedelta(days=30)
+            month_label = month_date.strftime('%b %Y')
+            monthly_labels.append(month_label)
+            
+            monthly_total = db.session.query(
+                func.sum(Investment.amount)
+            ).filter(
+                Investment.date >= month_date,
+                Investment.date < next_month
+            ).scalar() or 0
+            
+            monthly_investments.append(float(monthly_total))
+        
+        return render_template(
+            'admin/reports.html',
+            user_growth_labels=labels,
+            farmer_growth_data=farmer_data,
+            investor_growth_data=investor_data,
+            investment_categories=investment_categories,
+            investment_distribution=investment_distribution,
+            project_categories=project_categories,
+            project_distribution=project_distribution,
+            monthly_labels=monthly_labels,
+            monthly_investments=monthly_investments
+        )
+    
+    @app.route('/admin/reports/download/<report_type>')
+    @login_required
+    @admin_required
+    def admin_download_report(report_type):
+        # Create a CSV file in memory
+        output = io.StringIO()
+        writer = csv.writer(output)
+        
+        if report_type == 'users':
+            writer.writerow(['ID', 'Username', 'Email', 'Role', 'Is Admin', 'Created At'])
+            users = User.query.all()
+            for user in users:
+                writer.writerow([
+                    user.id,
+                    user.username,
+                    user.email,
+                    user.role,
+                    user.is_admin,
+                    user.created_at.strftime('%Y-%m-%d %H:%M:%S')
+                ])
+            filename = 'users_report.csv'
+            
+        elif report_type == 'projects':
+            writer.writerow([
+                'ID', 'Title', 'Farmer', 'Funding Goal', 'Current Funding', 
+                'Duration (months)', 'Expected ROI', 'Risk Level', 'Category',
+                'Status', 'Created At'
+            ])
+            projects = Project.query.all()
+            for project in projects:
+                writer.writerow([
+                    project.id,
+                    project.title,
+                    project.farmer.farm_name,
+                    project.funding_goal,
+                    project.current_funding,
+                    project.duration_months,
+                    project.expected_roi,
+                    project.risk_level,
+                    project.category,
+                    project.status,
+                    project.created_at.strftime('%Y-%m-%d %H:%M:%S')
+                ])
+            filename = 'projects_report.csv'
+            
+        elif report_type == 'investments':
+            writer.writerow([
+                'ID', 'Investor', 'Project', 'Amount', 'Date', 'Status'
+            ])
+            investments = Investment.query.all()
+            for investment in investments:
+                writer.writerow([
+                    investment.id,
+                    investment.investor.full_name,
+                    investment.project.title,
+                    investment.amount,
+                    investment.date.strftime('%Y-%m-%d %H:%M:%S'),
+                    investment.status
+                ])
+            filename = 'investments_report.csv'
+            
+        elif report_type == 'financial':
+            writer.writerow([
+                'Category', 'Total Investment', 'Project Count', 'Average Investment'
+            ])
+            categories = db.session.query(Project.category).distinct().all()
+            for (category,) in categories:
+                projects_count = Project.query.filter_by(category=category).count()
+                total_investment = db.session.query(
+                    func.sum(Investment.amount)
+                ).join(Project).filter(Project.category == category).scalar() or 0
+                avg = total_investment / projects_count if projects_count > 0 else 0
+                
+                writer.writerow([
+                    category,
+                    total_investment,
+                    projects_count,
+                    avg
+                ])
+            filename = 'financial_report.csv'
+        else:
+            abort(404)
+            
+        # Move to the beginning of the StringIO
+        output.seek(0)
+        
+        return send_file(
+            io.BytesIO(output.getvalue().encode('utf-8')),
+            mimetype='text/csv',
+            as_attachment=True,
+            download_name=filename
+        )

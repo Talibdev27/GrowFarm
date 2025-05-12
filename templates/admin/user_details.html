@@ -1,0 +1,274 @@
+{% extends 'base.html' %}
+
+{% block title %}Admin - User Details{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="row mb-4">
+        <div class="col-md-8">
+            <h1>User Details</h1>
+        </div>
+        <div class="col-md-4 text-end">
+            <a href="{{ url_for('admin_users') }}" class="btn btn-secondary">
+                <i class="fas fa-arrow-left me-2"></i> Back to Users
+            </a>
+            <a href="{{ url_for('admin_edit_user', user_id=user.id) }}" class="btn btn-primary">
+                <i class="fas fa-edit me-2"></i> Edit User
+            </a>
+        </div>
+    </div>
+    
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card mb-4">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0">Basic Information</h5>
+                </div>
+                <div class="card-body">
+                    <div class="mb-3">
+                        <label class="form-label text-muted">User ID</label>
+                        <p class="form-control-plaintext">{{ user.id }}</p>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label text-muted">Username</label>
+                        <p class="form-control-plaintext">{{ user.username }}</p>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label text-muted">Email</label>
+                        <p class="form-control-plaintext">{{ user.email }}</p>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label text-muted">Role</label>
+                        <p class="form-control-plaintext">
+                            <span class="badge {% if user.role == 'admin' %}bg-danger{% elif user.role == 'investor' %}bg-info{% else %}bg-success{% endif %}">
+                                {{ user.role }}
+                            </span>
+                        </p>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label text-muted">Admin Status</label>
+                        <p class="form-control-plaintext">
+                            {% if user.is_admin %}
+                            <span class="badge bg-danger">Administrator</span>
+                            {% else %}
+                            <span class="badge bg-secondary">Regular User</span>
+                            {% endif %}
+                        </p>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label text-muted">Created At</label>
+                        <p class="form-control-plaintext">{{ user.created_at.strftime('%Y-%m-%d %H:%M:%S') }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-6">
+            {% if user.role == 'farmer' and user.farmer %}
+            <div class="card mb-4">
+                <div class="card-header bg-success text-white">
+                    <h5 class="mb-0">Farmer Profile</h5>
+                </div>
+                <div class="card-body">
+                    <div class="mb-3">
+                        <label class="form-label text-muted">Farm Name</label>
+                        <p class="form-control-plaintext">{{ user.farmer.farm_name }}</p>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label text-muted">Farm Location</label>
+                        <p class="form-control-plaintext">{{ user.farmer.farm_location }}</p>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label text-muted">Experience</label>
+                        <p class="form-control-plaintext">{{ user.farmer.experience_years }} years</p>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label text-muted">Specialization</label>
+                        <p class="form-control-plaintext">{{ user.farmer.specialization }}</p>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label text-muted">Phone</label>
+                        <p class="form-control-plaintext">{{ user.farmer.phone }}</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card mb-4">
+                <div class="card-header bg-info text-white">
+                    <h5 class="mb-0">Projects ({{ user.farmer.projects.count() }})</h5>
+                </div>
+                <div class="card-body">
+                    {% if user.farmer.projects.count() > 0 %}
+                    <div class="list-group">
+                        {% for project in user.farmer.projects %}
+                        <a href="{{ url_for('admin_project_details', project_id=project.id) }}" class="list-group-item list-group-item-action">
+                            <div class="d-flex w-100 justify-content-between">
+                                <h6 class="mb-1">{{ project.title }}</h6>
+                                <small>{{ project.created_at.strftime('%Y-%m-%d') }}</small>
+                            </div>
+                            <p class="mb-1">{{ project.description[:100] }}{% if project.description|length > 100 %}...{% endif %}</p>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <small>Category: {{ project.category }}</small>
+                                <span class="badge 
+                                    {% if project.status == 'Open' %}bg-primary
+                                    {% elif project.status == 'Funded' %}bg-success
+                                    {% elif project.status == 'Completed' %}bg-info
+                                    {% else %}bg-secondary{% endif %}">
+                                    {{ project.status }}
+                                </span>
+                            </div>
+                        </a>
+                        {% endfor %}
+                    </div>
+                    {% else %}
+                    <p class="text-muted">No projects found.</p>
+                    {% endif %}
+                </div>
+            </div>
+            {% elif user.role == 'investor' and user.investor %}
+            <div class="card mb-4">
+                <div class="card-header bg-info text-white">
+                    <h5 class="mb-0">Investor Profile</h5>
+                </div>
+                <div class="card-body">
+                    <div class="mb-3">
+                        <label class="form-label text-muted">Full Name</label>
+                        <p class="form-control-plaintext">{{ user.investor.full_name }}</p>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label text-muted">Bio</label>
+                        <p class="form-control-plaintext">{{ user.investor.bio or 'No bio provided' }}</p>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label text-muted">Investment Focus</label>
+                        <p class="form-control-plaintext">{{ user.investor.investment_focus or 'Not specified' }}</p>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label text-muted">Investment Range</label>
+                        <p class="form-control-plaintext">
+                            {% if user.investor.min_investment and user.investor.max_investment %}
+                                ${{ user.investor.min_investment }} - ${{ user.investor.max_investment }}
+                            {% elif user.investor.min_investment %}
+                                Min: ${{ user.investor.min_investment }}
+                            {% elif user.investor.max_investment %}
+                                Max: ${{ user.investor.max_investment }}
+                            {% else %}
+                                Not specified
+                            {% endif %}
+                        </p>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label text-muted">Phone</label>
+                        <p class="form-control-plaintext">{{ user.investor.phone or 'Not provided' }}</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card mb-4">
+                <div class="card-header bg-success text-white">
+                    <h5 class="mb-0">Investments ({{ user.investor.investments.count() }})</h5>
+                </div>
+                <div class="card-body">
+                    {% if user.investor.investments.count() > 0 %}
+                    <div class="list-group">
+                        {% for investment in user.investor.investments %}
+                        <a href="{{ url_for('admin_investment_details', investment_id=investment.id) }}" class="list-group-item list-group-item-action">
+                            <div class="d-flex w-100 justify-content-between">
+                                <h6 class="mb-1">{{ investment.project.title }}</h6>
+                                <small>{{ investment.date.strftime('%Y-%m-%d') }}</small>
+                            </div>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <span class="text-primary">${{ investment.amount }}</span>
+                                <span class="badge 
+                                    {% if investment.status == 'Pending' %}bg-warning text-dark
+                                    {% elif investment.status == 'Confirmed' %}bg-primary
+                                    {% elif investment.status == 'Completed' %}bg-success
+                                    {% else %}bg-secondary{% endif %}">
+                                    {{ investment.status }}
+                                </span>
+                            </div>
+                        </a>
+                        {% endfor %}
+                    </div>
+                    {% else %}
+                    <p class="text-muted">No investments found.</p>
+                    {% endif %}
+                </div>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+    
+    <div class="row">
+        <div class="col-md-12 mb-4">
+            <div class="card">
+                <div class="card-header bg-warning text-dark">
+                    <h5 class="mb-0">Messages</h5>
+                </div>
+                <div class="card-body">
+                    <ul class="nav nav-tabs mb-3" id="messagesTab" role="tablist">
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link active" id="received-tab" data-bs-toggle="tab" data-bs-target="#received" type="button" role="tab" aria-controls="received" aria-selected="true">
+                                Received ({{ user.messages_received.count() }})
+                            </button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="sent-tab" data-bs-toggle="tab" data-bs-target="#sent" type="button" role="tab" aria-controls="sent" aria-selected="false">
+                                Sent ({{ user.messages_sent.count() }})
+                            </button>
+                        </li>
+                    </ul>
+                    <div class="tab-content" id="messagesTabContent">
+                        <div class="tab-pane fade show active" id="received" role="tabpanel" aria-labelledby="received-tab">
+                            {% if user.messages_received.count() > 0 %}
+                            <div class="list-group">
+                                {% for message in user.messages_received %}
+                                <div class="list-group-item">
+                                    <div class="d-flex w-100 justify-content-between">
+                                        <h6 class="mb-1">{{ message.subject }}</h6>
+                                        <small>{{ message.timestamp.strftime('%Y-%m-%d %H:%M') }}</small>
+                                    </div>
+                                    <p class="mb-1">{{ message.body[:150] }}{% if message.body|length > 150 %}...{% endif %}</p>
+                                    <small>From: {{ message.sender.username }}</small>
+                                    <div class="mt-2">
+                                        <span class="badge {% if message.read %}bg-secondary{% else %}bg-success{% endif %}">
+                                            {% if message.read %}Read{% else %}Unread{% endif %}
+                                        </span>
+                                    </div>
+                                </div>
+                                {% endfor %}
+                            </div>
+                            {% else %}
+                            <p class="text-muted">No messages received.</p>
+                            {% endif %}
+                        </div>
+                        <div class="tab-pane fade" id="sent" role="tabpanel" aria-labelledby="sent-tab">
+                            {% if user.messages_sent.count() > 0 %}
+                            <div class="list-group">
+                                {% for message in user.messages_sent %}
+                                <div class="list-group-item">
+                                    <div class="d-flex w-100 justify-content-between">
+                                        <h6 class="mb-1">{{ message.subject }}</h6>
+                                        <small>{{ message.timestamp.strftime('%Y-%m-%d %H:%M') }}</small>
+                                    </div>
+                                    <p class="mb-1">{{ message.body[:150] }}{% if message.body|length > 150 %}...{% endif %}</p>
+                                    <small>To: {{ message.recipient.username }}</small>
+                                    <div class="mt-2">
+                                        <span class="badge {% if message.read %}bg-success{% else %}bg-warning text-dark{% endif %}">
+                                            {% if message.read %}Read by Recipient{% else %}Not Read Yet{% endif %}
+                                        </span>
+                                    </div>
+                                </div>
+                                {% endfor %}
+                            </div>
+                            {% else %}
+                            <p class="text-muted">No messages sent.</p>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
