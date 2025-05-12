@@ -103,47 +103,14 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // Hero section parallax effect and navbar scroll change
+    // Hero section parallax effect
     const hero = document.querySelector('.hero');
-    const navbar = document.getElementById('mainNav');
-    
-    function handleScroll() {
-        const scrollPosition = window.scrollY;
-        
-        // Parallax effect for hero
-        if (hero) {
+    if (hero) {
+        window.addEventListener('scroll', function() {
+            const scrollPosition = window.scrollY;
             hero.style.backgroundPositionY = 50 - (scrollPosition * 0.1) + '%';
-        }
-        
-        // Navbar color change on scroll
-        if (navbar) {
-            if (scrollPosition > 50) {
-                navbar.classList.remove('navbar-transparent');
-                navbar.classList.add('navbar-scrolled');
-                
-                // Change navbar-toggler color for mobile
-                const navbarToggler = navbar.querySelector('.navbar-toggler');
-                if (navbarToggler) {
-                    navbarToggler.classList.remove('navbar-dark');
-                    navbarToggler.classList.add('navbar-light');
-                }
-            } else {
-                navbar.classList.add('navbar-transparent');
-                navbar.classList.remove('navbar-scrolled');
-                
-                // Change navbar-toggler color for mobile
-                const navbarToggler = navbar.querySelector('.navbar-toggler');
-                if (navbarToggler) {
-                    navbarToggler.classList.add('navbar-dark');
-                    navbarToggler.classList.remove('navbar-light');
-                }
-            }
-        }
+        });
     }
-    
-    window.addEventListener('scroll', handleScroll);
-    // Run once on page load
-    handleScroll();
 
     // Animate elements on scroll
     const animateElements = document.querySelectorAll('.animate-on-scroll');

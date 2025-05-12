@@ -1,17 +1,17 @@
 /* Global Styles */
 :root {
-    --primary: #118C4F; /* Money green - primary color */
-    --primary-dark: #0A6638; /* Darker money green */
-    --primary-light: #4CAF50; /* Lighter green */
-    --secondary: #8BC34A; /* Light leaf green - growth */
-    --accent: #D4AF37; /* Gold for investment */
+    --primary: #4caf50;
+    --primary-dark: #2e7d32;
+    --primary-light: #80e27e;
+    --secondary: #8bc34a;
+    --accent: #ff9800;
     --text-dark: #333333;
     --text-light: #f5f5f5;
     --background-light: #f9f9f9;
     --background-dark: #e0e0e0;
-    --success: #118C4F;
+    --success: #4caf50;
     --danger: #f44336;
-    --warning: #D4AF37; /* Gold */
+    --warning: #ff9800;
     --info: #2196f3;
 }
 
@@ -20,106 +20,6 @@ body {
     color: var(--text-dark);
     background-color: var(--background-light);
     line-height: 1.6;
-}
-
-/* Navbar Styles */
-.navbar {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    z-index: 1000;
-    padding: 1rem 0;
-    transition: all 0.3s ease;
-}
-
-.navbar-transparent {
-    background-color: transparent;
-}
-
-.navbar-scrolled {
-    background-color: white;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-}
-
-.navbar-brand {
-    font-weight: 700;
-    transition: color 0.3s;
-}
-
-.navbar-transparent .navbar-brand {
-    color: white;
-}
-
-.navbar-scrolled .navbar-brand {
-    color: #118C4F; /* Money green */
-}
-
-.navbar-transparent .nav-link {
-    color: white;
-}
-
-.navbar-scrolled .nav-link {
-    color: #333;
-}
-
-.nav-link {
-    font-weight: 500;
-    padding: 0.5rem 1.2rem !important;
-    transition: color 0.3s;
-}
-
-.navbar-transparent .nav-link:hover {
-    color: rgba(255, 255, 255, 0.7);
-}
-
-.navbar-scrolled .nav-link:hover {
-    color: #118C4F; /* Money green */
-}
-
-.navbar-transparent .navbar-nav .nav-link.active {
-    color: #D4AF37; /* Gold */
-}
-
-.navbar-scrolled .navbar-nav .nav-link.active {
-    color: #118C4F; /* Money green */
-}
-
-.btn-success {
-    background-color: #118C4F; /* Money green */
-    border: none;
-    border-radius: 4px;
-    padding: 0.5rem 1.5rem;
-}
-
-.btn-success:hover, .btn-success:focus {
-    background-color: #0A6638; /* Darker money green */
-}
-
-.navbar-transparent .btn-outline-light {
-    color: white;
-    border-color: rgba(255, 255, 255, 0.5);
-}
-
-.navbar-scrolled .btn-outline-light {
-    color: #118C4F; /* Money green */
-    border-color: #118C4F;
-}
-
-.btn-outline-light {
-    border-radius: 4px;
-    padding: 0.5rem 1.5rem;
-    transition: all 0.3s;
-}
-
-.navbar-transparent .btn-outline-light:hover {
-    background-color: rgba(255, 255, 255, 0.1);
-    color: white;
-}
-
-.navbar-scrolled .btn-outline-light:hover {
-    background-color: rgba(17, 140, 79, 0.1);
-    color: #0A6638; /* Darker money green */
 }
 
 /* Typography */
@@ -193,95 +93,23 @@ h1, h2, h3, h4, h5, h6 {
 
 /* Hero Section */
 .hero {
-    background: linear-gradient(90deg, rgba(17,140,79,0.9) 0%, rgba(76,175,80,0.8) 50%, rgba(139,195,74,0.7) 100%), url('https://images.unsplash.com/photo-1495107334309-fcf20504a5ab?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
+    background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1495107334309-fcf20504a5ab?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
     background-size: cover;
     background-position: center;
     color: white;
-    padding: 8rem 0 5rem;
-    margin-bottom: 0;
-    position: relative;
-    min-height: 100vh;
+    padding: 5rem 0;
+    margin-bottom: 3rem;
 }
 
-.hero-content {
-    padding: 2rem 0;
-}
-
-.hero-title {
-    font-size: 3.5rem;
-    font-weight: 700;
-    line-height: 1.2;
+.hero h1 {
+    color: white;
+    font-size: 3rem;
     margin-bottom: 1.5rem;
 }
 
-.text-light-green {
-    color: #8BC34A; /* Light leaf green */
-}
-
-.text-green {
-    color: #118C4F; /* Money green */
-}
-
-.hero-text {
-    color: rgba(255, 255, 255, 0.9);
+.hero p {
     font-size: 1.25rem;
     margin-bottom: 2rem;
-    max-width: 500px;
-}
-
-.hero-buttons {
-    margin-bottom: 2rem;
-}
-
-.stats-container {
-    display: flex;
-    gap: 2.5rem;
-}
-
-.stat-item {
-    background-color: rgba(255, 255, 255, 0.1);
-    padding: 1.2rem 1.5rem;
-    border-radius: 4px;
-    backdrop-filter: blur(5px);
-    min-width: 140px;
-    text-align: left;
-    border-left: 3px solid #D4AF37; /* Gold accent */
-}
-
-.stat-value {
-    font-size: 1.8rem;
-    font-weight: 700;
-    color: #fff;
-}
-
-.stat-label {
-    font-size: 0.9rem;
-    color: rgba(255, 255, 255, 0.8);
-}
-
-.scroll-indicator {
-    position: absolute;
-    bottom: 30px;
-    left: 50%;
-    transform: translateX(-50%);
-    animation: bounce 2s infinite;
-}
-
-.scroll-indicator a {
-    color: white;
-    font-size: 1.5rem;
-}
-
-@keyframes bounce {
-    0%, 20%, 50%, 80%, 100% {
-        transform: translateY(0) translateX(-50%);
-    }
-    40% {
-        transform: translateY(-20px) translateX(-50%);
-    }
-    60% {
-        transform: translateY(-10px) translateX(-50%);
-    }
 }
 
 /* Cards */
