@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+
+{% block title %}Send Message - GrowFarm{% endblock %}
+
+{% block content %}
+<section class="py-5">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card border-0 shadow-sm">
+                    <div class="card-body p-4 p-md-5">
+                        <div class="d-flex justify-content-between align-items-center mb-4">
+                            <h2 class="card-title fw-bold mb-0">Send Message</h2>
+                            <a href="{{ url_for('messages') }}" class="btn btn-outline-primary">
+                                <i class="fas fa-arrow-left me-2"></i>Back to Messages
+                            </a>
+                        </div>
+
+                        <div class="mb-4">
+                            <div class="alert alert-info">
+                                <div class="d-flex">
+                                    <div class="flex-shrink-0">
+                                        <i class="fas fa-info-circle me-2"></i>
+                                    </div>
+                                    <div>
+                                        <p class="mb-0">You are sending a message to <strong>{{ recipient.username }}</strong>
+                                        {% if recipient.role == 'farmer' and recipient.farmer %}
+                                            ({{ recipient.farmer.farm_name }})
+                                        {% elif recipient.role == 'investor' and recipient.investor %}
+                                            ({{ recipient.investor.full_name }})
+                                        {% endif %}
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <form method="POST" action="{{ url_for('send_message', recipient_id=recipient.id) }}" novalidate>
+                            {{ form.hidden_tag() }}
+                            {{ form.recipient_id }}
+                            
+                            <div class="mb-3">
+                                {{ form.subject.label(class="form-label") }}
+                                {% if form.subject.errors %}
+                                    {{ form.subject(class="form-control is-invalid") }}
+                                    <div class="invalid-feedback">
+                                        {% for error in form.subject.errors %}
+                                            {{ error }}
+                                        {% endfor %}
+                                    </div>
+                                {% else %}
+                                    {{ form.subject(class="form-control", placeholder="Message subject") }}
+                                {% endif %}
+                            </div>
+                            
+                            <div class="mb-3">
+                                {{ form.body.label(class="form-label") }}
+                                {% if form.body.errors %}
+                                    {{ form.body(class="form-control is-invalid", rows=6) }}
+                                    <div class="invalid-feedback">
+                                        {% for error in form.body.errors %}
+                                            {{ error }}
+                                        {% endfor %}
+                                    </div>
+                                {% else %}
+                                    {{ form.body(class="form-control", rows=6, placeholder="Type your message here...") }}
+                                {% endif %}
+                            </div>
+                            
+                            <div class="d-grid">
+                                {{ form.submit(class="btn btn-primary btn-lg") }}
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

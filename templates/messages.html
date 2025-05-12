@@ -1,0 +1,124 @@
+{% extends "base.html" %}
+
+{% block title %}Messages - GrowFarm{% endblock %}
+
+{% block content %}
+<section class="py-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <h1 class="fw-bold mb-4">Messages</h1>
+                <p class="lead mb-5">Communicate with farmers, investors, and the GrowFarm team.</p>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-12 mb-4">
+                <ul class="nav nav-tabs" id="messagesTab" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link active" id="inbox-tab" data-bs-toggle="tab" data-bs-target="#inbox" type="button" role="tab" aria-controls="inbox" aria-selected="true">
+                            <i class="fas fa-inbox me-2"></i>Inbox
+                            {% set unread_count = received_messages|selectattr('read', 'equalto', false)|list|length %}
+                            {% if unread_count > 0 %}
+                                <span class="badge bg-primary rounded-pill ms-2">{{ unread_count }}</span>
+                            {% endif %}
+                        </button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="sent-tab" data-bs-toggle="tab" data-bs-target="#sent" type="button" role="tab" aria-controls="sent" aria-selected="false">
+                            <i class="fas fa-paper-plane me-2"></i>Sent
+                        </button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="tab-content" id="messagesTabContent">
+            <!-- Inbox Tab -->
+            <div class="tab-pane fade show active" id="inbox" role="tabpanel" aria-labelledby="inbox-tab">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="card border-0 shadow-sm message-list">
+                            {% if received_messages %}
+                                <div class="list-group list-group-flush">
+                                    {% for message in received_messages %}
+                                        <div class="message-item {{ 'unread' if not message.read }}" data-message-id="{{ message.id }}">
+                                            <div class="d-flex justify-content-between align-items-center">
+                                                <div>
+                                                    <h5 class="mb-1">{{ message.subject }}</h5>
+                                                    <p class="text-muted mb-1">
+                                                        From: <span class="message-sender">{{ message.sender.username }}</span> 
+                                                        {% if not message.read %}
+                                                            <span class="badge bg-primary ms-2">New</span>
+                                                        {% endif %}
+                                                    </p>
+                                                </div>
+                                                <small class="message-date">{{ message.timestamp.strftime('%Y-%m-%d %H:%M') }}</small>
+                                            </div>
+                                            <p class="mb-1">{{ message.body|truncate(100) }}</p>
+                                            <div class="d-flex justify-content-between align-items-center mt-2">
+                                                <div>
+                                                    <a href="{{ url_for('mark_read', message_id=message.id) }}" class="btn btn-sm btn-outline-primary">
+                                                        <i class="fas fa-check me-1"></i>Mark as Read
+                                                    </a>
+                                                    <a href="{{ url_for('send_message', recipient_id=message.sender.id) }}" class="btn btn-sm btn-outline-primary ms-2">
+                                                        <i class="fas fa-reply me-1"></i>Reply
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                            {% else %}
+                                <div class="text-center py-5">
+                                    <div class="mb-3">
+                                        <i class="fas fa-inbox fa-3x text-muted"></i>
+                                    </div>
+                                    <h5>Your inbox is empty</h5>
+                                    <p class="text-muted">You don't have any messages yet.</p>
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sent Tab -->
+            <div class="tab-pane fade" id="sent" role="tabpanel" aria-labelledby="sent-tab">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="card border-0 shadow-sm message-list">
+                            {% if sent_messages %}
+                                <div class="list-group list-group-flush">
+                                    {% for message in sent_messages %}
+                                        <div class="message-item">
+                                            <div class="d-flex justify-content-between align-items-center">
+                                                <div>
+                                                    <h5 class="mb-1">{{ message.subject }}</h5>
+                                                    <p class="text-muted mb-1">
+                                                        To: <span class="message-sender">{{ message.recipient.username }}</span>
+                                                    </p>
+                                                </div>
+                                                <small class="message-date">{{ message.timestamp.strftime('%Y-%m-%d %H:%M') }}</small>
+                                            </div>
+                                            <p class="mb-1">{{ message.body|truncate(100) }}</p>
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                            {% else %}
+                                <div class="text-center py-5">
+                                    <div class="mb-3">
+                                        <i class="fas fa-paper-plane fa-3x text-muted"></i>
+                                    </div>
+                                    <h5>No sent messages</h5>
+                                    <p class="text-muted">You haven't sent any messages yet.</p>
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

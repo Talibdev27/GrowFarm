@@ -1,0 +1,235 @@
+{% extends "base.html" %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="hero text-center">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <h1 class="display-4 fw-bold mb-4">Grow Together, Prosper Together</h1>
+                <p class="lead mb-5">Connecting investors with farmers to create sustainable agricultural growth and shared prosperity. Join our community and be part of the agricultural revolution.</p>
+                <div class="d-grid gap-3 d-sm-flex justify-content-sm-center">
+                    <a href="{{ url_for('register') }}" class="btn btn-primary btn-lg px-5 rounded-pill">Get Started</a>
+                    <a href="{{ url_for('projects') }}" class="btn btn-outline-light btn-lg px-5 rounded-pill">Explore Projects</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- How It Works Section -->
+<section class="py-5">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h2 class="fw-bold">How GrowFarm Works</h2>
+            <p class="lead text-muted">A simple process to connect farmers with investors</p>
+        </div>
+        <div class="row g-4">
+            <div class="col-md-4 text-center animate-on-scroll">
+                <div class="p-4">
+                    <div class="feature-icon mb-4">
+                        <i class="fas fa-user-plus fa-3x"></i>
+                    </div>
+                    <h3 class="h4 mb-3">1. Create an Account</h3>
+                    <p class="text-muted mb-0">Sign up as a farmer or an investor based on your goals and interests.</p>
+                </div>
+            </div>
+            <div class="col-md-4 text-center animate-on-scroll">
+                <div class="p-4">
+                    <div class="feature-icon mb-4">
+                        <i class="fas fa-seedling fa-3x"></i>
+                    </div>
+                    <h3 class="h4 mb-3">2. List or Browse Projects</h3>
+                    <p class="text-muted mb-0">Farmers list their agricultural projects, while investors browse for opportunities.</p>
+                </div>
+            </div>
+            <div class="col-md-4 text-center animate-on-scroll">
+                <div class="p-4">
+                    <div class="feature-icon mb-4">
+                        <i class="fas fa-handshake fa-3x"></i>
+                    </div>
+                    <h3 class="h4 mb-3">3. Connect & Collaborate</h3>
+                    <p class="text-muted mb-0">Investors fund projects they believe in, and farmers bring them to life.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Featured Projects Section -->
+<section class="py-5 bg-light">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h2 class="fw-bold">Featured Projects</h2>
+            <p class="lead text-muted">Explore some of our highlighted agricultural investment opportunities</p>
+        </div>
+        <div class="row g-4">
+            {% if featured_projects %}
+                {% for project in featured_projects %}
+                    <div class="col-md-4">
+                        <div class="card project-card h-100">
+                            <span class="badge bg-primary category-badge">{{ project.category }}</span>
+                            <div class="bg-image">
+                                {% if project.category == 'Crops' %}
+                                    <div class="card-img-top" style="background: url('https://images.unsplash.com/photo-1628352081568-06c0a8d75457?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1350&q=80'); height: 200px; background-size: cover; background-position: center;"></div>
+                                {% elif project.category == 'Livestock' %}
+                                    <div class="card-img-top" style="background: url('https://images.unsplash.com/photo-1596733430284-f7437764b1a9?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1350&q=80'); height: 200px; background-size: cover; background-position: center;"></div>
+                                {% elif project.category == 'Dairy' %}
+                                    <div class="card-img-top" style="background: url('https://images.unsplash.com/photo-1550583724-b2692b85b150?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1350&q=80'); height: 200px; background-size: cover; background-position: center;"></div>
+                                {% elif project.category == 'Organic' %}
+                                    <div class="card-img-top" style="background: url('https://images.unsplash.com/photo-1574943320219-855726909e01?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1350&q=80'); height: 200px; background-size: cover; background-position: center;"></div>
+                                {% else %}
+                                    <div class="card-img-top" style="background: url('https://images.unsplash.com/photo-1523741543316-beb7fc7023d8?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1350&q=80'); height: 200px; background-size: cover; background-position: center;"></div>
+                                {% endif %}
+                            </div>
+                            <div class="card-body">
+                                <h5 class="card-title">{{ project.title }}</h5>
+                                <p class="card-text text-muted mb-3">{{ project.description|truncate(100) }}</p>
+                                <div class="d-flex justify-content-between align-items-center mb-3">
+                                    <span class="text-primary fw-bold">${{ project.funding_goal|int }}</span>
+                                    <span class="badge bg-{{ 'success' if project.risk_level == 'Low' else 'warning' if project.risk_level == 'Medium' else 'danger' }}">{{ project.risk_level }} Risk</span>
+                                </div>
+                                <div class="progress mb-3" style="height: 10px;">
+                                    <div class="progress-bar" role="progressbar" style="width: {{ project.calculate_progress() }}%;" 
+                                        aria-valuenow="{{ project.calculate_progress() }}" aria-valuemin="0" aria-valuemax="100">
+                                    </div>
+                                </div>
+                                <div class="d-flex justify-content-between small text-muted mb-3">
+                                    <span>Funded: ${{ project.current_funding|int }}</span>
+                                    <span>{{ project.calculate_progress()|int }}%</span>
+                                </div>
+                                <div class="d-grid">
+                                    <a href="{{ url_for('project_details', project_id=project.id) }}" class="btn btn-outline-primary">View Details</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <div class="col-12 text-center">
+                    <p>No featured projects available at the moment. Check back soon!</p>
+                </div>
+            {% endif %}
+        </div>
+        <div class="text-center mt-5">
+            <a href="{{ url_for('projects') }}" class="btn btn-primary btn-lg px-5 rounded-pill">View All Projects</a>
+        </div>
+    </div>
+</section>
+
+<!-- Benefits Section -->
+<section class="py-5">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h2 class="fw-bold">Benefits of GrowFarm</h2>
+            <p class="lead text-muted">Why farmers and investors choose our platform</p>
+        </div>
+        <div class="row g-4">
+            <div class="col-md-6 col-lg-3 animate-on-scroll">
+                <div class="card h-100 border-0 shadow-sm">
+                    <div class="card-body text-center p-4">
+                        <div class="rounded-circle bg-primary-light p-3 d-inline-block mb-3">
+                            <i class="fas fa-tractor text-primary fa-2x"></i>
+                        </div>
+                        <h5 class="card-title">For Farmers</h5>
+                        <p class="card-text">Access to capital for farm expansion, equipment purchases, or new ventures without traditional bank financing.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-3 animate-on-scroll">
+                <div class="card h-100 border-0 shadow-sm">
+                    <div class="card-body text-center p-4">
+                        <div class="rounded-circle bg-primary-light p-3 d-inline-block mb-3">
+                            <i class="fas fa-chart-line text-primary fa-2x"></i>
+                        </div>
+                        <h5 class="card-title">For Investors</h5>
+                        <p class="card-text">Diversify your portfolio with agricultural investments that offer competitive returns and support sustainable farming.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-3 animate-on-scroll">
+                <div class="card h-100 border-0 shadow-sm">
+                    <div class="card-body text-center p-4">
+                        <div class="rounded-circle bg-primary-light p-3 d-inline-block mb-3">
+                            <i class="fas fa-leaf text-primary fa-2x"></i>
+                        </div>
+                        <h5 class="card-title">Sustainability</h5>
+                        <p class="card-text">Support sustainable and regenerative agricultural practices that benefit the environment and local communities.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-3 animate-on-scroll">
+                <div class="card h-100 border-0 shadow-sm">
+                    <div class="card-body text-center p-4">
+                        <div class="rounded-circle bg-primary-light p-3 d-inline-block mb-3">
+                            <i class="fas fa-users text-primary fa-2x"></i>
+                        </div>
+                        <h5 class="card-title">Community</h5>
+                        <p class="card-text">Join a vibrant community of farmers and investors who share knowledge, resources, and success stories.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Testimonials Section -->
+<section class="py-5 bg-light">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h2 class="fw-bold">Success Stories</h2>
+            <p class="lead text-muted">Hear from farmers and investors who have thrived with GrowFarm</p>
+        </div>
+        <div class="row g-4">
+            <div class="col-md-6 animate-on-scroll">
+                <div class="testimonial h-100">
+                    <div class="d-flex align-items-center mb-4">
+                        <div class="flex-shrink-0">
+                            <div style="width: 80px; height: 80px; border-radius: 50%; background: url('https://images.unsplash.com/photo-1556015048-4d3aa10cdde2?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=400&q=80'); background-size: cover;"></div>
+                        </div>
+                        <div class="flex-grow-1 ms-3">
+                            <h5 class="mb-0">John Farmer</h5>
+                            <p class="text-muted mb-0">Organic Vegetable Farmer</p>
+                        </div>
+                    </div>
+                    <p class="mb-0">"GrowFarm helped me expand my organic vegetable farm by connecting me with investors who believe in sustainable agriculture. The funding I received allowed me to purchase new equipment and increase my production capacity by 50%."</p>
+                </div>
+            </div>
+            <div class="col-md-6 animate-on-scroll">
+                <div class="testimonial h-100">
+                    <div class="d-flex align-items-center mb-4">
+                        <div class="flex-shrink-0">
+                            <div style="width: 80px; height: 80px; border-radius: 50%; background: url('https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=400&q=80'); background-size: cover;"></div>
+                        </div>
+                        <div class="flex-grow-1 ms-3">
+                            <h5 class="mb-0">Sarah Green</h5>
+                            <p class="text-muted mb-0">Investor</p>
+                        </div>
+                    </div>
+                    <p class="mb-0">"As an investor passionate about sustainable agriculture, GrowFarm provides me with the perfect platform to support farmers while earning healthy returns. I've invested in three projects so far, and the transparency and support provided by the platform has been exceptional."</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA Section -->
+<section class="py-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-10 mx-auto">
+                <div class="card border-0 shadow">
+                    <div class="card-body p-5 text-center">
+                        <h2 class="fw-bold mb-4">Ready to Join the Agricultural Revolution?</h2>
+                        <p class="lead mb-4">Whether you're a farmer looking for investment or an investor seeking opportunities, GrowFarm connects you with the right partners for growth and success.</p>
+                        <div class="d-grid gap-3 d-sm-flex justify-content-sm-center">
+                            <a href="{{ url_for('register') }}" class="btn btn-primary btn-lg px-5 rounded-pill">Create an Account</a>
+                            <a href="{{ url_for('about') }}" class="btn btn-outline-primary btn-lg px-5 rounded-pill">Learn More</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

@@ -1,0 +1,273 @@
+{% extends "base.html" %}
+
+{% block title %}About Us - GrowFarm{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="py-5 bg-light">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6 mb-4 mb-lg-0">
+                <h1 class="fw-bold mb-4">About GrowFarm</h1>
+                <p class="lead">We're on a mission to transform agricultural financing by directly connecting farmers with investors who believe in sustainable agriculture.</p>
+                <p>GrowFarm was founded with a simple idea: to create a platform where farmers can access the capital they need to grow their operations, and investors can support sustainable agriculture while earning returns.</p>
+                <p>By removing the middlemen and traditional barriers to agricultural financing, we're creating a more efficient, transparent, and mutually beneficial ecosystem for all participants.</p>
+            </div>
+            <div class="col-lg-6">
+                <div style="border-radius: 10px; overflow: hidden; height: 400px; background: url('https://images.unsplash.com/photo-1595508064774-5ff825520ba8?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1350&q=80'); background-size: cover; background-position: center;"></div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Our Mission Section -->
+<section class="py-5">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6 order-lg-2 mb-4 mb-lg-0">
+                <h2 class="fw-bold mb-4">Our Mission</h2>
+                <p class="lead">To empower farmers and investors to create a more sustainable agricultural future together.</p>
+                <ul class="list-unstyled">
+                    <li class="mb-3">
+                        <div class="d-flex">
+                            <div class="flex-shrink-0">
+                                <i class="fas fa-check-circle text-primary me-2"></i>
+                            </div>
+                            <div>
+                                <strong>Farmer Empowerment:</strong> Provide farmers with access to capital to grow and improve their operations without the limitations of traditional bank financing.
+                            </div>
+                        </div>
+                    </li>
+                    <li class="mb-3">
+                        <div class="d-flex">
+                            <div class="flex-shrink-0">
+                                <i class="fas fa-check-circle text-primary me-2"></i>
+                            </div>
+                            <div>
+                                <strong>Investor Opportunity:</strong> Create investment opportunities in agriculture that offer competitive returns while supporting sustainable farming practices.
+                            </div>
+                        </div>
+                    </li>
+                    <li class="mb-3">
+                        <div class="d-flex">
+                            <div class="flex-shrink-0">
+                                <i class="fas fa-check-circle text-primary me-2"></i>
+                            </div>
+                            <div>
+                                <strong>Community Building:</strong> Foster a community where farmers and investors can share knowledge, resources, and success stories.
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="d-flex">
+                            <div class="flex-shrink-0">
+                                <i class="fas fa-check-circle text-primary me-2"></i>
+                            </div>
+                            <div>
+                                <strong>Sustainable Agriculture:</strong> Promote and support sustainable and regenerative agricultural practices that benefit the environment and local communities.
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <div class="col-lg-6 order-lg-1">
+                <div style="border-radius: 10px; overflow: hidden; height: 400px; background: url('https://images.unsplash.com/photo-1583471087149-67d8a0bbc8f9?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1350&q=80'); background-size: cover; background-position: center;"></div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- How It Works Section -->
+<section class="py-5 bg-light">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h2 class="fw-bold">How GrowFarm Works</h2>
+            <p class="lead text-muted">Our platform makes agricultural investment simple and transparent</p>
+        </div>
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="card h-100 border-0 shadow-sm">
+                    <div class="card-body p-4">
+                        <div class="rounded-circle bg-primary-light p-3 d-inline-block mb-3">
+                            <i class="fas fa-user-plus text-primary fa-2x"></i>
+                        </div>
+                        <h4 class="card-title">For Farmers</h4>
+                        <ol class="ps-3">
+                            <li class="mb-2">Create a farm profile showcasing your operation</li>
+                            <li class="mb-2">List your project with detailed funding needs and returns</li>
+                            <li class="mb-2">Connect with interested investors</li>
+                            <li class="mb-2">Receive funding and implement your project</li>
+                            <li>Share updates and results with your investors</li>
+                        </ol>
+                        <a href="{{ url_for('register') }}" class="btn btn-primary mt-3">Join as a Farmer</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card h-100 border-0 shadow-sm">
+                    <div class="card-body p-4">
+                        <div class="rounded-circle bg-primary-light p-3 d-inline-block mb-3">
+                            <i class="fas fa-search-dollar text-primary fa-2x"></i>
+                        </div>
+                        <h4 class="card-title">For Investors</h4>
+                        <ol class="ps-3">
+                            <li class="mb-2">Create an investor profile with your interests</li>
+                            <li class="mb-2">Browse and research agricultural projects</li>
+                            <li class="mb-2">Choose projects that match your investment criteria</li>
+                            <li class="mb-2">Track your investments and project progress</li>
+                            <li>Receive returns based on project success</li>
+                        </ol>
+                        <a href="{{ url_for('register') }}" class="btn btn-primary mt-3">Join as an Investor</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card h-100 border-0 shadow-sm">
+                    <div class="card-body p-4">
+                        <div class="rounded-circle bg-primary-light p-3 d-inline-block mb-3">
+                            <i class="fas fa-shield-alt text-primary fa-2x"></i>
+                        </div>
+                        <h4 class="card-title">Our Commitment</h4>
+                        <ul class="ps-3">
+                            <li class="mb-2">Thorough vetting of all projects and farmers</li>
+                            <li class="mb-2">Transparent information about risks and returns</li>
+                            <li class="mb-2">Secure transaction processing</li>
+                            <li class="mb-2">Regular updates on project progress</li>
+                            <li>Dedicated support for both farmers and investors</li>
+                        </ul>
+                        <a href="{{ url_for('contact') }}" class="btn btn-primary mt-3">Contact Us</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Team Section -->
+<section class="py-5">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h2 class="fw-bold">Our Team</h2>
+            <p class="lead text-muted">Meet the people behind GrowFarm</p>
+        </div>
+        <div class="row g-4">
+            <div class="col-md-6 col-lg-3">
+                <div class="card h-100 border-0 shadow-sm text-center">
+                    <div class="card-body p-4">
+                        <div style="width: 150px; height: 150px; border-radius: 50%; margin: 0 auto 20px; background: url('https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=400&q=80'); background-size: cover; background-position: center;"></div>
+                        <h5 class="card-title">Michael Johnson</h5>
+                        <p class="text-muted mb-3">CEO & Co-Founder</p>
+                        <p class="card-text">Former farmer with 15 years of experience in sustainable agriculture.</p>
+                        <div class="social-icons mt-3">
+                            <a href="#" class="text-muted me-2"><i class="fab fa-linkedin"></i></a>
+                            <a href="#" class="text-muted me-2"><i class="fab fa-twitter"></i></a>
+                            <a href="#" class="text-muted"><i class="fas fa-envelope"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-3">
+                <div class="card h-100 border-0 shadow-sm text-center">
+                    <div class="card-body p-4">
+                        <div style="width: 150px; height: 150px; border-radius: 50%; margin: 0 auto 20px; background: url('https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=400&q=80'); background-size: cover; background-position: center;"></div>
+                        <h5 class="card-title">Emily Rodriguez</h5>
+                        <p class="text-muted mb-3">COO & Co-Founder</p>
+                        <p class="card-text">Financial expert with a passion for agricultural investment and sustainability.</p>
+                        <div class="social-icons mt-3">
+                            <a href="#" class="text-muted me-2"><i class="fab fa-linkedin"></i></a>
+                            <a href="#" class="text-muted me-2"><i class="fab fa-twitter"></i></a>
+                            <a href="#" class="text-muted"><i class="fas fa-envelope"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-3">
+                <div class="card h-100 border-0 shadow-sm text-center">
+                    <div class="card-body p-4">
+                        <div style="width: 150px; height: 150px; border-radius: 50%; margin: 0 auto 20px; background: url('https://images.unsplash.com/photo-1607990281513-2c110a25bd8c?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=400&q=80'); background-size: cover; background-position: center;"></div>
+                        <h5 class="card-title">David Kim</h5>
+                        <p class="text-muted mb-3">CTO</p>
+                        <p class="card-text">Tech visionary with a background in fintech and agricultural technology.</p>
+                        <div class="social-icons mt-3">
+                            <a href="#" class="text-muted me-2"><i class="fab fa-linkedin"></i></a>
+                            <a href="#" class="text-muted me-2"><i class="fab fa-twitter"></i></a>
+                            <a href="#" class="text-muted"><i class="fas fa-envelope"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-3">
+                <div class="card h-100 border-0 shadow-sm text-center">
+                    <div class="card-body p-4">
+                        <div style="width: 150px; height: 150px; border-radius: 50%; margin: 0 auto 20px; background: url('https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=400&q=80'); background-size: cover; background-position: center;"></div>
+                        <h5 class="card-title">Sarah Thompson</h5>
+                        <p class="text-muted mb-3">Community Manager</p>
+                        <p class="card-text">Agricultural extension specialist with a focus on farmer education and support.</p>
+                        <div class="social-icons mt-3">
+                            <a href="#" class="text-muted me-2"><i class="fab fa-linkedin"></i></a>
+                            <a href="#" class="text-muted me-2"><i class="fab fa-twitter"></i></a>
+                            <a href="#" class="text-muted"><i class="fas fa-envelope"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Partners Section -->
+<section class="py-5 bg-light">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h2 class="fw-bold">Our Partners</h2>
+            <p class="lead text-muted">Organizations we work with to support sustainable agriculture</p>
+        </div>
+        <div class="row g-4 justify-content-center align-items-center">
+            <div class="col-6 col-md-4 col-lg-2 text-center">
+                <i class="fas fa-leaf fa-3x text-primary mb-2"></i>
+                <p class="mb-0 fw-bold">Green Farms</p>
+            </div>
+            <div class="col-6 col-md-4 col-lg-2 text-center">
+                <i class="fas fa-tractor fa-3x text-primary mb-2"></i>
+                <p class="mb-0 fw-bold">Farm Tech</p>
+            </div>
+            <div class="col-6 col-md-4 col-lg-2 text-center">
+                <i class="fas fa-apple-alt fa-3x text-primary mb-2"></i>
+                <p class="mb-0 fw-bold">Organic Guild</p>
+            </div>
+            <div class="col-6 col-md-4 col-lg-2 text-center">
+                <i class="fas fa-hand-holding-heart fa-3x text-primary mb-2"></i>
+                <p class="mb-0 fw-bold">Rural Support</p>
+            </div>
+            <div class="col-6 col-md-4 col-lg-2 text-center">
+                <i class="fas fa-university fa-3x text-primary mb-2"></i>
+                <p class="mb-0 fw-bold">Ag Finance</p>
+            </div>
+            <div class="col-6 col-md-4 col-lg-2 text-center">
+                <i class="fas fa-seedling fa-3x text-primary mb-2"></i>
+                <p class="mb-0 fw-bold">Seed Innovators</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA Section -->
+<section class="py-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-10 mx-auto">
+                <div class="card bg-primary text-white border-0 shadow">
+                    <div class="card-body p-5 text-center">
+                        <h2 class="fw-bold mb-4">Join the GrowFarm Community</h2>
+                        <p class="lead mb-4">Whether you're a farmer looking for funding or an investor seeking opportunities in agriculture, we invite you to be part of our growing community.</p>
+                        <div class="d-grid gap-3 d-sm-flex justify-content-sm-center">
+                            <a href="{{ url_for('register') }}" class="btn btn-light btn-lg px-5 rounded-pill text-primary fw-bold">Get Started</a>
+                            <a href="{{ url_for('contact') }}" class="btn btn-outline-light btn-lg px-5 rounded-pill">Contact Us</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

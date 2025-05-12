@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+
+{% block title %}{{ error_code }} {{ error_message }} - GrowFarm{% endblock %}
+
+{% block content %}
+<section class="py-5">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-8 text-center">
+                <div class="error-container py-5">
+                    <h1 class="display-1 fw-bold text-primary">{{ error_code }}</h1>
+                    <h2 class="mb-4">{{ error_message }}</h2>
+                    
+                    {% if error_code == 404 %}
+                        <p class="lead mb-4">The page you are looking for might have been removed, had its name changed, or is temporarily unavailable.</p>
+                    {% elif error_code == 403 %}
+                        <p class="lead mb-4">You don't have permission to access this resource.</p>
+                    {% elif error_code == 500 %}
+                        <p class="lead mb-4">Something went wrong on our server. We're working to fix the problem.</p>
+                    {% else %}
+                        <p class="lead mb-4">An unexpected error occurred. Please try again later.</p>
+                    {% endif %}
+                    
+                    <div class="mt-5">
+                        <a href="{{ url_for('index') }}" class="btn btn-primary btn-lg me-3">
+                            <i class="fas fa-home me-2"></i>Return to Home
+                        </a>
+                        <a href="{{ url_for('contact') }}" class="btn btn-outline-primary btn-lg">
+                            <i class="fas fa-envelope me-2"></i>Contact Support
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="py-5 bg-light">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-8 text-center">
+                <h3 class="mb-4">Not what you were looking for?</h3>
+                <div class="row g-4">
+                    <div class="col-md-4">
+                        <div class="card h-100 border-0 shadow-sm">
+                            <div class="card-body text-center p-4">
+                                <i class="fas fa-seedling fa-3x text-primary mb-3"></i>
+                                <h5>Explore Projects</h5>
+                                <p class="mb-0">Discover agricultural projects seeking investment.</p>
+                                <a href="{{ url_for('projects') }}" class="btn btn-sm btn-outline-primary mt-3">View Projects</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card h-100 border-0 shadow-sm">
+                            <div class="card-body text-center p-4">
+                                <i class="fas fa-user-plus fa-3x text-primary mb-3"></i>
+                                <h5>Join GrowFarm</h5>
+                                <p class="mb-0">Create an account to start investing or listing projects.</p>
+                                <a href="{{ url_for('register') }}" class="btn btn-sm btn-outline-primary mt-3">Sign Up</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card h-100 border-0 shadow-sm">
+                            <div class="card-body text-center p-4">
+                                <i class="fas fa-info-circle fa-3x text-primary mb-3"></i>
+                                <h5>Learn More</h5>
+                                <p class="mb-0">Find out how GrowFarm connects farmers with investors.</p>
+                                <a href="{{ url_for('about') }}" class="btn btn-sm btn-outline-primary mt-3">About Us</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
