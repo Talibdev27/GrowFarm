@@ -48,18 +48,18 @@ body {
 }
 
 .navbar-nav .nav-link.active {
-    color: #a3d39c;
+    color: #72c1c1;
 }
 
 .btn-success {
-    background-color: #4caf50;
+    background-color: #4a9c98;
     border: none;
     border-radius: 4px;
     padding: 0.5rem 1.5rem;
 }
 
 .btn-success:hover, .btn-success:focus {
-    background-color: #3d8b40;
+    background-color: #3b7d7a;
 }
 
 .btn-outline-light {
@@ -145,7 +145,7 @@ h1, h2, h3, h4, h5, h6 {
 
 /* Hero Section */
 .hero {
-    background: linear-gradient(90deg, rgba(0,62,41,0.9) 0%, rgba(0,128,55,0.8) 50%, rgba(56,145,84,0.7) 100%), url('https://images.unsplash.com/photo-1495107334309-fcf20504a5ab?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
+    background: linear-gradient(90deg, rgba(1,77,75,0.9) 0%, rgba(23,107,112,0.8) 50%, rgba(44,137,148,0.7) 100%), url('https://images.unsplash.com/photo-1495107334309-fcf20504a5ab?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
     background-size: cover;
     background-position: center;
     color: white;
@@ -167,11 +167,11 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .text-light-green {
-    color: #a3d39c;
+    color: #72c1c1;
 }
 
 .text-green {
-    color: #7ac142;
+    color: #4a9c98;
 }
 
 .hero-text {
@@ -192,10 +192,11 @@ h1, h2, h3, h4, h5, h6 {
 
 .stat-item {
     background-color: rgba(255, 255, 255, 0.1);
-    padding: 1.2rem;
-    border-radius: 10px;
+    padding: 1.2rem 1.5rem;
+    border-radius: 4px;
     backdrop-filter: blur(5px);
-    min-width: 120px;
+    min-width: 140px;
+    text-align: left;
 }
 
 .stat-value {
