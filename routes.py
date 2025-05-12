@@ -5,10 +5,17 @@ from functools import wraps
 from sqlalchemy import func, desc
 import io
 import csv
-from app import db
+from app import app, db
 from models import User, Farmer, Investor, Project, Investment, Message
 from forms import (LoginForm, RegistrationForm, FarmerProfileForm, InvestorProfileForm, 
                    ProjectForm, InvestmentForm, ContactForm, MessageForm)
+
+# Custom Jinja2 filter to add months to a date
+def monthsdelta(months):
+    return timedelta(days=30 * months)
+    
+# Register custom filters
+app.jinja_env.filters['monthsdelta'] = monthsdelta
 
 def register_routes(app):
     
@@ -703,11 +710,21 @@ def register_routes(app):
     @login_required
     @admin_required
     def admin_delete_project(project_id):
-        project = Project.query.get_or_404(project_id)
+        try:
+            project = Project.query.get_or_404(project_id)
+            
+            # Delete any investments associated with this project
+            Investment.query.filter_by(project_id=project_id).delete()
+            
+            # Now delete the project
+            db.session.delete(project)
+            db.session.commit()
+            flash('Project deleted successfully', 'success')
+        except Exception as e:
+            db.session.rollback()
+            app.logger.error(f"Error deleting project {project_id}: {str(e)}")
+            flash(f'Error deleting project: {str(e)}', 'danger')
         
-        db.session.delete(project)
-        db.session.commit()
-        flash('Project deleted successfully', 'success')
         return redirect(url_for('admin_projects'))
     
     @app.route('/admin/investments')

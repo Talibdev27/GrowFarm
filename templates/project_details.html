@@ -188,12 +188,12 @@
                                 <span class="fw-bold">{{ project.start_date.strftime('%Y-%m-%d') }}</span>
                             </li>
                             <li class="list-group-item d-flex justify-content-between align-items-center px-0">
-                                <span>End Date</span>
-                                <span class="fw-bold">{{ project.end_date.strftime('%Y-%m-%d') }}</span>
+                                <span>Start Date</span>
+                                <span class="fw-bold">{{ project.start_date.strftime('%Y-%m-%d') }}</span>
                             </li>
                             <li class="list-group-item d-flex justify-content-between align-items-center px-0">
                                 <span>Expected Completion</span>
-                                <span class="fw-bold">{{ (project.start_date + project.duration_months|monthsdelta).strftime('%Y-%m-%d') }}</span>
+                                <span class="fw-bold">{{ project.end_date.strftime('%Y-%m-%d') if project.end_date else 'Not set' }}</span>
                             </li>
                         </ul>
                     </div>
