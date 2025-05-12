@@ -1,17 +1,17 @@
 /* Global Styles */
 :root {
-    --primary: #4caf50;
-    --primary-dark: #2e7d32;
-    --primary-light: #80e27e;
-    --secondary: #8bc34a;
-    --accent: #ff9800;
+    --primary: #118C4F; /* Money green - primary color */
+    --primary-dark: #0A6638; /* Darker money green */
+    --primary-light: #4CAF50; /* Lighter green */
+    --secondary: #8BC34A; /* Light leaf green - growth */
+    --accent: #D4AF37; /* Gold for investment */
     --text-dark: #333333;
     --text-light: #f5f5f5;
     --background-light: #f9f9f9;
     --background-dark: #e0e0e0;
-    --success: #4caf50;
+    --success: #118C4F;
     --danger: #f44336;
-    --warning: #ff9800;
+    --warning: #D4AF37; /* Gold */
     --info: #2196f3;
 }
 
@@ -52,7 +52,7 @@ body {
 }
 
 .navbar-scrolled .navbar-brand {
-    color: #4a9c98;
+    color: #118C4F; /* Money green */
 }
 
 .navbar-transparent .nav-link {
@@ -74,26 +74,26 @@ body {
 }
 
 .navbar-scrolled .nav-link:hover {
-    color: #4a9c98;
+    color: #118C4F; /* Money green */
 }
 
 .navbar-transparent .navbar-nav .nav-link.active {
-    color: #72c1c1;
+    color: #D4AF37; /* Gold */
 }
 
 .navbar-scrolled .navbar-nav .nav-link.active {
-    color: #4a9c98;
+    color: #118C4F; /* Money green */
 }
 
 .btn-success {
-    background-color: #4a9c98;
+    background-color: #118C4F; /* Money green */
     border: none;
     border-radius: 4px;
     padding: 0.5rem 1.5rem;
 }
 
 .btn-success:hover, .btn-success:focus {
-    background-color: #3b7d7a;
+    background-color: #0A6638; /* Darker money green */
 }
 
 .navbar-transparent .btn-outline-light {
@@ -102,8 +102,8 @@ body {
 }
 
 .navbar-scrolled .btn-outline-light {
-    color: #4a9c98;
-    border-color: #4a9c98;
+    color: #118C4F; /* Money green */
+    border-color: #118C4F;
 }
 
 .btn-outline-light {
@@ -118,8 +118,8 @@ body {
 }
 
 .navbar-scrolled .btn-outline-light:hover {
-    background-color: rgba(74, 156, 152, 0.1);
-    color: #3b7d7a;
+    background-color: rgba(17, 140, 79, 0.1);
+    color: #0A6638; /* Darker money green */
 }
 
 /* Typography */
@@ -193,7 +193,7 @@ h1, h2, h3, h4, h5, h6 {
 
 /* Hero Section */
 .hero {
-    background: linear-gradient(90deg, rgba(1,77,75,0.9) 0%, rgba(23,107,112,0.8) 50%, rgba(44,137,148,0.7) 100%), url('https://images.unsplash.com/photo-1495107334309-fcf20504a5ab?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
+    background: linear-gradient(90deg, rgba(17,140,79,0.9) 0%, rgba(76,175,80,0.8) 50%, rgba(139,195,74,0.7) 100%), url('https://images.unsplash.com/photo-1495107334309-fcf20504a5ab?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
     background-size: cover;
     background-position: center;
     color: white;
@@ -215,11 +215,11 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .text-light-green {
-    color: #72c1c1;
+    color: #8BC34A; /* Light leaf green */
 }
 
 .text-green {
-    color: #4a9c98;
+    color: #118C4F; /* Money green */
 }
 
 .hero-text {
@@ -245,6 +245,7 @@ h1, h2, h3, h4, h5, h6 {
     backdrop-filter: blur(5px);
     min-width: 140px;
     text-align: left;
+    border-left: 3px solid #D4AF37; /* Gold accent */
 }
 
 .stat-value {
