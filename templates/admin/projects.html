@@ -1,0 +1,221 @@
+{% extends 'base.html' %}
+
+{% block title %}Admin - Projects Management{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h1 class="mb-4">Projects Management</h1>
+    
+    <div class="row">
+        <div class="col-md-3">
+            <div class="card mb-4">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0">Navigation</h5>
+                </div>
+                <div class="list-group list-group-flush">
+                    <a href="{{ url_for('admin_dashboard') }}" class="list-group-item list-group-item-action">
+                        <i class="fas fa-tachometer-alt me-2"></i> Dashboard
+                    </a>
+                    <a href="{{ url_for('admin_users') }}" class="list-group-item list-group-item-action">
+                        <i class="fas fa-users me-2"></i> Users
+                    </a>
+                    <a href="{{ url_for('admin_projects') }}" class="list-group-item list-group-item-action active">
+                        <i class="fas fa-project-diagram me-2"></i> Projects
+                    </a>
+                    <a href="{{ url_for('admin_investments') }}" class="list-group-item list-group-item-action">
+                        <i class="fas fa-hand-holding-usd me-2"></i> Investments
+                    </a>
+                    <a href="{{ url_for('admin_reports') }}" class="list-group-item list-group-item-action">
+                        <i class="fas fa-chart-bar me-2"></i> Reports
+                    </a>
+                </div>
+            </div>
+            
+            <div class="card mb-4">
+                <div class="card-header bg-secondary text-white">
+                    <h5 class="mb-0">Filters</h5>
+                </div>
+                <div class="card-body">
+                    <form action="{{ url_for('admin_projects') }}" method="get">
+                        <div class="mb-3">
+                            <label for="status" class="form-label">Status</label>
+                            <select class="form-select" id="status" name="status">
+                                <option value="">All Statuses</option>
+                                <option value="Open" {% if request.args.get('status') == 'Open' %}selected{% endif %}>Open</option>
+                                <option value="Funded" {% if request.args.get('status') == 'Funded' %}selected{% endif %}>Funded</option>
+                                <option value="Completed" {% if request.args.get('status') == 'Completed' %}selected{% endif %}>Completed</option>
+                                <option value="Cancelled" {% if request.args.get('status') == 'Cancelled' %}selected{% endif %}>Cancelled</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="category" class="form-label">Category</label>
+                            <select class="form-select" id="category" name="category">
+                                <option value="">All Categories</option>
+                                <option value="Crops" {% if request.args.get('category') == 'Crops' %}selected{% endif %}>Crops</option>
+                                <option value="Livestock" {% if request.args.get('category') == 'Livestock' %}selected{% endif %}>Livestock</option>
+                                <option value="Dairy" {% if request.args.get('category') == 'Dairy' %}selected{% endif %}>Dairy</option>
+                                <option value="Organic" {% if request.args.get('category') == 'Organic' %}selected{% endif %}>Organic</option>
+                                <option value="Sustainable" {% if request.args.get('category') == 'Sustainable' %}selected{% endif %}>Sustainable</option>
+                                <option value="Agroforestry" {% if request.args.get('category') == 'Agroforestry' %}selected{% endif %}>Agroforestry</option>
+                                <option value="Other" {% if request.args.get('category') == 'Other' %}selected{% endif %}>Other</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="search" class="form-label">Search</label>
+                            <input type="text" class="form-control" id="search" name="search" placeholder="Title, description..." value="{{ request.args.get('search', '') }}">
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100">Apply Filters</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-9">
+            <div class="card mb-4">
+                <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+                    <h5 class="mb-0">Projects List</h5>
+                </div>
+                <div class="card-body">
+                    {% if projects %}
+                    <div class="table-responsive">
+                        <table class="table table-striped table-hover">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Title</th>
+                                    <th>Farmer</th>
+                                    <th>Category</th>
+                                    <th>Funding</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for project in projects %}
+                                <tr>
+                                    <td>{{ project.id }}</td>
+                                    <td>{{ project.title }}</td>
+                                    <td>{{ project.farmer.farm_name }}</td>
+                                    <td>{{ project.category }}</td>
+                                    <td>
+                                        <div class="d-flex align-items-center">
+                                            <div class="progress flex-grow-1 me-2" style="height: 8px;">
+                                                <div class="progress-bar bg-success" role="progressbar" style="width: {{ project.calculate_progress() }}%"></div>
+                                            </div>
+                                            <span class="small text-muted">{{ project.calculate_progress()|int }}%</span>
+                                        </div>
+                                        <small class="text-muted">${{ project.current_funding }} / ${{ project.funding_goal }}</small>
+                                    </td>
+                                    <td>
+                                        <span class="badge 
+                                            {% if project.status == 'Open' %}bg-primary
+                                            {% elif project.status == 'Funded' %}bg-success
+                                            {% elif project.status == 'Completed' %}bg-info
+                                            {% else %}bg-secondary{% endif %}">
+                                            {{ project.status }}
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <div class="btn-group btn-group-sm" role="group">
+                                            <a href="{{ url_for('admin_project_details', project_id=project.id) }}" class="btn btn-info">
+                                                <i class="fas fa-eye"></i>
+                                            </a>
+                                            <a href="{{ url_for('admin_edit_project', project_id=project.id) }}" class="btn btn-warning">
+                                                <i class="fas fa-edit"></i>
+                                            </a>
+                                            <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteProjectModal{{ project.id }}">
+                                                <i class="fas fa-trash"></i>
+                                            </button>
+                                        </div>
+                                        
+                                        <!-- Delete Project Modal -->
+                                        <div class="modal fade" id="deleteProjectModal{{ project.id }}" tabindex="-1" aria-labelledby="deleteProjectModalLabel{{ project.id }}" aria-hidden="true">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="deleteProjectModalLabel{{ project.id }}">Confirm Deletion</h5>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        Are you sure you want to delete the project <strong>{{ project.title }}</strong>? This action cannot be undone and will remove all associated investments.
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                                        <form action="{{ url_for('admin_delete_project', project_id=project.id) }}" method="post">
+                                                            <button type="submit" class="btn btn-danger">Delete Project</button>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    <!-- Pagination -->
+                    {% if pagination %}
+                    <nav aria-label="Page navigation">
+                        <ul class="pagination justify-content-center">
+                            {% if pagination.has_prev %}
+                            <li class="page-item">
+                                <a class="page-link" href="{{ url_for('admin_projects', page=pagination.prev_num, **request.args) }}" aria-label="Previous">
+                                    <span aria-hidden="true">&laquo;</span>
+                                </a>
+                            </li>
+                            {% else %}
+                            <li class="page-item disabled">
+                                <a class="page-link" href="#" aria-label="Previous">
+                                    <span aria-hidden="true">&laquo;</span>
+                                </a>
+                            </li>
+                            {% endif %}
+                            
+                            {% for page in pagination.iter_pages() %}
+                                {% if page %}
+                                    {% if page != pagination.page %}
+                                    <li class="page-item">
+                                        <a class="page-link" href="{{ url_for('admin_projects', page=page, **request.args) }}">{{ page }}</a>
+                                    </li>
+                                    {% else %}
+                                    <li class="page-item active">
+                                        <a class="page-link" href="#">{{ page }}</a>
+                                    </li>
+                                    {% endif %}
+                                {% else %}
+                                <li class="page-item disabled">
+                                    <a class="page-link" href="#">...</a>
+                                </li>
+                                {% endif %}
+                            {% endfor %}
+                            
+                            {% if pagination.has_next %}
+                            <li class="page-item">
+                                <a class="page-link" href="{{ url_for('admin_projects', page=pagination.next_num, **request.args) }}" aria-label="Next">
+                                    <span aria-hidden="true">&raquo;</span>
+                                </a>
+                            </li>
+                            {% else %}
+                            <li class="page-item disabled">
+                                <a class="page-link" href="#" aria-label="Next">
+                                    <span aria-hidden="true">&raquo;</span>
+                                </a>
+                            </li>
+                            {% endif %}
+                        </ul>
+                    </nav>
+                    {% endif %}
+                    
+                    {% else %}
+                    <div class="alert alert-info">
+                        No projects found matching your criteria. <a href="{{ url_for('admin_projects') }}">Clear filters</a>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

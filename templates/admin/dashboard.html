@@ -1,0 +1,161 @@
+{% extends 'base.html' %}
+
+{% block title %}Admin Dashboard{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h1 class="mb-4">Admin Dashboard</h1>
+    
+    <div class="row">
+        <div class="col-md-3">
+            <div class="card mb-4">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0">Navigation</h5>
+                </div>
+                <div class="list-group list-group-flush">
+                    <a href="{{ url_for('admin_dashboard') }}" class="list-group-item list-group-item-action active">
+                        <i class="fas fa-tachometer-alt me-2"></i> Dashboard
+                    </a>
+                    <a href="{{ url_for('admin_users') }}" class="list-group-item list-group-item-action">
+                        <i class="fas fa-users me-2"></i> Users
+                    </a>
+                    <a href="{{ url_for('admin_projects') }}" class="list-group-item list-group-item-action">
+                        <i class="fas fa-project-diagram me-2"></i> Projects
+                    </a>
+                    <a href="{{ url_for('admin_investments') }}" class="list-group-item list-group-item-action">
+                        <i class="fas fa-hand-holding-usd me-2"></i> Investments
+                    </a>
+                    <a href="{{ url_for('admin_reports') }}" class="list-group-item list-group-item-action">
+                        <i class="fas fa-chart-bar me-2"></i> Reports
+                    </a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-9">
+            <div class="row">
+                <!-- Statistics Cards -->
+                <div class="col-md-4 mb-4">
+                    <div class="card border-primary h-100">
+                        <div class="card-body text-center">
+                            <h2 class="display-4 text-primary">{{ stats.users }}</h2>
+                            <h5>Total Users</h5>
+                            <div class="small text-muted mt-2">
+                                <span class="text-success">{{ stats.farmers }}</span> Farmers | 
+                                <span class="text-info">{{ stats.investors }}</span> Investors
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-4 mb-4">
+                    <div class="card border-success h-100">
+                        <div class="card-body text-center">
+                            <h2 class="display-4 text-success">{{ stats.projects }}</h2>
+                            <h5>Active Projects</h5>
+                            <div class="small text-muted mt-2">
+                                <span class="text-success">{{ stats.funded_projects }}</span> Fully Funded
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-4 mb-4">
+                    <div class="card border-info h-100">
+                        <div class="card-body text-center">
+                            <h2 class="display-4 text-info">${{ stats.total_investment }}</h2>
+                            <h5>Total Investments</h5>
+                            <div class="small text-muted mt-2">
+                                <span class="text-success">{{ stats.avg_investment }}</span> Average Investment
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card mb-4">
+                        <div class="card-header bg-primary text-white">
+                            <h5 class="mb-0">Recent Activities</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th>Date</th>
+                                            <th>User</th>
+                                            <th>Action</th>
+                                            <th>Details</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for activity in recent_activities %}
+                                        <tr>
+                                            <td>{{ activity.timestamp }}</td>
+                                            <td>{{ activity.username }}</td>
+                                            <td>{{ activity.action }}</td>
+                                            <td>{{ activity.details }}</td>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="card mb-4">
+                        <div class="card-header bg-success text-white">
+                            <h5 class="mb-0">New Users</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="list-group">
+                                {% for user in new_users %}
+                                <a href="#" class="list-group-item list-group-item-action">
+                                    <div class="d-flex w-100 justify-content-between">
+                                        <h6 class="mb-1">{{ user.username }}</h6>
+                                        <small>{{ user.created_at }}</small>
+                                    </div>
+                                    <p class="mb-1">{{ user.email }}</p>
+                                    <small>Role: {{ user.role }}</small>
+                                </a>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-6">
+                    <div class="card mb-4">
+                        <div class="card-header bg-warning text-dark">
+                            <h5 class="mb-0">Recent Projects</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="list-group">
+                                {% for project in recent_projects %}
+                                <a href="#" class="list-group-item list-group-item-action">
+                                    <div class="d-flex w-100 justify-content-between">
+                                        <h6 class="mb-1">{{ project.title }}</h6>
+                                        <small>{{ project.created_at }}</small>
+                                    </div>
+                                    <p class="mb-1">{{ project.description[:100] }}{% if project.description|length > 100 %}...{% endif %}</p>
+                                    <div class="d-flex justify-content-between">
+                                        <small>By: {{ project.farmer.farm_name }}</small>
+                                        <small>Funding: ${{ project.current_funding }} / ${{ project.funding_goal }}</small>
+                                    </div>
+                                </a>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

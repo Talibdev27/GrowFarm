@@ -1,0 +1,320 @@
+{% extends 'base.html' %}
+
+{% block title %}Admin - Reports{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h1 class="mb-4">Reports and Analytics</h1>
+    
+    <div class="row">
+        <div class="col-md-3">
+            <div class="card mb-4">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0">Navigation</h5>
+                </div>
+                <div class="list-group list-group-flush">
+                    <a href="{{ url_for('admin_dashboard') }}" class="list-group-item list-group-item-action">
+                        <i class="fas fa-tachometer-alt me-2"></i> Dashboard
+                    </a>
+                    <a href="{{ url_for('admin_users') }}" class="list-group-item list-group-item-action">
+                        <i class="fas fa-users me-2"></i> Users
+                    </a>
+                    <a href="{{ url_for('admin_projects') }}" class="list-group-item list-group-item-action">
+                        <i class="fas fa-project-diagram me-2"></i> Projects
+                    </a>
+                    <a href="{{ url_for('admin_investments') }}" class="list-group-item list-group-item-action">
+                        <i class="fas fa-hand-holding-usd me-2"></i> Investments
+                    </a>
+                    <a href="{{ url_for('admin_reports') }}" class="list-group-item list-group-item-action active">
+                        <i class="fas fa-chart-bar me-2"></i> Reports
+                    </a>
+                </div>
+            </div>
+            
+            <div class="card mb-4">
+                <div class="card-header bg-secondary text-white">
+                    <h5 class="mb-0">Date Range</h5>
+                </div>
+                <div class="card-body">
+                    <form action="{{ url_for('admin_reports') }}" method="get">
+                        <div class="mb-3">
+                            <label for="start_date" class="form-label">Start Date</label>
+                            <input type="date" class="form-control" id="start_date" name="start_date" value="{{ request.args.get('start_date', '') }}">
+                        </div>
+                        <div class="mb-3">
+                            <label for="end_date" class="form-label">End Date</label>
+                            <input type="date" class="form-control" id="end_date" name="end_date" value="{{ request.args.get('end_date', '') }}">
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100">Apply Filters</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-9">
+            <div class="row">
+                <div class="col-md-12 mb-4">
+                    <div class="card">
+                        <div class="card-header bg-primary text-white">
+                            <h5 class="mb-0">User Growth</h5>
+                        </div>
+                        <div class="card-body">
+                            <canvas id="userGrowthChart" height="250"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="row">
+                <div class="col-md-6 mb-4">
+                    <div class="card">
+                        <div class="card-header bg-success text-white">
+                            <h5 class="mb-0">Investment Distribution</h5>
+                        </div>
+                        <div class="card-body">
+                            <canvas id="investmentDistributionChart" height="250"></canvas>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-6 mb-4">
+                    <div class="card">
+                        <div class="card-header bg-info text-white">
+                            <h5 class="mb-0">Project Categories</h5>
+                        </div>
+                        <div class="card-body">
+                            <canvas id="projectCategoriesChart" height="250"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="row">
+                <div class="col-md-12 mb-4">
+                    <div class="card">
+                        <div class="card-header bg-warning text-dark">
+                            <h5 class="mb-0">Monthly Investment Trends</h5>
+                        </div>
+                        <div class="card-body">
+                            <canvas id="monthlyInvestmentChart" height="250"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="row">
+                <div class="col-md-12 mb-4">
+                    <div class="card">
+                        <div class="card-header bg-secondary text-white d-flex justify-content-between">
+                            <h5 class="mb-0">Generate Reports</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <div class="card h-100 border-primary">
+                                        <div class="card-body">
+                                            <h5 class="card-title">User Report</h5>
+                                            <p class="card-text">Generate a detailed report of all users, including registration dates and activity metrics.</p>
+                                            <a href="{{ url_for('admin_download_report', report_type='users') }}" class="btn btn-primary">
+                                                <i class="fas fa-download me-2"></i> Download
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="col-md-6 mb-3">
+                                    <div class="card h-100 border-success">
+                                        <div class="card-body">
+                                            <h5 class="card-title">Project Report</h5>
+                                            <p class="card-text">Generate a detailed report of all projects, including funding status and category breakdowns.</p>
+                                            <a href="{{ url_for('admin_download_report', report_type='projects') }}" class="btn btn-success">
+                                                <i class="fas fa-download me-2"></i> Download
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="col-md-6 mb-3">
+                                    <div class="card h-100 border-info">
+                                        <div class="card-body">
+                                            <h5 class="card-title">Investment Report</h5>
+                                            <p class="card-text">Generate a detailed report of all investments, including status and time-based analysis.</p>
+                                            <a href="{{ url_for('admin_download_report', report_type='investments') }}" class="btn btn-info text-white">
+                                                <i class="fas fa-download me-2"></i> Download
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="col-md-6 mb-3">
+                                    <div class="card h-100 border-warning">
+                                        <div class="card-body">
+                                            <h5 class="card-title">Financial Summary</h5>
+                                            <p class="card-text">Generate a detailed financial summary including investments, projections, and revenue.</p>
+                                            <a href="{{ url_for('admin_download_report', report_type='financial') }}" class="btn btn-warning text-dark">
+                                                <i class="fas fa-download me-2"></i> Download
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% block scripts %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+// User Growth Chart
+const userGrowthCtx = document.getElementById('userGrowthChart').getContext('2d');
+const userGrowthChart = new Chart(userGrowthCtx, {
+    type: 'line',
+    data: {
+        labels: {{ user_growth_labels|tojson }},
+        datasets: [
+            {
+                label: 'Farmers',
+                data: {{ farmer_growth_data|tojson }},
+                backgroundColor: 'rgba(40, 167, 69, 0.2)',
+                borderColor: 'rgba(40, 167, 69, 1)',
+                borderWidth: 2,
+                tension: 0.1
+            },
+            {
+                label: 'Investors',
+                data: {{ investor_growth_data|tojson }},
+                backgroundColor: 'rgba(0, 123, 255, 0.2)',
+                borderColor: 'rgba(0, 123, 255, 1)',
+                borderWidth: 2,
+                tension: 0.1
+            }
+        ]
+    },
+    options: {
+        responsive: true,
+        plugins: {
+            legend: {
+                position: 'top',
+            },
+            title: {
+                display: true,
+                text: 'User Growth Over Time'
+            }
+        },
+        scales: {
+            y: {
+                beginAtZero: true
+            }
+        }
+    }
+});
+
+// Investment Distribution Chart
+const investmentDistributionCtx = document.getElementById('investmentDistributionChart').getContext('2d');
+const investmentDistributionChart = new Chart(investmentDistributionCtx, {
+    type: 'pie',
+    data: {
+        labels: {{ investment_categories|tojson }},
+        datasets: [{
+            label: 'Investment Distribution',
+            data: {{ investment_distribution|tojson }},
+            backgroundColor: [
+                'rgba(255, 99, 132, 0.7)',
+                'rgba(54, 162, 235, 0.7)',
+                'rgba(255, 206, 86, 0.7)',
+                'rgba(75, 192, 192, 0.7)',
+                'rgba(153, 102, 255, 0.7)',
+                'rgba(255, 159, 64, 0.7)',
+                'rgba(199, 199, 199, 0.7)'
+            ],
+            borderWidth: 1
+        }]
+    },
+    options: {
+        responsive: true,
+        plugins: {
+            legend: {
+                position: 'right',
+            },
+            title: {
+                display: true,
+                text: 'Investment by Category'
+            }
+        }
+    }
+});
+
+// Project Categories Chart
+const projectCategoriesCtx = document.getElementById('projectCategoriesChart').getContext('2d');
+const projectCategoriesChart = new Chart(projectCategoriesCtx, {
+    type: 'doughnut',
+    data: {
+        labels: {{ project_categories|tojson }},
+        datasets: [{
+            label: 'Project Categories',
+            data: {{ project_distribution|tojson }},
+            backgroundColor: [
+                'rgba(255, 99, 132, 0.7)',
+                'rgba(54, 162, 235, 0.7)',
+                'rgba(255, 206, 86, 0.7)',
+                'rgba(75, 192, 192, 0.7)',
+                'rgba(153, 102, 255, 0.7)',
+                'rgba(255, 159, 64, 0.7)',
+                'rgba(40, 167, 69, 0.7)'
+            ],
+            borderWidth: 1
+        }]
+    },
+    options: {
+        responsive: true,
+        plugins: {
+            legend: {
+                position: 'right',
+            },
+            title: {
+                display: true,
+                text: 'Project Categories'
+            }
+        }
+    }
+});
+
+// Monthly Investment Chart
+const monthlyInvestmentCtx = document.getElementById('monthlyInvestmentChart').getContext('2d');
+const monthlyInvestmentChart = new Chart(monthlyInvestmentCtx, {
+    type: 'bar',
+    data: {
+        labels: {{ monthly_labels|tojson }},
+        datasets: [{
+            label: 'Investment Amount ($)',
+            data: {{ monthly_investments|tojson }},
+            backgroundColor: 'rgba(255, 193, 7, 0.5)',
+            borderColor: 'rgba(255, 193, 7, 1)',
+            borderWidth: 1
+        }]
+    },
+    options: {
+        responsive: true,
+        plugins: {
+            legend: {
+                position: 'top',
+            },
+            title: {
+                display: true,
+                text: 'Monthly Investment Trends'
+            }
+        },
+        scales: {
+            y: {
+                beginAtZero: true
+            }
+        }
+    }
+});
+</script>
+{% endblock %}
+{% endblock %}
