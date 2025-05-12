@@ -2,26 +2,48 @@
 
 {% block content %}
 <!-- Hero Section -->
-<section class="hero text-center">
+<section class="hero">
     <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-lg-8">
-                <h1 class="display-4 fw-bold mb-4">Grow Together, Prosper Together</h1>
-                <p class="lead mb-5">Connecting investors with farmers to create sustainable agricultural growth and shared prosperity. Join our community and be part of the agricultural revolution.</p>
-                <div class="d-grid gap-3 d-sm-flex justify-content-sm-center">
-                    <a href="{{ url_for('register') }}" class="btn btn-primary btn-lg px-5 rounded-pill">Get Started</a>
-                    <a href="{{ url_for('projects') }}" class="btn btn-outline-light btn-lg px-5 rounded-pill">Explore Projects</a>
+        <div class="row">
+            <div class="col-lg-7 hero-content">
+                <h1 class="hero-title">
+                    <span class="text-white">Connect</span> 
+                    <span class="text-light-green">Investors</span> 
+                    <span class="text-white">with</span><br>
+                    <span class="text-green">Farmers</span>
+                </h1>
+                <p class="hero-text">Join our platform to fund sustainable agriculture projects and earn competitive returns while supporting local farmers.</p>
+                <div class="hero-buttons">
+                    <a href="{{ url_for('projects') }}" class="btn btn-primary btn-lg px-4 me-3">Explore Opportunities</a>
+                    <a href="#how-it-works" class="btn btn-outline-light btn-lg px-4">How It Works <i class="fas fa-arrow-right ms-1"></i></a>
+                </div>
+                <div class="stats-container mt-5">
+                    <div class="stat-item">
+                        <div class="stat-value">$24M+</div>
+                        <div class="stat-label">Capital Invested</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">450+</div>
+                        <div class="stat-label">Successful Projects</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">8-15%</div>
+                        <div class="stat-label">Annual Returns</div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
+    <div class="scroll-indicator">
+        <a href="#how-it-works"><i class="fas fa-chevron-down"></i></a>
+    </div>
 </section>
 
 <!-- How It Works Section -->
-<section class="py-5">
+<section id="how-it-works" class="py-5">
     <div class="container">
         <div class="text-center mb-5">
-            <h2 class="fw-bold">How GrowFarm Works</h2>
+            <h2 class="fw-bold">How It Works</h2>
             <p class="lead text-muted">A simple process to connect farmers with investors</p>
         </div>
         <div class="row g-4">

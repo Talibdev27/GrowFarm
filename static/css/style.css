@@ -93,23 +93,93 @@ h1, h2, h3, h4, h5, h6 {
 
 /* Hero Section */
 .hero {
-    background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1495107334309-fcf20504a5ab?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
+    background: linear-gradient(90deg, rgba(0,62,41,0.9) 0%, rgba(0,128,55,0.8) 50%, rgba(56,145,84,0.7) 100%), url('https://images.unsplash.com/photo-1495107334309-fcf20504a5ab?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
     background-size: cover;
     background-position: center;
     color: white;
-    padding: 5rem 0;
-    margin-bottom: 3rem;
+    padding: 8rem 0 5rem;
+    margin-bottom: 0;
+    position: relative;
+    min-height: 100vh;
 }
 
-.hero h1 {
-    color: white;
-    font-size: 3rem;
+.hero-content {
+    padding: 2rem 0;
+}
+
+.hero-title {
+    font-size: 3.5rem;
+    font-weight: 700;
+    line-height: 1.2;
     margin-bottom: 1.5rem;
 }
 
-.hero p {
+.text-light-green {
+    color: #a3d39c;
+}
+
+.text-green {
+    color: #7ac142;
+}
+
+.hero-text {
+    color: rgba(255, 255, 255, 0.9);
     font-size: 1.25rem;
     margin-bottom: 2rem;
+    max-width: 500px;
+}
+
+.hero-buttons {
+    margin-bottom: 2rem;
+}
+
+.stats-container {
+    display: flex;
+    gap: 2.5rem;
+}
+
+.stat-item {
+    background-color: rgba(255, 255, 255, 0.1);
+    padding: 1.2rem;
+    border-radius: 10px;
+    backdrop-filter: blur(5px);
+    min-width: 120px;
+}
+
+.stat-value {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: #fff;
+}
+
+.stat-label {
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.scroll-indicator {
+    position: absolute;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    animation: bounce 2s infinite;
+}
+
+.scroll-indicator a {
+    color: white;
+    font-size: 1.5rem;
+}
+
+@keyframes bounce {
+    0%, 20%, 50%, 80%, 100% {
+        transform: translateY(0) translateX(-50%);
+    }
+    40% {
+        transform: translateY(-20px) translateX(-50%);
+    }
+    60% {
+        transform: translateY(-10px) translateX(-50%);
+    }
 }
 
 /* Cards */
