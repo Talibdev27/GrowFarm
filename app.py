@@ -22,8 +22,17 @@ app = Flask(__name__)
 app.secret_key = os.environ.get("SESSION_SECRET", "dev-secret-key")
 app.wsgi_app = ProxyFix(app.wsgi_app, x_proto=1, x_host=1)  # needed for url_for to generate with https
 
-# Configure the database (using SQLite for simplicity in development)
-app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get("DATABASE_URL", "sqlite:///growfarm.db")
+# Configure the database (using PostgreSQL)
+database_url = os.environ.get("DATABASE_URL")
+if database_url:
+    # Handle potential postgres:// URLs (SQLAlchemy 1.4+ requires postgresql://)
+    if database_url.startswith("postgres://"):
+        database_url = database_url.replace("postgres://", "postgresql://", 1)
+    app.config["SQLALCHEMY_DATABASE_URI"] = database_url
+else:
+    # Fallback for development (though we should always have DATABASE_URL)
+    app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///growfarm.db"
+    print("WARNING: DATABASE_URL not set, using SQLite instead")
 app.config["SQLALCHEMY_ENGINE_OPTIONS"] = {
     "pool_recycle": 300,
     "pool_pre_ping": True,
