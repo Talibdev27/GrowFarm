@@ -583,8 +583,10 @@ def register_routes(app):
         project = Project.query.get_or_404(project_id)
         
         if request.method == 'POST':
+            # Basic info
             project.title = request.form.get('title')
             project.description = request.form.get('description')
+            project.location = request.form.get('location')
             project.funding_goal = float(request.form.get('funding_goal'))
             project.current_funding = float(request.form.get('current_funding', 0))
             project.duration_months = int(request.form.get('duration_months'))
@@ -592,6 +594,28 @@ def register_routes(app):
             project.risk_level = request.form.get('risk_level')
             project.category = request.form.get('category')
             project.status = request.form.get('status')
+            
+            # Additional info
+            project.image_url = request.form.get('image_url')
+            project.tags = request.form.get('tags')
+            project.overview = request.form.get('overview')
+            project.regional_significance = request.form.get('regional_significance')
+            project.why_investment = request.form.get('why_investment')
+            project.documents = request.form.get('documents')
+            
+            # Financial details
+            if request.form.get('min_investment'):
+                project.min_investment = float(request.form.get('min_investment'))
+            if request.form.get('price_per_unit'):
+                project.price_per_unit = float(request.form.get('price_per_unit'))
+            
+            # Land details
+            if request.form.get('total_acres'):
+                project.total_acres = float(request.form.get('total_acres'))
+            if request.form.get('estimated_ownership_duration'):
+                project.estimated_ownership_duration = int(request.form.get('estimated_ownership_duration'))
+                
+            project.investment_type = request.form.get('investment_type')
             
             db.session.commit()
             flash('Project updated successfully', 'success')

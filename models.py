@@ -71,6 +71,7 @@ class Project(db.Model):
     farmer_id = db.Column(db.Integer, db.ForeignKey('farmer.id'), nullable=False)
     title = db.Column(db.String(100), nullable=False)
     description = db.Column(db.Text, nullable=False)
+    location = db.Column(db.String(200))
     funding_goal = db.Column(db.Float, nullable=False)
     current_funding = db.Column(db.Float, default=0.0)
     duration_months = db.Column(db.Integer, nullable=False)
@@ -81,6 +82,19 @@ class Project(db.Model):
     end_date = db.Column(db.DateTime)
     status = db.Column(db.String(20), default='Open')  # 'Open', 'Funded', 'Completed', 'Cancelled'
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
+    
+    # Additional fields
+    image_url = db.Column(db.String(500))
+    tags = db.Column(db.String(200))  # Comma-separated tags
+    overview = db.Column(db.Text)
+    regional_significance = db.Column(db.Text)
+    why_investment = db.Column(db.Text)
+    min_investment = db.Column(db.Float, default=0.0)
+    price_per_unit = db.Column(db.Float, default=0.0)
+    total_acres = db.Column(db.Float)
+    estimated_ownership_duration = db.Column(db.Integer)  # in months
+    investment_type = db.Column(db.String(100))
+    documents = db.Column(db.String(500))  # Comma-separated document references
     
     # Relationships
     investments = db.relationship('Investment', backref='project', lazy='dynamic', cascade="all, delete-orphan")
