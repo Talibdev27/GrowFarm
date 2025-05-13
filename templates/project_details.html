@@ -26,6 +26,14 @@
                     <button type="button" class="btn btn-primary btn-lg" data-bs-toggle="modal" data-bs-target="#investmentModal">
                         <i class="fas fa-hand-holding-usd me-2"></i>Invest Now
                     </button>
+                {% elif not current_user.is_authenticated and project.status == 'Open' %}
+                    <a href="{{ url_for('login') }}" class="btn btn-primary btn-lg">
+                        <i class="fas fa-hand-holding-usd me-2"></i>Login to Invest
+                    </a>
+                {% elif current_user.is_authenticated and current_user.role == 'farmer' and project.status == 'Open' %}
+                    <button type="button" class="btn btn-outline-primary btn-lg" disabled>
+                        <i class="fas fa-info-circle me-2"></i>Farmers cannot invest
+                    </button>
                 {% endif %}
             </div>
         </div>
@@ -198,11 +206,23 @@
                                     <i class="fas fa-hand-holding-usd me-2"></i>Invest Now
                                 </button>
                             </div>
-                        {% elif not current_user.is_authenticated %}
-                            <div class="d-grid mt-3">
-                                <a href="{{ url_for('login') }}" class="btn btn-primary">
-                                    <i class="fas fa-sign-in-alt me-2"></i>Login to Invest
-                                </a>
+                        {% elif not current_user.is_authenticated and project.status == 'Open' %}
+                            <div class="mt-3">
+                                <div class="alert alert-info mb-2">
+                                    <i class="fas fa-info-circle me-2"></i>Ready to support this project?
+                                </div>
+                                <div class="d-grid">
+                                    <a href="{{ url_for('login') }}" class="btn btn-primary">
+                                        <i class="fas fa-sign-in-alt me-2"></i>Login to Invest
+                                    </a>
+                                </div>
+                                <div class="text-center mt-2">
+                                    <a href="{{ url_for('register') }}" class="text-decoration-none">New user? Register here</a>
+                                </div>
+                            </div>
+                        {% elif current_user.is_authenticated and current_user.role == 'farmer' and project.status == 'Open' %}
+                            <div class="alert alert-info mt-3 mb-0">
+                                <i class="fas fa-info-circle me-2"></i>Only investors can make investments in projects.
                             </div>
                         {% elif project.status != 'Open' %}
                             <div class="alert alert-secondary mt-3 mb-0">
