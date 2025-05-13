@@ -6,11 +6,11 @@
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-lg-8">
-                <h1 class="display-4 fw-bold mb-4">Grow Together, Prosper Together</h1>
-                <p class="lead mb-5">Connecting investors with farmers to create sustainable agricultural growth and shared prosperity. Join our community and be part of the agricultural revolution.</p>
+                <h1 class="display-4 fw-bold mb-4">{{ _('Grow Together, Prosper Together') }}</h1>
+                <p class="lead mb-5">{{ _('Connecting investors with farmers to create sustainable agricultural growth and shared prosperity. Join our community and be part of the agricultural revolution.') }}</p>
                 <div class="d-grid gap-3 d-sm-flex justify-content-sm-center">
-                    <a href="{{ url_for('register') }}" class="btn btn-primary btn-lg px-5 rounded-pill">Get Started</a>
-                    <a href="{{ url_for('projects') }}" class="btn btn-outline-light btn-lg px-5 rounded-pill">Explore Projects</a>
+                    <a href="{{ url_for('register') }}" class="btn btn-primary btn-lg px-5 rounded-pill">{{ _('Get Started') }}</a>
+                    <a href="{{ url_for('projects') }}" class="btn btn-outline-light btn-lg px-5 rounded-pill">{{ _('Explore Projects') }}</a>
                 </div>
             </div>
         </div>
@@ -21,8 +21,8 @@
 <section class="py-5">
     <div class="container">
         <div class="text-center mb-5">
-            <h2 class="fw-bold">How GrowFarm Works</h2>
-            <p class="lead text-muted">A simple process to connect farmers with investors</p>
+            <h2 class="fw-bold">{{ _('How GrowFarm Works') }}</h2>
+            <p class="lead text-muted">{{ _('A simple process to connect farmers with investors') }}</p>
         </div>
         <div class="row g-4">
             <div class="col-md-4 text-center animate-on-scroll">
@@ -30,8 +30,8 @@
                     <div class="feature-icon mb-4">
                         <i class="fas fa-user-plus fa-3x"></i>
                     </div>
-                    <h3 class="h4 mb-3">1. Create an Account</h3>
-                    <p class="text-muted mb-0">Sign up as a farmer or an investor based on your goals and interests.</p>
+                    <h3 class="h4 mb-3">{{ _('1. Create an Account') }}</h3>
+                    <p class="text-muted mb-0">{{ _('Sign up as a farmer or an investor based on your goals and interests.') }}</p>
                 </div>
             </div>
             <div class="col-md-4 text-center animate-on-scroll">
@@ -39,8 +39,8 @@
                     <div class="feature-icon mb-4">
                         <i class="fas fa-seedling fa-3x"></i>
                     </div>
-                    <h3 class="h4 mb-3">2. List or Browse Projects</h3>
-                    <p class="text-muted mb-0">Farmers list their agricultural projects, while investors browse for opportunities.</p>
+                    <h3 class="h4 mb-3">{{ _('2. List or Browse Projects') }}</h3>
+                    <p class="text-muted mb-0">{{ _('Farmers list their agricultural projects, while investors browse for opportunities.') }}</p>
                 </div>
             </div>
             <div class="col-md-4 text-center animate-on-scroll">
@@ -48,8 +48,8 @@
                     <div class="feature-icon mb-4">
                         <i class="fas fa-handshake fa-3x"></i>
                     </div>
-                    <h3 class="h4 mb-3">3. Connect & Collaborate</h3>
-                    <p class="text-muted mb-0">Investors fund projects they believe in, and farmers bring them to life.</p>
+                    <h3 class="h4 mb-3">{{ _('3. Connect & Collaborate') }}</h3>
+                    <p class="text-muted mb-0">{{ _('Investors fund projects they believe in, and farmers bring them to life.') }}</p>
                 </div>
             </div>
         </div>
@@ -60,8 +60,8 @@
 <section class="py-5 bg-light">
     <div class="container">
         <div class="text-center mb-5">
-            <h2 class="fw-bold">Featured Projects</h2>
-            <p class="lead text-muted">Explore some of our highlighted agricultural investment opportunities</p>
+            <h2 class="fw-bold">{{ _('Featured Projects') }}</h2>
+            <p class="lead text-muted">{{ _('Explore some of our highlighted agricultural investment opportunities') }}</p>
         </div>
         <div class="row g-4">
             {% if featured_projects %}
@@ -89,7 +89,7 @@
                                 <p class="card-text text-muted mb-3">{{ project.description|truncate(100) }}</p>
                                 <div class="d-flex justify-content-between align-items-center mb-3">
                                     <span class="text-primary fw-bold">${{ project.funding_goal|int }}</span>
-                                    <span class="badge bg-{{ 'success' if project.risk_level == 'Low' else 'warning' if project.risk_level == 'Medium' else 'danger' }}">{{ project.risk_level }} Risk</span>
+                                    <span class="badge bg-{{ 'success' if project.risk_level == 'Low' else 'warning' if project.risk_level == 'Medium' else 'danger' }}">{{ _(project.risk_level) }} {{ _('Risk') }}</span>
                                 </div>
                                 <div class="progress mb-3" style="height: 10px;">
                                     <div class="progress-bar" role="progressbar" style="width: {{ project.calculate_progress() }}%;" 
@@ -97,11 +97,11 @@
                                     </div>
                                 </div>
                                 <div class="d-flex justify-content-between small text-muted mb-3">
-                                    <span>Funded: ${{ project.current_funding|int }}</span>
+                                    <span>{{ _('Funded:') }} ${{ project.current_funding|int }}</span>
                                     <span>{{ project.calculate_progress()|int }}%</span>
                                 </div>
                                 <div class="d-grid">
-                                    <a href="{{ url_for('project_details', project_id=project.id) }}" class="btn btn-outline-primary">View Details</a>
+                                    <a href="{{ url_for('project_details', project_id=project.id) }}" class="btn btn-outline-primary">{{ _('View Details') }}</a>
                                 </div>
                             </div>
                         </div>
@@ -109,12 +109,12 @@
                 {% endfor %}
             {% else %}
                 <div class="col-12 text-center">
-                    <p>No featured projects available at the moment. Check back soon!</p>
+                    <p>{{ _('No featured projects available at the moment. Check back soon!') }}</p>
                 </div>
             {% endif %}
         </div>
         <div class="text-center mt-5">
-            <a href="{{ url_for('projects') }}" class="btn btn-primary btn-lg px-5 rounded-pill">View All Projects</a>
+            <a href="{{ url_for('projects') }}" class="btn btn-primary btn-lg px-5 rounded-pill">{{ _('View All Projects') }}</a>
         </div>
     </div>
 </section>
@@ -123,8 +123,8 @@
 <section class="py-5">
     <div class="container">
         <div class="text-center mb-5">
-            <h2 class="fw-bold">Benefits of GrowFarm</h2>
-            <p class="lead text-muted">Why farmers and investors choose our platform</p>
+            <h2 class="fw-bold">{{ _('Benefits of GrowFarm') }}</h2>
+            <p class="lead text-muted">{{ _('Why farmers and investors choose our platform') }}</p>
         </div>
         <div class="row g-4">
             <div class="col-md-6 col-lg-3 animate-on-scroll">
@@ -133,8 +133,8 @@
                         <div class="rounded-circle bg-primary-light p-3 d-inline-block mb-3">
                             <i class="fas fa-tractor text-primary fa-2x"></i>
                         </div>
-                        <h5 class="card-title">For Farmers</h5>
-                        <p class="card-text">Access to capital for farm expansion, equipment purchases, or new ventures without traditional bank financing.</p>
+                        <h5 class="card-title">{{ _('For Farmers') }}</h5>
+                        <p class="card-text">{{ _('Access to capital for farm expansion, equipment purchases, or new ventures without traditional bank financing.') }}</p>
                     </div>
                 </div>
             </div>
