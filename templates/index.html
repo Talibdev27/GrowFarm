@@ -144,8 +144,8 @@
                         <div class="rounded-circle bg-primary-light p-3 d-inline-block mb-3">
                             <i class="fas fa-chart-line text-primary fa-2x"></i>
                         </div>
-                        <h5 class="card-title">For Investors</h5>
-                        <p class="card-text">Diversify your portfolio with agricultural investments that offer competitive returns and support sustainable farming.</p>
+                        <h5 class="card-title">{{ _('For Investors') }}</h5>
+                        <p class="card-text">{{ _('Diversify your portfolio with agricultural investments that offer competitive returns and support sustainable farming.') }}</p>
                     </div>
                 </div>
             </div>
@@ -155,8 +155,8 @@
                         <div class="rounded-circle bg-primary-light p-3 d-inline-block mb-3">
                             <i class="fas fa-leaf text-primary fa-2x"></i>
                         </div>
-                        <h5 class="card-title">Sustainability</h5>
-                        <p class="card-text">Support sustainable and regenerative agricultural practices that benefit the environment and local communities.</p>
+                        <h5 class="card-title">{{ _('Sustainability') }}</h5>
+                        <p class="card-text">{{ _('Support sustainable and regenerative agricultural practices that benefit the environment and local communities.') }}</p>
                     </div>
                 </div>
             </div>
@@ -166,8 +166,8 @@
                         <div class="rounded-circle bg-primary-light p-3 d-inline-block mb-3">
                             <i class="fas fa-users text-primary fa-2x"></i>
                         </div>
-                        <h5 class="card-title">Community</h5>
-                        <p class="card-text">Join a vibrant community of farmers and investors who share knowledge, resources, and success stories.</p>
+                        <h5 class="card-title">{{ _('Community') }}</h5>
+                        <p class="card-text">{{ _('Join a vibrant community of farmers and investors who share knowledge, resources, and success stories.') }}</p>
                     </div>
                 </div>
             </div>
@@ -179,8 +179,8 @@
 <section class="py-5 bg-light">
     <div class="container">
         <div class="text-center mb-5">
-            <h2 class="fw-bold">Success Stories</h2>
-            <p class="lead text-muted">Hear from farmers and investors who have thrived with GrowFarm</p>
+            <h2 class="fw-bold">{{ _('Success Stories') }}</h2>
+            <p class="lead text-muted">{{ _('Hear from farmers and investors who have thrived with GrowFarm') }}</p>
         </div>
         <div class="row g-4">
             <div class="col-md-6 animate-on-scroll">
@@ -190,11 +190,11 @@
                             <div style="width: 80px; height: 80px; border-radius: 50%; background: url('https://images.unsplash.com/photo-1556015048-4d3aa10cdde2?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=400&q=80'); background-size: cover;"></div>
                         </div>
                         <div class="flex-grow-1 ms-3">
-                            <h5 class="mb-0">John Farmer</h5>
-                            <p class="text-muted mb-0">Organic Vegetable Farmer</p>
+                            <h5 class="mb-0">{{ _('John Farmer') }}</h5>
+                            <p class="text-muted mb-0">{{ _('Organic Vegetable Farmer') }}</p>
                         </div>
                     </div>
-                    <p class="mb-0">"GrowFarm helped me expand my organic vegetable farm by connecting me with investors who believe in sustainable agriculture. The funding I received allowed me to purchase new equipment and increase my production capacity by 50%."</p>
+                    <p class="mb-0">{{ _('GrowFarm helped me expand my organic vegetable farm by connecting me with investors who believe in sustainable agriculture. The funding I received allowed me to purchase new equipment and increase my production capacity by 50%%.') }}</p>
                 </div>
             </div>
             <div class="col-md-6 animate-on-scroll">
@@ -204,11 +204,11 @@
                             <div style="width: 80px; height: 80px; border-radius: 50%; background: url('https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=400&q=80'); background-size: cover;"></div>
                         </div>
                         <div class="flex-grow-1 ms-3">
-                            <h5 class="mb-0">Sarah Green</h5>
-                            <p class="text-muted mb-0">Investor</p>
+                            <h5 class="mb-0">{{ _('Sarah Green') }}</h5>
+                            <p class="text-muted mb-0">{{ _('Investor') }}</p>
                         </div>
                     </div>
-                    <p class="mb-0">"As an investor passionate about sustainable agriculture, GrowFarm provides me with the perfect platform to support farmers while earning healthy returns. I've invested in three projects so far, and the transparency and support provided by the platform has been exceptional."</p>
+                    <p class="mb-0">{{ _('As an investor passionate about sustainable agriculture, GrowFarm provides me with the perfect platform to support farmers while earning healthy returns. I have invested in three projects so far, and the transparency and support provided by the platform has been exceptional.') }}</p>
                 </div>
             </div>
         </div>
@@ -222,11 +222,11 @@
             <div class="col-lg-10 mx-auto">
                 <div class="card border-0 shadow">
                     <div class="card-body p-5 text-center">
-                        <h2 class="fw-bold mb-4">Ready to Join the Agricultural Revolution?</h2>
-                        <p class="lead mb-4">Whether you're a farmer looking for investment or an investor seeking opportunities, GrowFarm connects you with the right partners for growth and success.</p>
+                        <h2 class="fw-bold mb-4">{{ _('Ready to Join the Agricultural Revolution?') }}</h2>
+                        <p class="lead mb-4">{{ _('Whether you\'re a farmer looking for investment or an investor seeking opportunities, GrowFarm connects you with the right partners for growth and success.') }}</p>
                         <div class="d-grid gap-3 d-sm-flex justify-content-sm-center">
-                            <a href="{{ url_for('register') }}" class="btn btn-primary btn-lg px-5 rounded-pill">Create an Account</a>
-                            <a href="{{ url_for('about') }}" class="btn btn-outline-primary btn-lg px-5 rounded-pill">Learn More</a>
+                            <a href="{{ url_for('register') }}" class="btn btn-primary btn-lg px-5 rounded-pill">{{ _('Create an Account') }}</a>
+                            <a href="{{ url_for('about') }}" class="btn btn-outline-primary btn-lg px-5 rounded-pill">{{ _('Learn More') }}</a>
                         </div>
                     </div>
                 </div>

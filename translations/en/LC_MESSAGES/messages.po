@@ -37,5 +37,137 @@ msgstr "Admin Dashboard"
 msgid "Logout"
 msgstr "Logout"
 
+msgid "View All Projects"
+msgstr "View All Projects"
+
 msgid "You do not have permission to access this page."
 msgstr "You do not have permission to access this page."
+
+msgid "Grow Together, Prosper Together"
+msgstr "Grow Together, Prosper Together"
+
+msgid "Connecting investors with farmers to create sustainable agricultural growth and shared prosperity. Join our community and be part of the agricultural revolution."
+msgstr "Connecting investors with farmers to create sustainable agricultural growth and shared prosperity. Join our community and be part of the agricultural revolution."
+
+msgid "Get Started"
+msgstr "Get Started"
+
+msgid "Explore Projects"
+msgstr "Explore Projects"
+
+msgid "How GrowFarm Works"
+msgstr "How GrowFarm Works"
+
+msgid "A simple process to connect farmers with investors"
+msgstr "A simple process to connect farmers with investors"
+
+msgid "1. Create an Account"
+msgstr "1. Create an Account"
+
+msgid "Sign up as a farmer or an investor based on your goals and interests."
+msgstr "Sign up as a farmer or an investor based on your goals and interests."
+
+msgid "2. List or Browse Projects"
+msgstr "2. List or Browse Projects"
+
+msgid "Farmers list their agricultural projects, while investors browse for opportunities."
+msgstr "Farmers list their agricultural projects, while investors browse for opportunities."
+
+msgid "3. Connect & Collaborate"
+msgstr "3. Connect & Collaborate"
+
+msgid "Investors fund projects they believe in, and farmers bring them to life."
+msgstr "Investors fund projects they believe in, and farmers bring them to life."
+
+msgid "Featured Projects"
+msgstr "Featured Projects"
+
+msgid "Explore some of our highlighted agricultural investment opportunities"
+msgstr "Explore some of our highlighted agricultural investment opportunities"
+
+msgid "No featured projects available at the moment. Check back soon!"
+msgstr "No featured projects available at the moment. Check back soon!"
+
+msgid "Low"
+msgstr "Low"
+
+msgid "Medium"
+msgstr "Medium"
+
+msgid "High"
+msgstr "High"
+
+msgid "Risk"
+msgstr "Risk"
+
+msgid "Funded:"
+msgstr "Funded:"
+
+msgid "View Details"
+msgstr "View Details"
+
+msgid "Benefits of GrowFarm"
+msgstr "Benefits of GrowFarm"
+
+msgid "Why farmers and investors choose our platform"
+msgstr "Why farmers and investors choose our platform"
+
+msgid "For Farmers"
+msgstr "For Farmers"
+
+msgid "Access to capital for farm expansion, equipment purchases, or new ventures without traditional bank financing."
+msgstr "Access to capital for farm expansion, equipment purchases, or new ventures without traditional bank financing."
+
+msgid "For Investors"
+msgstr "For Investors"
+
+msgid "Diversify your portfolio with agricultural investments that offer competitive returns and support sustainable farming."
+msgstr "Diversify your portfolio with agricultural investments that offer competitive returns and support sustainable farming."
+
+msgid "Sustainability"
+msgstr "Sustainability"
+
+msgid "Support sustainable and regenerative agricultural practices that benefit the environment and local communities."
+msgstr "Support sustainable and regenerative agricultural practices that benefit the environment and local communities."
+
+msgid "Community"
+msgstr "Community"
+
+msgid "Join a vibrant community of farmers and investors who share knowledge, resources, and success stories."
+msgstr "Join a vibrant community of farmers and investors who share knowledge, resources, and success stories."
+
+msgid "Success Stories"
+msgstr "Success Stories"
+
+msgid "Hear from farmers and investors who have thrived with GrowFarm"
+msgstr "Hear from farmers and investors who have thrived with GrowFarm"
+
+msgid "John Farmer"
+msgstr "John Farmer"
+
+msgid "Organic Vegetable Farmer"
+msgstr "Organic Vegetable Farmer"
+
+msgid "GrowFarm helped me expand my organic vegetable farm by connecting me with investors who believe in sustainable agriculture. The funding I received allowed me to purchase new equipment and increase my production capacity by 50%%."
+msgstr "GrowFarm helped me expand my organic vegetable farm by connecting me with investors who believe in sustainable agriculture. The funding I received allowed me to purchase new equipment and increase my production capacity by 50%%."
+
+msgid "Sarah Green"
+msgstr "Sarah Green"
+
+msgid "Investor"
+msgstr "Investor"
+
+msgid "As an investor passionate about sustainable agriculture, GrowFarm provides me with the perfect platform to support farmers while earning healthy returns. I have invested in three projects so far, and the transparency and support provided by the platform has been exceptional."
+msgstr "As an investor passionate about sustainable agriculture, GrowFarm provides me with the perfect platform to support farmers while earning healthy returns. I have invested in three projects so far, and the transparency and support provided by the platform has been exceptional."
+
+msgid "Ready to Join the Agricultural Revolution?"
+msgstr "Ready to Join the Agricultural Revolution?"
+
+msgid "Whether you're a farmer looking for investment or an investor seeking opportunities, GrowFarm connects you with the right partners for growth and success."
+msgstr "Whether you're a farmer looking for investment or an investor seeking opportunities, GrowFarm connects you with the right partners for growth and success."
+
+msgid "Create an Account"
+msgstr "Create an Account"
+
+msgid "Learn More"
+msgstr "Learn More"

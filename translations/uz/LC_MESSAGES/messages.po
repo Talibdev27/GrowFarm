@@ -37,5 +37,137 @@ msgstr "Admin boshqaruv paneli"
 msgid "Logout"
 msgstr "Chiqish"
 
+msgid "View All Projects"
+msgstr "Barcha loyihalarni ko'rish"
+
 msgid "You do not have permission to access this page."
 msgstr "Sizda ushbu sahifaga kirish uchun ruxsat yo'q."
+
+msgid "Grow Together, Prosper Together"
+msgstr "Birga o'sib, birga ravnaq topamiz"
+
+msgid "Connecting investors with farmers to create sustainable agricultural growth and shared prosperity. Join our community and be part of the agricultural revolution."
+msgstr "Investorlarni fermerlar bilan bog'lab, barqaror qishloq xo'jaligi o'sishini va umumiy farovonlikni yaratamiz. Jamiyatimizga qo'shiling va qishloq xo'jaligi inqilobining bir qismi bo'ling."
+
+msgid "Get Started"
+msgstr "Boshlash"
+
+msgid "Explore Projects"
+msgstr "Loyihalarni ko'rib chiqish"
+
+msgid "How GrowFarm Works"
+msgstr "GrowFarm qanday ishlaydi"
+
+msgid "A simple process to connect farmers with investors"
+msgstr "Fermerlarni investorlar bilan bog'lashning oddiy jarayoni"
+
+msgid "1. Create an Account"
+msgstr "1. Hisob yarating"
+
+msgid "Sign up as a farmer or an investor based on your goals and interests."
+msgstr "Maqsadlaringiz va qiziqishlaringizga asoslanib, fermer yoki investor sifatida ro'yxatdan o'ting."
+
+msgid "2. List or Browse Projects"
+msgstr "2. Loyihalarni ro'yxatlang yoki ko'rib chiqing"
+
+msgid "Farmers list their agricultural projects, while investors browse for opportunities."
+msgstr "Fermerlar o'z qishloq xo'jaligi loyihalarini ro'yxatga olishadi, investorlar esa imkoniyatlarni ko'rib chiqishadi."
+
+msgid "3. Connect & Collaborate"
+msgstr "3. Bog'laning va hamkorlik qiling"
+
+msgid "Investors fund projects they believe in, and farmers bring them to life."
+msgstr "Investorlar ishongan loyihalarini moliyalashtiradilar, fermerlar esa ularni hayotga tatbiq etadilar."
+
+msgid "Featured Projects"
+msgstr "Tanlangan loyihalar"
+
+msgid "Explore some of our highlighted agricultural investment opportunities"
+msgstr "Bizning ajratilgan qishloq xo'jaligi investitsiya imkoniyatlarimizdan ba'zilarini ko'rib chiqing"
+
+msgid "No featured projects available at the moment. Check back soon!"
+msgstr "Hozirda tanlangan loyihalar mavjud emas. Tez orada qayta tekshiring!"
+
+msgid "Low"
+msgstr "Past"
+
+msgid "Medium"
+msgstr "O'rta"
+
+msgid "High"
+msgstr "Yuqori"
+
+msgid "Risk"
+msgstr "Xavf"
+
+msgid "Funded:"
+msgstr "Moliyalashtirilgan:"
+
+msgid "View Details"
+msgstr "Tafsilotlarni ko'rish"
+
+msgid "Benefits of GrowFarm"
+msgstr "GrowFarm afzalliklari"
+
+msgid "Why farmers and investors choose our platform"
+msgstr "Nima uchun fermerlar va investorlar bizning platformani tanlashadi"
+
+msgid "For Farmers"
+msgstr "Fermerlar uchun"
+
+msgid "Access to capital for farm expansion, equipment purchases, or new ventures without traditional bank financing."
+msgstr "Fermani kengaytirish, uskunalar xarid qilish yoki an'anaviy bank moliyalashtirishlarsiz yangi loyihalar uchun kapitalga kirishish."
+
+msgid "For Investors"
+msgstr "Investorlar uchun"
+
+msgid "Diversify your portfolio with agricultural investments that offer competitive returns and support sustainable farming."
+msgstr "Raqobatbardosh daromad taklif etadigan va barqaror dehqonchilikni qo'llab-quvvatlaydigan qishloq xo'jaligi investitsiyalari bilan portfelingizni diversifikatsiya qiling."
+
+msgid "Sustainability"
+msgstr "Barqarorlik"
+
+msgid "Support sustainable and regenerative agricultural practices that benefit the environment and local communities."
+msgstr "Atrof-muhit va mahalliy jamoalarga foyda keltiradigan barqaror va regenerativ qishloq xo'jaligi amaliyotlarini qo'llab-quvvatlang."
+
+msgid "Community"
+msgstr "Jamiyat"
+
+msgid "Join a vibrant community of farmers and investors who share knowledge, resources, and success stories."
+msgstr "Bilim, resurslar va muvaffaqiyat hikoyalarini bo'lishuvchi fermerlar va investorlarning faol jamoasiga qo'shiling."
+
+msgid "Success Stories"
+msgstr "Muvaffaqiyat hikoyalari"
+
+msgid "Hear from farmers and investors who have thrived with GrowFarm"
+msgstr "GrowFarm bilan muvaffaqiyat qozongan fermerlar va investorlardan eshiting"
+
+msgid "John Farmer"
+msgstr "Jon Fermer"
+
+msgid "Organic Vegetable Farmer"
+msgstr "Organik sabzavot fermeri"
+
+msgid "GrowFarm helped me expand my organic vegetable farm by connecting me with investors who believe in sustainable agriculture. The funding I received allowed me to purchase new equipment and increase my production capacity by 50%%."
+msgstr "GrowFarm meni barqaror qishloq xo'jaligiga ishonuvchi investorlar bilan bog'lab, organik sabzavot fermamni kengaytirishga yordam berdi. Men olgan moliyalashtirish yangi uskunalar sotib olishga va ishlab chiqarish quvvatimni 50%% ga oshirishga imkon berdi."
+
+msgid "Sarah Green"
+msgstr "Sara Grin"
+
+msgid "Investor"
+msgstr "Investor"
+
+msgid "As an investor passionate about sustainable agriculture, GrowFarm provides me with the perfect platform to support farmers while earning healthy returns. I have invested in three projects so far, and the transparency and support provided by the platform has been exceptional."
+msgstr "Barqaror qishloq xo'jaligiga ishtiyoqli investor sifatida, GrowFarm menga sog'lom daromad olish bilan birga fermerlarni qo'llab-quvvatlash uchun mukammal platformani taqdim etadi. Men hozirgacha uchta loyihaga investitsiya qildim va platforma tomonidan taqdim etilgan shaffoflik va qo'llab-quvvatlash ajoyib bo'ldi."
+
+msgid "Ready to Join the Agricultural Revolution?"
+msgstr "Qishloq xo'jaligi inqilobiga qo'shilishga tayyormisiz?"
+
+msgid "Whether you're a farmer looking for investment or an investor seeking opportunities, GrowFarm connects you with the right partners for growth and success."
+msgstr "Siz investitsiya qidirayotgan fermer bo'lasizmi yoki imkoniyatlar izlayotgan investor bo'lasizmi, GrowFarm sizni o'sish va muvaffaqiyat uchun to'g'ri hamkorlar bilan bog'laydi."
+
+msgid "Create an Account"
+msgstr "Hisob yaratish"
+
+msgid "Learn More"
+msgstr "Ko'proq ma'lumot olish"

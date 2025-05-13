@@ -37,5 +37,137 @@ msgstr "Панель администратора"
 msgid "Logout"
 msgstr "Выйти"
 
+msgid "View All Projects"
+msgstr "Посмотреть все проекты"
+
 msgid "You do not have permission to access this page."
 msgstr "У вас нет прав для доступа к этой странице."
+
+msgid "Grow Together, Prosper Together"
+msgstr "Растем вместе, процветаем вместе"
+
+msgid "Connecting investors with farmers to create sustainable agricultural growth and shared prosperity. Join our community and be part of the agricultural revolution."
+msgstr "Соединяем инвесторов с фермерами для создания устойчивого сельскохозяйственного роста и общего процветания. Присоединяйтесь к нашему сообществу и станьте частью сельскохозяйственной революции."
+
+msgid "Get Started"
+msgstr "Начать"
+
+msgid "Explore Projects"
+msgstr "Изучить проекты"
+
+msgid "How GrowFarm Works"
+msgstr "Как работает GrowFarm"
+
+msgid "A simple process to connect farmers with investors"
+msgstr "Простой процесс соединения фермеров с инвесторами"
+
+msgid "1. Create an Account"
+msgstr "1. Создайте аккаунт"
+
+msgid "Sign up as a farmer or an investor based on your goals and interests."
+msgstr "Зарегистрируйтесь как фермер или инвестор в зависимости от ваших целей и интересов."
+
+msgid "2. List or Browse Projects"
+msgstr "2. Размещайте или просматривайте проекты"
+
+msgid "Farmers list their agricultural projects, while investors browse for opportunities."
+msgstr "Фермеры размещают свои сельскохозяйственные проекты, а инвесторы ищут возможности."
+
+msgid "3. Connect & Collaborate"
+msgstr "3. Соединяйтесь и сотрудничайте"
+
+msgid "Investors fund projects they believe in, and farmers bring them to life."
+msgstr "Инвесторы финансируют проекты, в которые они верят, а фермеры воплощают их в жизнь."
+
+msgid "Featured Projects"
+msgstr "Избранные проекты"
+
+msgid "Explore some of our highlighted agricultural investment opportunities"
+msgstr "Ознакомьтесь с некоторыми из наших выделенных возможностей сельскохозяйственных инвестиций"
+
+msgid "No featured projects available at the moment. Check back soon!"
+msgstr "В настоящее время нет доступных избранных проектов. Проверьте позже!"
+
+msgid "Low"
+msgstr "Низкий"
+
+msgid "Medium"
+msgstr "Средний"
+
+msgid "High"
+msgstr "Высокий"
+
+msgid "Risk"
+msgstr "Риск"
+
+msgid "Funded:"
+msgstr "Финансировано:"
+
+msgid "View Details"
+msgstr "Подробнее"
+
+msgid "Benefits of GrowFarm"
+msgstr "Преимущества GrowFarm"
+
+msgid "Why farmers and investors choose our platform"
+msgstr "Почему фермеры и инвесторы выбирают нашу платформу"
+
+msgid "For Farmers"
+msgstr "Для фермеров"
+
+msgid "Access to capital for farm expansion, equipment purchases, or new ventures without traditional bank financing."
+msgstr "Доступ к капиталу для расширения фермы, покупки оборудования или новых предприятий без традиционного банковского финансирования."
+
+msgid "For Investors"
+msgstr "Для инвесторов"
+
+msgid "Diversify your portfolio with agricultural investments that offer competitive returns and support sustainable farming."
+msgstr "Диверсифицируйте свой портфель сельскохозяйственными инвестициями, которые предлагают конкурентоспособную прибыль и поддерживают устойчивое сельское хозяйство."
+
+msgid "Sustainability"
+msgstr "Устойчивость"
+
+msgid "Support sustainable and regenerative agricultural practices that benefit the environment and local communities."
+msgstr "Поддержка устойчивых и регенеративных сельскохозяйственных практик, которые приносят пользу окружающей среде и местным сообществам."
+
+msgid "Community"
+msgstr "Сообщество"
+
+msgid "Join a vibrant community of farmers and investors who share knowledge, resources, and success stories."
+msgstr "Присоединяйтесь к активному сообществу фермеров и инвесторов, которые делятся знаниями, ресурсами и историями успеха."
+
+msgid "Success Stories"
+msgstr "Истории успеха"
+
+msgid "Hear from farmers and investors who have thrived with GrowFarm"
+msgstr "Узнайте от фермеров и инвесторов, которые процветали с GrowFarm"
+
+msgid "John Farmer"
+msgstr "Джон Фермер"
+
+msgid "Organic Vegetable Farmer"
+msgstr "Органический овощевод"
+
+msgid "GrowFarm helped me expand my organic vegetable farm by connecting me with investors who believe in sustainable agriculture. The funding I received allowed me to purchase new equipment and increase my production capacity by 50%%."
+msgstr "GrowFarm помог мне расширить мою органическую овощную ферму, соединив меня с инвесторами, которые верят в устойчивое сельское хозяйство. Полученное финансирование позволило мне приобрести новое оборудование и увеличить производственные мощности на 50%%."
+
+msgid "Sarah Green"
+msgstr "Сара Грин"
+
+msgid "Investor"
+msgstr "Инвестор"
+
+msgid "As an investor passionate about sustainable agriculture, GrowFarm provides me with the perfect platform to support farmers while earning healthy returns. I have invested in three projects so far, and the transparency and support provided by the platform has been exceptional."
+msgstr "Как инвестор, увлеченный устойчивым сельским хозяйством, GrowFarm предоставляет мне идеальную платформу для поддержки фермеров, одновременно получая хорошую прибыль. Я уже инвестировал в три проекта, и прозрачность и поддержка, предоставляемые платформой, были исключительными."
+
+msgid "Ready to Join the Agricultural Revolution?"
+msgstr "Готовы присоединиться к сельскохозяйственной революции?"
+
+msgid "Whether you're a farmer looking for investment or an investor seeking opportunities, GrowFarm connects you with the right partners for growth and success."
+msgstr "Независимо от того, являетесь ли вы фермером, ищущим инвестиции, или инвестором, ищущим возможности, GrowFarm соединяет вас с правильными партнерами для роста и успеха."
+
+msgid "Create an Account"
+msgstr "Создать аккаунт"
+
+msgid "Learn More"
+msgstr "Узнать больше"
