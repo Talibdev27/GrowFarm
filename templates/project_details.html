@@ -37,7 +37,39 @@
                 <div class="card border-0 shadow-sm mb-4">
                     <div class="card-body p-0">
                         {% if project.image_url %}
-                            <div class="project-image" style="background: url('{{ project.image_url }}'); background-size: cover; background-position: center;"></div>
+                            <div id="detail-project-image" class="project-image" style="background: url('{{ project.image_url }}'); background-size: cover; background-position: center;"></div>
+                            <script>
+                                document.addEventListener('DOMContentLoaded', function() {
+                                    const img = new Image();
+                                    img.onload = function() {
+                                        // Image loaded successfully, do nothing
+                                    };
+                                    img.onerror = function() {
+                                        // Image failed to load, use fallback
+                                        const projectImage = document.getElementById('detail-project-image');
+                                        if (projectImage) {
+                                            {% if project.category == 'Crops' %}
+                                                projectImage.style.background = "url('https://images.unsplash.com/photo-1628352081568-06c0a8d75457?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1350&q=80')";
+                                            {% elif project.category == 'Livestock' %}
+                                                projectImage.style.background = "url('https://images.unsplash.com/photo-1596733430284-f7437764b1a9?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1350&q=80')";
+                                            {% elif project.category == 'Dairy' %}
+                                                projectImage.style.background = "url('https://images.unsplash.com/photo-1550583724-b2692b85b150?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1350&q=80')";
+                                            {% elif project.category == 'Organic' %}
+                                                projectImage.style.background = "url('https://images.unsplash.com/photo-1574943320219-855726909e01?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1350&q=80')";
+                                            {% elif project.category == 'Sustainable' %}
+                                                projectImage.style.background = "url('https://images.unsplash.com/photo-1530836369250-ef72a3f5cda8?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1350&q=80')";
+                                            {% elif project.category == 'Agroforestry' %}
+                                                projectImage.style.background = "url('https://images.unsplash.com/photo-1511497584788-876760111969?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1350&q=80')";
+                                            {% else %}
+                                                projectImage.style.background = "url('https://images.unsplash.com/photo-1523741543316-beb7fc7023d8?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1350&q=80')";
+                                            {% endif %}
+                                            projectImage.style.backgroundSize = 'cover';
+                                            projectImage.style.backgroundPosition = 'center';
+                                        }
+                                    };
+                                    img.src = '{{ project.image_url }}';
+                                });
+                            </script>
                         {% elif project.category == 'Crops' %}
                             <div class="project-image" style="background: url('https://images.unsplash.com/photo-1628352081568-06c0a8d75457?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1350&q=80'); background-size: cover; background-position: center;"></div>
                         {% elif project.category == 'Livestock' %}

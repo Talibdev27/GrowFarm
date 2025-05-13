@@ -679,7 +679,11 @@ def register_routes(app):
             project.status = request.form.get('status')
             
             # Additional info
-            project.image_url = request.form.get('image_url')
+            image_url = request.form.get('image_url')
+            # Only update image URL if it's been changed
+            if image_url != project.image_url:
+                project.image_url = image_url
+                
             project.tags = request.form.get('tags')
             project.overview = request.form.get('overview')
             project.regional_significance = request.form.get('regional_significance')

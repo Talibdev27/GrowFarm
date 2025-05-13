@@ -44,12 +44,47 @@
                         <div class="mb-3">
                             <label for="image_url" class="form-label">Image URL</label>
                             <input type="url" class="form-control" id="image_url" name="image_url" value="{{ project.image_url }}">
+                            <div class="form-text">Use direct image URLs (ending with .jpg, .png, etc.) from reliable sources like Unsplash, Pexels, or Pixabay for better compatibility.</div>
                             {% if project.image_url %}
                             <div class="mt-2">
-                                <img src="{{ project.image_url }}" alt="{{ project.title }}" class="img-thumbnail" style="max-height: 150px;">
+                                <div id="image-preview-container">
+                                    <img id="image-preview" src="{{ project.image_url }}" alt="{{ project.title }}" class="img-thumbnail" style="max-height: 150px;">
+                                    <div id="image-error" class="alert alert-warning mt-2" style="display:none;">
+                                        This image URL may not be accessible. Please use a different image source.
+                                    </div>
+                                </div>
                             </div>
                             {% endif %}
                         </div>
+                        
+                        <script>
+                            document.addEventListener('DOMContentLoaded', function() {
+                                const imgPreview = document.getElementById('image-preview');
+                                const imgError = document.getElementById('image-error');
+                                const imgUrlInput = document.getElementById('image_url');
+                                
+                                if (imgPreview) {
+                                    imgPreview.onerror = function() {
+                                        this.style.display = 'none';
+                                        if (imgError) imgError.style.display = 'block';
+                                    };
+                                    
+                                    imgPreview.onload = function() {
+                                        this.style.display = 'block';
+                                        if (imgError) imgError.style.display = 'none';
+                                    };
+                                }
+                                
+                                if (imgUrlInput) {
+                                    imgUrlInput.addEventListener('change', function() {
+                                        if (this.value && imgPreview) {
+                                            imgPreview.src = this.value;
+                                            imgPreview.style.display = 'block';
+                                        }
+                                    });
+                                }
+                            });
+                        </script>
                         
                         <div class="row mb-3">
                             <div class="col-md-6">
