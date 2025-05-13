@@ -95,26 +95,25 @@ msgstr "Foydalanish shartlari"
 
 #: templates/base.html:169
 msgid "Privacy Policy"
-msgstr ""
+msgstr "Maxfiylik siyosati"
 
 #: templates/base.html:175
 msgid "123 Farm Street, Agritown"
-msgstr ""
+msgstr "123 Ferma ko'chasi, Agritown"
 
 #: templates/base.html:176
 msgid "(123) 456-7890"
-msgstr ""
+msgstr "(123) 456-7890"
 
 #: templates/base.html:184
 msgid "&copy; 2023 GrowFarm. All rights reserved."
-msgstr ""
+msgstr "&copy; 2023 GrowFarm. Barcha huquqlar himoyalangan."
 
 #: templates/base.html:187
 msgid "Designed with"
-msgstr ""
+msgstr "Yaratildi"
 
 #: templates/base.html:187
-#, fuzzy
 msgid "for farmers and investors"
 msgstr "Investorlar uchun"
 
