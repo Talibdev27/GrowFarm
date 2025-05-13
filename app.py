@@ -29,6 +29,12 @@ def get_locale():
     # Otherwise try to detect from request header
     detected_lang = request.accept_languages.best_match(['en', 'ru', 'uz'])
     print(f"Detected language from headers: {detected_lang}")
+    
+    # If no language is detected, default to English
+    if not detected_lang:
+        print("No language detected, defaulting to English")
+        return 'en'
+        
     return detected_lang
 
 # Create the app
@@ -36,14 +42,20 @@ app = Flask(__name__)
 app.secret_key = os.environ.get("SESSION_SECRET", "dev-secret-key")
 app.wsgi_app = ProxyFix(app.wsgi_app, x_proto=1, x_host=1)  # needed for url_for to generate with https
 
-# Configure Babel
+# Configure Babel - Use absolute paths for reliability
+translations_dir = os.path.join(os.getcwd(), 'translations')
 app.config['BABEL_DEFAULT_LOCALE'] = 'en'
-app.config['BABEL_TRANSLATION_DIRECTORIES'] = 'translations'
+app.config['BABEL_TRANSLATION_DIRECTORIES'] = translations_dir
 app.config['LANGUAGES'] = {
     'en': 'English',
     'ru': 'Russian',
     'uz': 'Uzbek'
 }
+
+# Print directory for debugging
+print(f"Current working directory: {os.getcwd()}")
+print(f"Translation directory: {os.path.join(os.getcwd(), 'translations')}")
+print(f"Available translations: {os.listdir('translations')}")
 
 # Configure the database (using PostgreSQL)
 database_url = os.environ.get("DATABASE_URL")
@@ -68,6 +80,7 @@ login_manager.init_app(app)
 login_manager.login_view = 'login'
 login_manager.login_message_category = 'info'
 babel.init_app(app, locale_selector=get_locale)
+print("Babel initialized with locale_selector function")
 
 # Import routes and models after initializing extensions to avoid circular imports
 with app.app_context():

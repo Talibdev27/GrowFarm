@@ -32,8 +32,13 @@ def register_routes(app):
     def change_language(lang_code):
         """Route to change the language"""
         if lang_code in app.config['LANGUAGES']:
+            # Force clear any existing session
+            session.clear()
+            # Set the language explicitly
             session['language'] = lang_code
             print(f"Language changed to: {lang_code}")
+            # Force session to be saved
+            session.modified = True
             # Get the referrer so we can redirect back to the same page
             referrer = request.referrer or url_for('index')
             return redirect(referrer)
