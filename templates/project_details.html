@@ -359,6 +359,9 @@
     </div>
 </section>
 
+<!-- Confetti Container for Investment Success Animation -->
+<div class="confetti-container" id="confetti-container"></div>
+
 <!-- Investment Modal -->
 {% if current_user.is_authenticated and current_user.role == 'investor' and project.status == 'Open' and investment_form %}
 <div class="modal fade" id="investmentModal" tabindex="-1" aria-labelledby="investmentModalLabel" aria-hidden="true">
@@ -458,9 +461,101 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                    {{ investment_form.submit(class="btn btn-primary") }}
+                    <div class="spotlight-container">
+                        {{ investment_form.submit(class="btn btn-invest btn-lg w-100") }}
+                        <div class="spotlight"></div>
+                    </div>
+                    
+                    <script>
+                        // Make the spotlight effect work on the submit button
+                        document.addEventListener('DOMContentLoaded', function() {
+                            const submitSpotlightEl = document.querySelector('.modal-footer .spotlight-container');
+                            if (submitSpotlightEl) {
+                                const spotlight = submitSpotlightEl.querySelector('.spotlight');
+                                
+                                if (spotlight) {
+                                    submitSpotlightEl.addEventListener('mousemove', function(e) {
+                                        const rect = this.getBoundingClientRect();
+                                        const x = ((e.clientX - rect.left) / this.offsetWidth) * 100;
+                                        const y = ((e.clientY - rect.top) / this.offsetHeight) * 100;
+                                        
+                                        spotlight.style.setProperty('--x', x + '%');
+                                        spotlight.style.setProperty('--y', y + '%');
+                                    });
+                                }
+                            }
+                        });
+                    </script>
                 </div>
             </form>
+            
+            <script>
+                document.addEventListener('DOMContentLoaded', function() {
+                    // Get the investment form and confetti container
+                    const investmentForm = document.getElementById('investment-form');
+                    const confettiContainer = document.getElementById('confetti-container');
+                    
+                    if (investmentForm) {
+                        investmentForm.addEventListener('submit', function(e) {
+                            // Default form submission is allowed, this just triggers the celebration
+                            
+                            // Show confetti animation
+                            createConfetti();
+                            
+                            // Animate modal close
+                            setTimeout(function() {
+                                const modal = document.getElementById('investmentModal');
+                                const modalInstance = bootstrap.Modal.getInstance(modal);
+                                if (modalInstance) {
+                                    modalInstance.hide();
+                                }
+                            }, 500);
+                        });
+                    }
+                    
+                    // Function to create and animate confetti particles
+                    function createConfetti() {
+                        // Show the container
+                        confettiContainer.style.display = 'block';
+                        
+                        // Create confetti pieces
+                        const colors = ['#4CAF50', '#8BC34A', '#CDDC39', '#FFEB3B', '#FFC107'];
+                        
+                        // Generate 100 confetti pieces
+                        for (let i = 0; i < 100; i++) {
+                            const confetti = document.createElement('div');
+                            confetti.className = 'confetti';
+                            
+                            // Random position, size, color and animation duration
+                            const left = Math.random() * 100;
+                            const size = Math.random() * 8 + 6;
+                            const colorIndex = Math.floor(Math.random() * colors.length);
+                            const duration = Math.random() * 3 + 2;
+                            
+                            confetti.style.left = left + 'vw';
+                            confetti.style.width = size + 'px';
+                            confetti.style.height = size + 'px';
+                            confetti.style.backgroundColor = colors[colorIndex];
+                            confetti.style.animationDuration = duration + 's';
+                            
+                            // Add to container
+                            confettiContainer.appendChild(confetti);
+                            
+                            // Remove after animation completes
+                            setTimeout(() => {
+                                confetti.remove();
+                            }, duration * 1000);
+                        }
+                        
+                        // Hide container after all animations are done
+                        setTimeout(() => {
+                            confettiContainer.style.display = 'none';
+                            // Clear any remaining confetti
+                            confettiContainer.innerHTML = '';
+                        }, 5000);
+                    }
+                });
+            </script>
         </div>
     </div>
 </div>
