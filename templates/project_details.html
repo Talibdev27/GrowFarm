@@ -23,18 +23,44 @@
             </div>
             <div class="col-lg-4 text-lg-end">
                 {% if current_user.is_authenticated and current_user.role == 'investor' and project.status == 'Open' %}
-                    <button type="button" class="btn btn-primary btn-lg" data-bs-toggle="modal" data-bs-target="#investmentModal">
-                        <i class="fas fa-hand-holding-usd me-2"></i>Invest Now
-                    </button>
+                    <div class="spotlight-container">
+                        <button type="button" class="btn btn-invest btn-invest-shine btn-invest-dollars btn-lg" data-bs-toggle="modal" data-bs-target="#investmentModal">
+                            <i class="fas fa-hand-holding-usd me-2"></i>Invest Now
+                        </button>
+                        <div class="spotlight"></div>
+                    </div>
                 {% elif not current_user.is_authenticated and project.status == 'Open' %}
-                    <a href="{{ url_for('login') }}" class="btn btn-primary btn-lg">
-                        <i class="fas fa-hand-holding-usd me-2"></i>Login to Invest
-                    </a>
+                    <div class="spotlight-container">
+                        <a href="{{ url_for('login') }}" class="btn btn-login-invest btn-invest-attention btn-lg">
+                            <i class="fas fa-hand-holding-usd me-2"></i>Login to Invest
+                        </a>
+                        <div class="spotlight"></div>
+                    </div>
                 {% elif current_user.is_authenticated and current_user.role == 'farmer' and project.status == 'Open' %}
                     <button type="button" class="btn btn-outline-primary btn-lg" disabled>
                         <i class="fas fa-info-circle me-2"></i>Farmers cannot invest
                     </button>
                 {% endif %}
+                
+                <script>
+                document.addEventListener('DOMContentLoaded', function() {
+                    const spotlightEl = document.querySelector('.spotlight-container');
+                    if (spotlightEl) {
+                        const spotlight = spotlightEl.querySelector('.spotlight');
+                        
+                        if (spotlight) {
+                            spotlightEl.addEventListener('mousemove', function(e) {
+                                const rect = this.getBoundingClientRect();
+                                const x = ((e.clientX - rect.left) / this.offsetWidth) * 100;
+                                const y = ((e.clientY - rect.top) / this.offsetHeight) * 100;
+                                
+                                spotlight.style.setProperty('--x', x + '%');
+                                spotlight.style.setProperty('--y', y + '%');
+                            });
+                        }
+                    }
+                });
+                </script>
             </div>
         </div>
 
@@ -201,18 +227,86 @@
                         </ul>
 
                         {% if current_user.is_authenticated and current_user.role == 'investor' and project.status == 'Open' %}
-                            <div class="d-grid mt-3">
-                                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#investmentModal">
-                                    <i class="fas fa-hand-holding-usd me-2"></i>Invest Now
-                                </button>
+                            <div class="d-grid mt-3 position-relative">
+                                <div class="spotlight-container w-100">
+                                    <button type="button" class="btn btn-invest btn-invest-pulse btn-invest-dollars w-100" data-bs-toggle="modal" data-bs-target="#investmentModal">
+                                        <i class="fas fa-hand-holding-usd me-2"></i>Invest Now
+                                    </button>
+                                    <div class="spotlight"></div>
+                                </div>
+                                
+                                <!-- Decorative dollar signs that float up on hover -->
+                                <div class="position-absolute top-0 start-0 w-100 h-100 overflow-hidden pointer-events-none">
+                                    <span class="floating-dollar d-none">$</span>
+                                    <span class="floating-dollar d-none">$</span>
+                                    <span class="floating-dollar d-none">$</span>
+                                </div>
                             </div>
+                            
+                            <style>
+                                .floating-dollar {
+                                    position: absolute;
+                                    color: rgba(255,255,255,0.7);
+                                    font-size: 18px;
+                                    font-weight: bold;
+                                    bottom: 0;
+                                    animation: floatingDollar 3s ease-out forwards;
+                                }
+                                
+                                @keyframes floatingDollar {
+                                    0% {
+                                        transform: translateY(0) rotate(0deg);
+                                        opacity: 0;
+                                    }
+                                    10% {
+                                        opacity: 1;
+                                    }
+                                    100% {
+                                        transform: translateY(-80px) rotate(20deg);
+                                        opacity: 0;
+                                    }
+                                }
+                            </style>
+                            
+                            <script>
+                                document.addEventListener('DOMContentLoaded', function() {
+                                    const investBtn = document.querySelector('.btn-invest-dollars');
+                                    if (investBtn) {
+                                        investBtn.addEventListener('mouseenter', function() {
+                                            const dollars = document.querySelectorAll('.floating-dollar');
+                                            dollars.forEach((dollar, index) => {
+                                                dollar.classList.remove('d-none');
+                                                dollar.style.left = `${20 + (index * 25)}%`;
+                                                dollar.style.animationDelay = `${index * 0.3}s`;
+                                            });
+                                        });
+                                    }
+                                    
+                                    // Make the spotlight effect work on this button too
+                                    const sidebarSpotlightEl = document.querySelector('.investment-details .spotlight-container');
+                                    if (sidebarSpotlightEl) {
+                                        const spotlight = sidebarSpotlightEl.querySelector('.spotlight');
+                                        
+                                        if (spotlight) {
+                                            sidebarSpotlightEl.addEventListener('mousemove', function(e) {
+                                                const rect = this.getBoundingClientRect();
+                                                const x = ((e.clientX - rect.left) / this.offsetWidth) * 100;
+                                                const y = ((e.clientY - rect.top) / this.offsetHeight) * 100;
+                                                
+                                                spotlight.style.setProperty('--x', x + '%');
+                                                spotlight.style.setProperty('--y', y + '%');
+                                            });
+                                        }
+                                    }
+                                });
+                            </script>
                         {% elif not current_user.is_authenticated and project.status == 'Open' %}
                             <div class="mt-3">
                                 <div class="alert alert-info mb-2">
                                     <i class="fas fa-info-circle me-2"></i>Ready to support this project?
                                 </div>
                                 <div class="d-grid">
-                                    <a href="{{ url_for('login') }}" class="btn btn-primary">
+                                    <a href="{{ url_for('login') }}" class="btn btn-login-invest btn-invest-shine">
                                         <i class="fas fa-sign-in-alt me-2"></i>Login to Invest
                                     </a>
                                 </div>
