@@ -18,4 +18,5 @@ dependencies = [
     "oauthlib>=3.2.2",
     "pyjwt>=2.10.1",
     "flask-babel>=4.0.0",
+    "babel>=2.17.0",
 ]
