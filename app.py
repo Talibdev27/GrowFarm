@@ -1,11 +1,11 @@
 import os
 import logging
-
-from flask import Flask
+from flask import Flask, request, session, g
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.orm import DeclarativeBase
 from werkzeug.middleware.proxy_fix import ProxyFix
 from flask_login import LoginManager
+from flask_babel import Babel
 
 # Configure logging
 logging.basicConfig(level=logging.DEBUG)
@@ -16,11 +16,30 @@ class Base(DeclarativeBase):
 # Initialize extensions
 db = SQLAlchemy(model_class=Base)
 login_manager = LoginManager()
+babel = Babel()
+
+# Function to determine supported languages and select best match
+def get_locale():
+    # Check if user has explicitly set a language in the session
+    if 'language' in session:
+        return session['language']
+    
+    # Otherwise try to detect from request header
+    return request.accept_languages.best_match(['en', 'ru', 'uz'])
 
 # Create the app
 app = Flask(__name__)
 app.secret_key = os.environ.get("SESSION_SECRET", "dev-secret-key")
 app.wsgi_app = ProxyFix(app.wsgi_app, x_proto=1, x_host=1)  # needed for url_for to generate with https
+
+# Configure Babel
+app.config['BABEL_DEFAULT_LOCALE'] = 'en'
+app.config['BABEL_TRANSLATION_DIRECTORIES'] = 'translations'
+app.config['LANGUAGES'] = {
+    'en': 'English',
+    'ru': 'Russian',
+    'uz': 'Uzbek'
+}
 
 # Configure the database (using PostgreSQL)
 database_url = os.environ.get("DATABASE_URL")
@@ -44,6 +63,7 @@ db.init_app(app)
 login_manager.init_app(app)
 login_manager.login_view = 'login'
 login_manager.login_message_category = 'info'
+babel.init_app(app, locale_selector=get_locale)
 
 # Import routes and models after initializing extensions to avoid circular imports
 with app.app_context():

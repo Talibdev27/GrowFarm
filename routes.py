@@ -1,10 +1,11 @@
-from flask import render_template, redirect, url_for, flash, request, abort, jsonify, send_file
+from flask import render_template, redirect, url_for, flash, request, abort, jsonify, send_file, session
 from flask_login import login_user, current_user, logout_user, login_required
 from datetime import datetime, timedelta
 from functools import wraps
 from sqlalchemy import func, desc
 import io
 import csv
+from flask_babel import _, get_locale
 from app import app, db
 from models import User, Farmer, Investor, Project, Investment, Message
 from forms import (LoginForm, RegistrationForm, FarmerProfileForm, InvestorProfileForm, 
@@ -19,12 +20,31 @@ app.jinja_env.filters['monthsdelta'] = monthsdelta
 
 def register_routes(app):
     
+    @app.context_processor
+    def inject_languages():
+        """Inject language info into all templates"""
+        return dict(
+            available_languages=app.config['LANGUAGES'],
+            current_locale=get_locale()
+        )
+    
+    @app.route('/change_language/<lang_code>')
+    def change_language(lang_code):
+        """Route to change the language"""
+        if lang_code in app.config['LANGUAGES']:
+            session['language'] = lang_code
+            # Get the referrer so we can redirect back to the same page
+            referrer = request.referrer or url_for('index')
+            return redirect(referrer)
+        flash('Language not supported.', 'danger')
+        return redirect(url_for('index'))
+    
     # Admin access decorator
     def admin_required(f):
         @wraps(f)
         def decorated_function(*args, **kwargs):
             if not current_user.is_authenticated or not current_user.is_admin:
-                flash('You do not have permission to access this page.', 'danger')
+                flash(_('You do not have permission to access this page.'), 'danger')
                 return redirect(url_for('index'))
             return f(*args, **kwargs)
         return decorated_function
