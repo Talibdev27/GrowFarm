@@ -712,18 +712,39 @@ def register_routes(app):
     def admin_delete_project(project_id):
         try:
             project = Project.query.get_or_404(project_id)
+            project_title = project.title  # Save for flash message
             
-            # Delete any investments associated with this project
-            Investment.query.filter_by(project_id=project_id).delete()
+            # First, explicitly delete all investments associated with this project
+            try:
+                investments = Investment.query.filter_by(project_id=project_id).all()
+                if investments:
+                    for investment in investments:
+                        db.session.delete(investment)
+                    db.session.commit()
+                    print(f"Successfully deleted {len(investments)} investments for project {project_id}")
+                else:
+                    print(f"No investments found for project {project_id}")
+            except Exception as investment_error:
+                db.session.rollback()
+                # Log the error but continue with trying to delete the project
+                print(f"Error deleting investments: {str(investment_error)}")
+                app.logger.error(f"Error deleting investments for project {project_id}: {str(investment_error)}")
             
-            # Now delete the project
-            db.session.delete(project)
-            db.session.commit()
-            flash('Project deleted successfully', 'success')
+            # Now delete the project itself
+            try:
+                db.session.delete(project)
+                db.session.commit()
+                flash(f'Project "{project_title}" deleted successfully', 'success')
+                print(f"Successfully deleted project {project_id}")
+                return redirect(url_for('admin_projects'))
+            except Exception as project_error:
+                db.session.rollback()
+                app.logger.error(f"Error deleting project {project_id}: {str(project_error)}")
+                flash(f'Error deleting project: {str(project_error)}', 'danger')
+                
         except Exception as e:
-            db.session.rollback()
-            app.logger.error(f"Error deleting project {project_id}: {str(e)}")
-            flash(f'Error deleting project: {str(e)}', 'danger')
+            app.logger.error(f"Error finding project {project_id}: {str(e)}")
+            flash(f'Error finding project: {str(e)}', 'danger')
         
         return redirect(url_for('admin_projects'))
     
