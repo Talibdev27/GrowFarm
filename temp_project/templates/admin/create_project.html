@@ -1,0 +1,213 @@
+{% extends 'base.html' %}
+
+{% block title %}Admin - Create New Project{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h1 class="mb-4">Create New Project</h1>
+    
+    <div class="row">
+        <div class="col-md-3">
+            <div class="card mb-4">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0">Navigation</h5>
+                </div>
+                <div class="list-group list-group-flush">
+                    <a href="{{ url_for('admin_dashboard') }}" class="list-group-item list-group-item-action">
+                        <i class="fas fa-tachometer-alt me-2"></i> Dashboard
+                    </a>
+                    <a href="{{ url_for('admin_users') }}" class="list-group-item list-group-item-action">
+                        <i class="fas fa-users me-2"></i> Users
+                    </a>
+                    <a href="{{ url_for('admin_projects') }}" class="list-group-item list-group-item-action active">
+                        <i class="fas fa-project-diagram me-2"></i> Projects
+                    </a>
+                    <a href="{{ url_for('admin_investments') }}" class="list-group-item list-group-item-action">
+                        <i class="fas fa-hand-holding-usd me-2"></i> Investments
+                    </a>
+                    <a href="{{ url_for('admin_reports') }}" class="list-group-item list-group-item-action">
+                        <i class="fas fa-chart-bar me-2"></i> Reports
+                    </a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-9">
+            <div class="card mb-4">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0">New Project Information</h5>
+                </div>
+                <div class="card-body">
+                    {% if farmers %}
+                    <form action="{{ url_for('admin_create_project') }}" method="post">
+                        <div class="mb-3">
+                            <label for="farmer_id" class="form-label">Farmer</label>
+                            <select class="form-select" id="farmer_id" name="farmer_id" required>
+                                <option value="">Select a Farmer</option>
+                                {% for farmer in farmers %}
+                                <option value="{{ farmer.id }}">{{ farmer.farm_name }} ({{ farmer.user.username }})</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    {% else %}
+                        <div class="alert alert-warning">
+                            <h4><i class="fas fa-exclamation-triangle me-2"></i>No Farmers Available</h4>
+                            <p>There are no farmers registered in the system yet. You need at least one farmer to create a project.</p>
+                            <a href="{{ url_for('admin_users') }}" class="btn btn-primary">Go to Users</a>
+                        </div>
+                        <div class="mt-4">
+                            <div class="card bg-light">
+                                <div class="card-body">
+                                    <h5 class="card-title">How to add a farmer?</h5>
+                                    <ol>
+                                        <li>Go to the <a href="{{ url_for('admin_users') }}">Users Management</a> page</li>
+                                        <li>Create a new user with the role "farmer"</li>
+                                        <li>Fill out the farmer's profile information</li>
+                                        <li>Return to this page to create a project</li>
+                                    </ol>
+                                </div>
+                            </div>
+                        </div>
+                    {% endif %}
+
+                    {% if farmers %}
+
+                        <div class="mb-3">
+                            <label for="title" class="form-label">Project Title</label>
+                            <input type="text" class="form-control" id="title" name="title" required>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="location" class="form-label">Location</label>
+                            <input type="text" class="form-control" id="location" name="location">
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="description" class="form-label">Project Description</label>
+                            <textarea class="form-control" id="description" name="description" rows="5" required></textarea>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="image_url" class="form-label">Image URL</label>
+                            <input type="url" class="form-control" id="image_url" name="image_url">
+                        </div>
+                        
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label for="funding_goal" class="form-label">Funding Goal ($)</label>
+                                <input type="number" class="form-control" id="funding_goal" name="funding_goal" min="1" step="0.01" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="current_funding" class="form-label">Current Funding ($)</label>
+                                <input type="number" class="form-control" id="current_funding" name="current_funding" value="0" min="0" step="0.01" required>
+                            </div>
+                        </div>
+                        
+                        <div class="row mb-3">
+                            <div class="col-md-4">
+                                <label for="duration_months" class="form-label">Duration (months)</label>
+                                <input type="number" class="form-control" id="duration_months" name="duration_months" min="1" max="60" required>
+                            </div>
+                            <div class="col-md-4">
+                                <label for="expected_roi" class="form-label">Annual Return (%)</label>
+                                <input type="number" class="form-control" id="expected_roi" name="expected_roi" min="0" max="100" step="0.01" required>
+                            </div>
+                            <div class="col-md-4">
+                                <label for="risk_level" class="form-label">Risk Level</label>
+                                <select class="form-select" id="risk_level" name="risk_level" required>
+                                    <option value="Low">Low</option>
+                                    <option value="Medium">Medium</option>
+                                    <option value="High">High</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="tags" class="form-label">Tags (comma-separated)</label>
+                            <input type="text" class="form-control" id="tags" name="tags" placeholder="Organic, Fair Trade, Sustainable">
+                        </div>
+                        
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label for="min_investment" class="form-label">Minimum Investment ($)</label>
+                                <input type="number" class="form-control" id="min_investment" name="min_investment" min="0" step="0.01">
+                            </div>
+                            <div class="col-md-6">
+                                <label for="price_per_unit" class="form-label">Price per Unit ($)</label>
+                                <input type="number" class="form-control" id="price_per_unit" name="price_per_unit" min="0" step="0.01">
+                            </div>
+                        </div>
+                        
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label for="total_acres" class="form-label">Total Acres</label>
+                                <input type="number" class="form-control" id="total_acres" name="total_acres" min="0" step="0.01">
+                            </div>
+                            <div class="col-md-6">
+                                <label for="estimated_ownership_duration" class="form-label">Estimated Ownership Duration (months)</label>
+                                <input type="number" class="form-control" id="estimated_ownership_duration" name="estimated_ownership_duration" min="0">
+                            </div>
+                        </div>
+                        
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label for="investment_type" class="form-label">Investment Type</label>
+                                <input type="text" class="form-control" id="investment_type" name="investment_type">
+                            </div>
+                            <div class="col-md-6">
+                                <label for="documents" class="form-label">Documents (comma-separated)</label>
+                                <input type="text" class="form-control" id="documents" name="documents" placeholder="doc1.pdf, doc2.pdf, ...">
+                            </div>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="overview" class="form-label">Overview</label>
+                            <textarea class="form-control" id="overview" name="overview" rows="3"></textarea>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="regional_significance" class="form-label">Regional Significance</label>
+                            <textarea class="form-control" id="regional_significance" name="regional_significance" rows="3"></textarea>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="why_investment" class="form-label">Why Invest</label>
+                            <textarea class="form-control" id="why_investment" name="why_investment" rows="3"></textarea>
+                        </div>
+                        
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label for="category" class="form-label">Category</label>
+                                <select class="form-select" id="category" name="category" required>
+                                    <option value="Crops">Crops</option>
+                                    <option value="Livestock">Livestock</option>
+                                    <option value="Dairy">Dairy</option>
+                                    <option value="Organic">Organic</option>
+                                    <option value="Sustainable">Sustainable</option>
+                                    <option value="Agroforestry">Agroforestry</option>
+                                    <option value="Other">Other</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="status" class="form-label">Status</label>
+                                <select class="form-select" id="status" name="status" required>
+                                    <option value="Open">Open</option>
+                                    <option value="Funded">Funded</option>
+                                    <option value="Completed">Completed</option>
+                                    <option value="Cancelled">Cancelled</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-primary">Create Project</button>
+                            <a href="{{ url_for('admin_projects') }}" class="btn btn-secondary">Cancel</a>
+                        </div>
+                    </form>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

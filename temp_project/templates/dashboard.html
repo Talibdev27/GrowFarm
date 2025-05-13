@@ -1,0 +1,320 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard - GrowFarm{% endblock %}
+
+{% block content %}
+<section class="py-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <h1 class="fw-bold mb-4">
+                    {% if current_user.role == 'farmer' %}
+                        Farmer Dashboard
+                    {% else %}
+                        Investor Dashboard
+                    {% endif %}
+                </h1>
+            </div>
+        </div>
+
+        <!-- Dashboard Stats -->
+        <div class="row mb-4">
+            {% if current_user.role == 'farmer' %}
+                <div class="col-md-4">
+                    <div class="dashboard-stat">
+                        <div class="d-flex justify-content-between">
+                            <div>
+                                <div class="stat-value">${{ total_funding|int }}</div>
+                                <div class="stat-label">Total Funding</div>
+                            </div>
+                            <div class="stat-icon">
+                                <i class="fas fa-dollar-sign"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="dashboard-stat">
+                        <div class="d-flex justify-content-between">
+                            <div>
+                                <div class="stat-value">{{ projects|length }}</div>
+                                <div class="stat-label">Total Projects</div>
+                            </div>
+                            <div class="stat-icon">
+                                <i class="fas fa-seedling"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="dashboard-stat">
+                        <div class="d-flex justify-content-between">
+                            <div>
+                                <div class="stat-value">{{ active_projects }}</div>
+                                <div class="stat-label">Active Projects</div>
+                            </div>
+                            <div class="stat-icon">
+                                <i class="fas fa-chart-line"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% else %}
+                <div class="col-md-4">
+                    <div class="dashboard-stat">
+                        <div class="d-flex justify-content-between">
+                            <div>
+                                <div class="stat-value">${{ total_invested|int }}</div>
+                                <div class="stat-label">Total Invested</div>
+                            </div>
+                            <div class="stat-icon">
+                                <i class="fas fa-dollar-sign"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="dashboard-stat">
+                        <div class="d-flex justify-content-between">
+                            <div>
+                                <div class="stat-value">{{ projects_funded }}</div>
+                                <div class="stat-label">Projects Funded</div>
+                            </div>
+                            <div class="stat-icon">
+                                <i class="fas fa-hand-holding-usd"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="dashboard-stat">
+                        <div class="d-flex justify-content-between">
+                            <div>
+                                <div class="stat-value">{{ investments|length }}</div>
+                                <div class="stat-label">Total Investments</div>
+                            </div>
+                            <div class="stat-icon">
+                                <i class="fas fa-chart-pie"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+
+        <!-- Quick Actions -->
+        <div class="row mb-4">
+            <div class="col-lg-12">
+                <div class="card border-0 shadow-sm">
+                    <div class="card-body">
+                        <h4 class="card-title">Quick Actions</h4>
+                        <div class="d-flex flex-wrap gap-2">
+                            {% if current_user.role == 'farmer' %}
+                                <a href="{{ url_for('create_project') }}" class="btn btn-primary">
+                                    <i class="fas fa-plus-circle me-2"></i>Create New Project
+                                </a>
+                                <a href="{{ url_for('profile') }}" class="btn btn-outline-primary">
+                                    <i class="fas fa-user-edit me-2"></i>Edit Profile
+                                </a>
+                                <a href="{{ url_for('messages') }}" class="btn btn-outline-primary">
+                                    <i class="fas fa-envelope me-2"></i>Messages
+                                </a>
+                            {% else %}
+                                <a href="{{ url_for('projects') }}" class="btn btn-primary">
+                                    <i class="fas fa-search me-2"></i>Find Projects
+                                </a>
+                                <a href="{{ url_for('profile') }}" class="btn btn-outline-primary">
+                                    <i class="fas fa-user-edit me-2"></i>Edit Profile
+                                </a>
+                                <a href="{{ url_for('messages') }}" class="btn btn-outline-primary">
+                                    <i class="fas fa-envelope me-2"></i>Messages
+                                </a>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Dashboard Content -->
+        {% if current_user.role == 'farmer' %}
+            <!-- Farmer Projects -->
+            <div class="row mb-4">
+                <div class="col-lg-12">
+                    <div class="card border-0 shadow-sm">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-center mb-4">
+                                <h4 class="card-title mb-0">Your Projects</h4>
+                                <a href="{{ url_for('create_project') }}" class="btn btn-sm btn-primary">
+                                    <i class="fas fa-plus-circle me-1"></i>New Project
+                                </a>
+                            </div>
+
+                            {% if projects %}
+                                <div class="table-responsive">
+                                    <table class="table table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th>Project</th>
+                                                <th>Category</th>
+                                                <th>Funding Goal</th>
+                                                <th>Current</th>
+                                                <th>Progress</th>
+                                                <th>Status</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for project in projects %}
+                                                <tr>
+                                                    <td>{{ project.title }}</td>
+                                                    <td>
+                                                        <span class="badge bg-primary">{{ project.category }}</span>
+                                                    </td>
+                                                    <td>${{ project.funding_goal|int }}</td>
+                                                    <td>${{ project.current_funding|int }}</td>
+                                                    <td>
+                                                        <div class="progress" style="height: 8px; width: 100px;">
+                                                            <div class="progress-bar" role="progressbar" 
+                                                                style="width: {{ project.calculate_progress() }}%;" 
+                                                                aria-valuenow="{{ project.calculate_progress() }}" 
+                                                                aria-valuemin="0" aria-valuemax="100">
+                                                            </div>
+                                                        </div>
+                                                        <small>{{ project.calculate_progress()|int }}%</small>
+                                                    </td>
+                                                    <td>
+                                                        <span class="badge bg-{{ 'success' if project.status == 'Funded' else 'primary' if project.status == 'Open' else 'secondary' }}">
+                                                            {{ project.status }}
+                                                        </span>
+                                                    </td>
+                                                    <td>
+                                                        <a href="{{ url_for('project_details', project_id=project.id) }}" class="btn btn-sm btn-outline-primary">
+                                                            View
+                                                        </a>
+                                                    </td>
+                                                </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            {% else %}
+                                <div class="text-center py-5">
+                                    <div class="mb-3">
+                                        <i class="fas fa-seedling fa-3x text-muted"></i>
+                                    </div>
+                                    <h5>No projects yet</h5>
+                                    <p class="text-muted">Create your first project to start receiving funding.</p>
+                                    <a href="{{ url_for('create_project') }}" class="btn btn-primary">
+                                        <i class="fas fa-plus-circle me-2"></i>Create New Project
+                                    </a>
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% else %}
+            <!-- Investor Dashboard -->
+            <div class="row">
+                <!-- Investments -->
+                <div class="col-lg-8 mb-4">
+                    <div class="card border-0 shadow-sm h-100">
+                        <div class="card-body">
+                            <h4 class="card-title mb-4">Your Investments</h4>
+                            
+                            {% if investments %}
+                                <div class="table-responsive">
+                                    <table class="table table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th>Project</th>
+                                                <th>Amount</th>
+                                                <th>Date</th>
+                                                <th>Status</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for investment in investments %}
+                                                <tr>
+                                                    <td>{{ investment.project.title }}</td>
+                                                    <td>${{ investment.amount|int }}</td>
+                                                    <td>{{ investment.date.strftime('%Y-%m-%d') }}</td>
+                                                    <td>
+                                                        <span class="badge bg-{{ 'success' if investment.status == 'Completed' else 'primary' if investment.status == 'Confirmed' else 'warning' }}">
+                                                            {{ investment.status }}
+                                                        </span>
+                                                    </td>
+                                                    <td>
+                                                        <a href="{{ url_for('project_details', project_id=investment.project.id) }}" class="btn btn-sm btn-outline-primary">
+                                                            View Project
+                                                        </a>
+                                                    </td>
+                                                </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            {% else %}
+                                <div class="text-center py-5">
+                                    <div class="mb-3">
+                                        <i class="fas fa-hand-holding-usd fa-3x text-muted"></i>
+                                    </div>
+                                    <h5>No investments yet</h5>
+                                    <p class="text-muted">Start investing in agricultural projects to grow your portfolio.</p>
+                                    <a href="{{ url_for('projects') }}" class="btn btn-primary">
+                                        <i class="fas fa-search me-2"></i>Find Projects
+                                    </a>
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Recommended Projects -->
+                <div class="col-lg-4 mb-4">
+                    <div class="card border-0 shadow-sm h-100">
+                        <div class="card-body">
+                            <h4 class="card-title mb-4">Recommended Projects</h4>
+                            
+                            {% if recommended_projects %}
+                                {% for project in recommended_projects %}
+                                    <div class="card mb-3 border">
+                                        <div class="card-body">
+                                            <h5 class="card-title">{{ project.title }}</h5>
+                                            <p class="card-text small">{{ project.description|truncate(100) }}</p>
+                                            <div class="d-flex justify-content-between align-items-center">
+                                                <span class="badge bg-primary">{{ project.category }}</span>
+                                                <span class="text-primary fw-bold">${{ project.funding_goal|int }}</span>
+                                            </div>
+                                            <div class="progress mt-2 mb-2" style="height: 5px;">
+                                                <div class="progress-bar" role="progressbar" 
+                                                    style="width: {{ project.calculate_progress() }}%;" 
+                                                    aria-valuenow="{{ project.calculate_progress() }}" 
+                                                    aria-valuemin="0" aria-valuemax="100">
+                                                </div>
+                                            </div>
+                                            <div class="d-grid">
+                                                <a href="{{ url_for('project_details', project_id=project.id) }}" class="btn btn-sm btn-outline-primary">View Details</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            {% else %}
+                                <div class="text-center py-4">
+                                    <p class="text-muted">No recommended projects available at the moment.</p>
+                                </div>
+                            {% endif %}
+                            
+                            <div class="d-grid mt-3">
+                                <a href="{{ url_for('projects') }}" class="btn btn-primary">Browse All Projects</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+</section>
+{% endblock %}

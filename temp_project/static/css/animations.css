@@ -1,0 +1,221 @@
+/* Animations for buttons and interactive elements */
+
+/* Spotlight effect */
+.spotlight-container {
+    position: relative;
+    overflow: hidden;
+    display: inline-block;
+    border-radius: 0.3rem;
+}
+
+.spotlight {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background: radial-gradient(circle at var(--x, 50%) var(--y, 50%), 
+                rgba(255, 255, 255, 0.3) 0%, 
+                rgba(255, 255, 255, 0) 50%);
+    opacity: 0;
+    transition: opacity 0.3s;
+    pointer-events: none;
+}
+
+.spotlight-container:hover .spotlight {
+    opacity: 1;
+}
+
+/* Animated Invest Now button */
+.btn-invest {
+    position: relative;
+    background: linear-gradient(135deg, #4CAF50, #2E7D32);
+    color: white;
+    border: none;
+    overflow: hidden;
+    z-index: 1;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.btn-invest:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #2E7D32, #4CAF50);
+    transition: all 0.5s ease;
+    z-index: -1;
+}
+
+.btn-invest:hover {
+    color: white;
+    transform: translateY(-3px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.btn-invest:hover:before {
+    left: 0;
+}
+
+.btn-invest:active {
+    transform: translateY(0);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Pulse animation for Invest Now button */
+.btn-invest-pulse {
+    animation: pulse 2s infinite;
+    box-shadow: 0 0 0 rgba(76, 175, 80, 0.4);
+}
+
+@keyframes pulse {
+    0% {
+        box-shadow: 0 0 0 0 rgba(76, 175, 80, 0.4);
+    }
+    70% {
+        box-shadow: 0 0 0 15px rgba(76, 175, 80, 0);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(76, 175, 80, 0);
+    }
+}
+
+/* Shine effect */
+.btn-invest-shine {
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-invest-shine:after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(
+        to right, 
+        rgba(255, 255, 255, 0) 0%, 
+        rgba(255, 255, 255, 0.3) 50%, 
+        rgba(255, 255, 255, 0) 100%
+    );
+    transform: rotate(30deg);
+    transition: all 0.8s;
+    opacity: 0;
+}
+
+.btn-invest-shine:hover:after {
+    opacity: 1;
+    left: 100%;
+    transition: all 0.8s;
+}
+
+/* Scale in and out animation for attention */
+.btn-invest-attention {
+    animation: scaleInOut 2s infinite;
+}
+
+@keyframes scaleInOut {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.05);
+    }
+}
+
+/* For secondary "Login to Invest" button */
+.btn-login-invest {
+    background: linear-gradient(135deg, #2196F3, #0D47A1);
+    color: white;
+    border: none;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.btn-login-invest:hover {
+    background: linear-gradient(135deg, #0D47A1, #2196F3);
+    transform: translateY(-3px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.btn-login-invest:active {
+    transform: translateY(0);
+}
+
+/* Add floating dollar signs animation */
+.btn-invest-dollars {
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-invest-dollars:before {
+    content: '$';
+    position: absolute;
+    color: rgba(255,255,255,0.5);
+    font-size: 16px;
+    animation: floatUp 2.5s infinite;
+    opacity: 0;
+    left: 30%;
+}
+
+.btn-invest-dollars:after {
+    content: '$';
+    position: absolute;
+    color: rgba(255,255,255,0.5);
+    font-size: 14px;
+    animation: floatUp 3s infinite 0.5s;
+    opacity: 0;
+    left: 60%;
+}
+
+@keyframes floatUp {
+    0% {
+        bottom: -10px;
+        opacity: 0;
+    }
+    50% {
+        opacity: 1;
+    }
+    100% {
+        bottom: 40px;
+        opacity: 0;
+    }
+}
+
+/* Confetti Animation */
+.confetti-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 9999;
+    overflow: hidden;
+    display: none;
+}
+
+.confetti {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    background-color: #4CAF50;
+    opacity: 0.8;
+    transform-origin: center;
+    animation: confettiFall linear forwards;
+}
+
+@keyframes confettiFall {
+    0% {
+        transform: translateY(-10vh) rotate(0deg);
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(100vh) rotate(720deg);
+        opacity: 0;
+    }
+}

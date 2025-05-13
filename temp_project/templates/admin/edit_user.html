@@ -1,0 +1,143 @@
+{% extends 'base.html' %}
+
+{% block title %}Admin - Edit User{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="row mb-4">
+        <div class="col-md-8">
+            <h1>Edit User</h1>
+        </div>
+        <div class="col-md-4 text-end">
+            <a href="{{ url_for('admin_users') }}" class="btn btn-secondary">
+                <i class="fas fa-arrow-left me-2"></i> Back to Users
+            </a>
+            <a href="{{ url_for('admin_user_details', user_id=user.id) }}" class="btn btn-primary">
+                <i class="fas fa-eye me-2"></i> View Details
+            </a>
+        </div>
+    </div>
+    
+    <div class="row">
+        <div class="col-md-8 mx-auto">
+            <div class="card">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0">Edit User Information</h5>
+                </div>
+                <div class="card-body">
+                    <form action="{{ url_for('admin_edit_user', user_id=user.id) }}" method="post">
+                        <div class="mb-3">
+                            <label for="username" class="form-label">Username</label>
+                            <input type="text" class="form-control" id="username" name="username" value="{{ user.username }}" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Email</label>
+                            <input type="email" class="form-control" id="email" name="email" value="{{ user.email }}" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="password" class="form-label">Password</label>
+                            <input type="password" class="form-control" id="password" name="password" placeholder="Leave blank to keep current password">
+                            <div class="form-text">Leave blank to keep the current password.</div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="role" class="form-label">Role</label>
+                            <select class="form-select" id="role" name="role" required>
+                                <option value="investor" {% if user.role == 'investor' %}selected{% endif %}>Investor</option>
+                                <option value="farmer" {% if user.role == 'farmer' %}selected{% endif %}>Farmer</option>
+                                <option value="admin" {% if user.role == 'admin' %}selected{% endif %}>Admin</option>
+                            </select>
+                        </div>
+                        <div class="form-check mb-4">
+                            <input class="form-check-input" type="checkbox" id="is_admin" name="is_admin" {% if user.is_admin %}checked{% endif %}>
+                            <label class="form-check-label" for="is_admin">
+                                Grant Admin Privileges
+                            </label>
+                        </div>
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-primary">Save Changes</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            
+            {% if user.role == 'farmer' and user.farmer %}
+            <div class="card mt-4">
+                <div class="card-header bg-success text-white">
+                    <h5 class="mb-0">Farmer Profile</h5>
+                </div>
+                <div class="card-body">
+                    <form action="{{ url_for('admin_edit_farmer_profile', user_id=user.id) }}" method="post">
+                        <div class="mb-3">
+                            <label for="farm_name" class="form-label">Farm Name</label>
+                            <input type="text" class="form-control" id="farm_name" name="farm_name" value="{{ user.farmer.farm_name }}" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="farm_location" class="form-label">Farm Location</label>
+                            <input type="text" class="form-control" id="farm_location" name="farm_location" value="{{ user.farmer.farm_location }}" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="description" class="form-label">Description</label>
+                            <textarea class="form-control" id="description" name="description" rows="3">{{ user.farmer.description }}</textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label for="experience_years" class="form-label">Years of Experience</label>
+                            <input type="number" class="form-control" id="experience_years" name="experience_years" value="{{ user.farmer.experience_years }}" min="0">
+                        </div>
+                        <div class="mb-3">
+                            <label for="specialization" class="form-label">Specialization</label>
+                            <input type="text" class="form-control" id="specialization" name="specialization" value="{{ user.farmer.specialization }}">
+                        </div>
+                        <div class="mb-3">
+                            <label for="phone" class="form-label">Phone Number</label>
+                            <input type="text" class="form-control" id="phone" name="phone" value="{{ user.farmer.phone }}">
+                        </div>
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-success">Update Farmer Profile</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            {% elif user.role == 'investor' and user.investor %}
+            <div class="card mt-4">
+                <div class="card-header bg-info text-white">
+                    <h5 class="mb-0">Investor Profile</h5>
+                </div>
+                <div class="card-body">
+                    <form action="{{ url_for('admin_edit_investor_profile', user_id=user.id) }}" method="post">
+                        <div class="mb-3">
+                            <label for="full_name" class="form-label">Full Name</label>
+                            <input type="text" class="form-control" id="full_name" name="full_name" value="{{ user.investor.full_name }}" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="bio" class="form-label">Bio</label>
+                            <textarea class="form-control" id="bio" name="bio" rows="3">{{ user.investor.bio }}</textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label for="investment_focus" class="form-label">Investment Focus</label>
+                            <input type="text" class="form-control" id="investment_focus" name="investment_focus" value="{{ user.investor.investment_focus }}">
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label for="min_investment" class="form-label">Minimum Investment ($)</label>
+                                <input type="number" class="form-control" id="min_investment" name="min_investment" value="{{ user.investor.min_investment }}" min="0" step="0.01">
+                            </div>
+                            <div class="col-md-6">
+                                <label for="max_investment" class="form-label">Maximum Investment ($)</label>
+                                <input type="number" class="form-control" id="max_investment" name="max_investment" value="{{ user.investor.max_investment }}" min="0" step="0.01">
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="phone" class="form-label">Phone Number</label>
+                            <input type="text" class="form-control" id="phone" name="phone" value="{{ user.investor.phone }}">
+                        </div>
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-info">Update Investor Profile</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

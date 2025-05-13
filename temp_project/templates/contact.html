@@ -1,0 +1,217 @@
+{% extends "base.html" %}
+
+{% block title %}Contact Us - GrowFarm{% endblock %}
+
+{% block content %}
+<section class="py-5 bg-light">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6 mb-4 mb-lg-0">
+                <h1 class="fw-bold mb-4">Contact Us</h1>
+                <p class="lead">Have questions about GrowFarm? We're here to help.</p>
+                <p>Whether you're a farmer looking to list a project, an investor seeking opportunities, or just curious about how we work, our team is ready to assist you.</p>
+                <div class="d-flex align-items-center mb-3">
+                    <div class="flex-shrink-0">
+                        <i class="fas fa-map-marker-alt fa-2x text-primary"></i>
+                    </div>
+                    <div class="ms-3">
+                        <h5 class="mb-1">Visit Us</h5>
+                        <p class="mb-0">123 Farm Street, Agritown, AG 12345</p>
+                    </div>
+                </div>
+                <div class="d-flex align-items-center mb-3">
+                    <div class="flex-shrink-0">
+                        <i class="fas fa-phone fa-2x text-primary"></i>
+                    </div>
+                    <div class="ms-3">
+                        <h5 class="mb-1">Call Us</h5>
+                        <p class="mb-0">(123) 456-7890</p>
+                    </div>
+                </div>
+                <div class="d-flex align-items-center">
+                    <div class="flex-shrink-0">
+                        <i class="fas fa-envelope fa-2x text-primary"></i>
+                    </div>
+                    <div class="ms-3">
+                        <h5 class="mb-1">Email Us</h5>
+                        <p class="mb-0">info@growfarm.com</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="card border-0 shadow-sm">
+                    <div class="card-body p-4 p-md-5">
+                        <h2 class="card-title fw-bold mb-4">Send Us a Message</h2>
+                        
+                        <form method="POST" action="{{ url_for('contact') }}" id="contact-form" novalidate>
+                            {{ form.hidden_tag() }}
+                            
+                            <div class="mb-3">
+                                {{ form.name.label(class="form-label") }}
+                                {% if form.name.errors %}
+                                    {{ form.name(class="form-control is-invalid", id="name") }}
+                                    <div class="invalid-feedback">
+                                        {% for error in form.name.errors %}
+                                            {{ error }}
+                                        {% endfor %}
+                                    </div>
+                                {% else %}
+                                    {{ form.name(class="form-control", id="name", placeholder="Your name") }}
+                                {% endif %}
+                            </div>
+                            
+                            <div class="mb-3">
+                                {{ form.email.label(class="form-label") }}
+                                {% if form.email.errors %}
+                                    {{ form.email(class="form-control is-invalid", id="email") }}
+                                    <div class="invalid-feedback">
+                                        {% for error in form.email.errors %}
+                                            {{ error }}
+                                        {% endfor %}
+                                    </div>
+                                {% else %}
+                                    {{ form.email(class="form-control", id="email", placeholder="Your email address") }}
+                                {% endif %}
+                            </div>
+                            
+                            <div class="mb-3">
+                                {{ form.subject.label(class="form-label") }}
+                                {% if form.subject.errors %}
+                                    {{ form.subject(class="form-control is-invalid", id="subject") }}
+                                    <div class="invalid-feedback">
+                                        {% for error in form.subject.errors %}
+                                            {{ error }}
+                                        {% endfor %}
+                                    </div>
+                                {% else %}
+                                    {{ form.subject(class="form-control", id="subject", placeholder="Subject of your message") }}
+                                {% endif %}
+                            </div>
+                            
+                            <div class="mb-3">
+                                {{ form.message.label(class="form-label") }}
+                                {% if form.message.errors %}
+                                    {{ form.message(class="form-control is-invalid", rows=5, id="message") }}
+                                    <div class="invalid-feedback">
+                                        {% for error in form.message.errors %}
+                                            {{ error }}
+                                        {% endfor %}
+                                    </div>
+                                {% else %}
+                                    {{ form.message(class="form-control", rows=5, id="message", placeholder="Your message") }}
+                                {% endif %}
+                            </div>
+                            
+                            <div class="d-grid">
+                                {{ form.submit(class="btn btn-primary btn-lg") }}
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- FAQ Section -->
+<section class="py-5">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h2 class="fw-bold">Frequently Asked Questions</h2>
+            <p class="lead text-muted">Find answers to common questions about GrowFarm</p>
+        </div>
+        
+        <div class="row justify-content-center">
+            <div class="col-lg-10">
+                <div class="accordion" id="faqAccordion">
+                    <div class="accordion-item border mb-3 shadow-sm">
+                        <h2 class="accordion-header" id="headingOne">
+                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                How does GrowFarm work?
+                            </button>
+                        </h2>
+                        <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#faqAccordion">
+                            <div class="accordion-body">
+                                GrowFarm connects farmers seeking funding with investors looking for agricultural opportunities. Farmers create profiles and list their projects with details about funding needs, expected returns, and timelines. Investors browse projects, invest in ones they believe in, and track their investments through our platform.
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="accordion-item border mb-3 shadow-sm">
+                        <h2 class="accordion-header" id="headingTwo">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                How do I invest in a project?
+                            </button>
+                        </h2>
+                        <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#faqAccordion">
+                            <div class="accordion-body">
+                                To invest in a project, first create an investor account and complete your profile. Browse available projects, view their details, and when you find one you're interested in, click the "Invest Now" button. Enter the amount you want to invest (minimum $100), and confirm your investment.
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="accordion-item border mb-3 shadow-sm">
+                        <h2 class="accordion-header" id="headingThree">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                How do I list my farm project?
+                            </button>
+                        </h2>
+                        <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#faqAccordion">
+                            <div class="accordion-body">
+                                Create a farmer account, complete your farm profile with details about your operation, and then click on "Create Project" in your dashboard. Fill out the project details including funding goal, expected ROI, duration, and risk level. Once submitted, your project will be reviewed and, if approved, listed on our platform for potential investors.
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="accordion-item border mb-3 shadow-sm">
+                        <h2 class="accordion-header" id="headingFour">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                                What types of projects are eligible?
+                            </button>
+                        </h2>
+                        <div id="collapseFour" class="accordion-collapse collapse" aria-labelledby="headingFour" data-bs-parent="#faqAccordion">
+                            <div class="accordion-body">
+                                We accept a wide range of agricultural projects including crop production, livestock, dairy, organic farming, sustainable agriculture, agroforestry, and more. Projects should have clear objectives, realistic timelines, and transparent financial projections. We particularly encourage sustainable and regenerative farming practices.
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="accordion-item border shadow-sm">
+                        <h2 class="accordion-header" id="headingFive">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
+                                How are returns distributed to investors?
+                            </button>
+                        </h2>
+                        <div id="collapseFive" class="accordion-collapse collapse" aria-labelledby="headingFive" data-bs-parent="#faqAccordion">
+                            <div class="accordion-body">
+                                Returns are distributed according to the agreement specified in each project. Typically, farmers will provide regular updates on the project's progress and make payments to investors based on the project's timeline and success. The expected ROI and payment schedule are clearly outlined in the project details.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Map Section -->
+<section class="py-5 bg-light">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="card border-0 shadow-sm">
+                    <div class="card-body p-0">
+                        <div style="height: 400px; background-color: #e9ecef; display: flex; align-items: center; justify-content: center;">
+                            <div class="text-center">
+                                <i class="fas fa-map-marked-alt fa-4x text-muted mb-3"></i>
+                                <h4>Map Location</h4>
+                                <p class="mb-0">Interactive map would be displayed here in a production environment</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

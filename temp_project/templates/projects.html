@@ -1,0 +1,210 @@
+{% extends "base.html" %}
+
+{% block title %}Projects - GrowFarm{% endblock %}
+
+{% block content %}
+<section class="py-5">
+    <div class="container">
+        <div class="row mb-4">
+            <div class="col-lg-12">
+                <h1 class="fw-bold mb-4">Agricultural Projects</h1>
+                <p class="lead">Discover farming projects seeking investment and support.</p>
+            </div>
+        </div>
+
+        <!-- Filters -->
+        <div class="row mb-4">
+            <div class="col-lg-12">
+                <div class="card border-0 shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title mb-3">Filter Projects</h5>
+                        <div class="row g-3">
+                            <div class="col-md-5">
+                                <label for="category-filter" class="form-label">Category</label>
+                                <select class="form-select" id="category-filter">
+                                    <option value="">All Categories</option>
+                                    {% for category in categories %}
+                                        <option value="{{ category }}" {% if selected_category == category %}selected{% endif %}>{{ category }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="col-md-5">
+                                <label for="risk-filter" class="form-label">Risk Level</label>
+                                <select class="form-select" id="risk-filter">
+                                    <option value="">All Risk Levels</option>
+                                    <option value="Low" {% if selected_risk == "Low" %}selected{% endif %}>Low</option>
+                                    <option value="Medium" {% if selected_risk == "Medium" %}selected{% endif %}>Medium</option>
+                                    <option value="High" {% if selected_risk == "High" %}selected{% endif %}>High</option>
+                                </select>
+                            </div>
+                            <div class="col-md-2 d-flex align-items-end">
+                                <button id="reset-filters" class="btn btn-outline-secondary w-100">Reset</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Projects List -->
+        <div class="row g-4">
+            {% if projects.items %}
+                {% for project in projects.items %}
+                    <div class="col-md-6 col-lg-4">
+                        <div class="card project-card h-100">
+                            <span class="badge bg-primary category-badge">{{ project.category }}</span>
+                            <div class="bg-image">
+                                {% if project.image_url %}
+                                    <div class="card-img-top project-image-{{ project.id }}" style="background: url('{{ project.image_url }}'); height: 200px; background-size: cover; background-position: center;"></div>
+                                    <script>
+                                        document.addEventListener('DOMContentLoaded', function() {
+                                            const img = new Image();
+                                            img.onload = function() {
+                                                // Image loaded successfully, do nothing
+                                            };
+                                            img.onerror = function() {
+                                                // Image failed to load, use fallback
+                                                const projectImage = document.querySelector('.project-image-{{ project.id }}');
+                                                if (projectImage) {
+                                                    {% if project.category == 'Crops' %}
+                                                        projectImage.style.background = "url('https://images.unsplash.com/photo-1628352081568-06c0a8d75457?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1350&q=80')";
+                                                    {% elif project.category == 'Livestock' %}
+                                                        projectImage.style.background = "url('https://images.unsplash.com/photo-1596733430284-f7437764b1a9?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1350&q=80')";
+                                                    {% elif project.category == 'Dairy' %}
+                                                        projectImage.style.background = "url('https://images.unsplash.com/photo-1550583724-b2692b85b150?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1350&q=80')";
+                                                    {% elif project.category == 'Organic' %}
+                                                        projectImage.style.background = "url('https://images.unsplash.com/photo-1574943320219-855726909e01?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1350&q=80')";
+                                                    {% elif project.category == 'Sustainable' %}
+                                                        projectImage.style.background = "url('https://images.unsplash.com/photo-1530836369250-ef72a3f5cda8?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1350&q=80')";
+                                                    {% elif project.category == 'Agroforestry' %}
+                                                        projectImage.style.background = "url('https://images.unsplash.com/photo-1511497584788-876760111969?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1350&q=80')";
+                                                    {% else %}
+                                                        projectImage.style.background = "url('https://images.unsplash.com/photo-1523741543316-beb7fc7023d8?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1350&q=80')";
+                                                    {% endif %}
+                                                    projectImage.style.backgroundSize = 'cover';
+                                                    projectImage.style.backgroundPosition = 'center';
+                                                }
+                                            };
+                                            img.src = '{{ project.image_url }}';
+                                        });
+                                    </script>
+                                {% elif project.category == 'Crops' %}
+                                    <div class="card-img-top" style="background: url('https://images.unsplash.com/photo-1628352081568-06c0a8d75457?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1350&q=80'); height: 200px; background-size: cover; background-position: center;"></div>
+                                {% elif project.category == 'Livestock' %}
+                                    <div class="card-img-top" style="background: url('https://images.unsplash.com/photo-1596733430284-f7437764b1a9?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1350&q=80'); height: 200px; background-size: cover; background-position: center;"></div>
+                                {% elif project.category == 'Dairy' %}
+                                    <div class="card-img-top" style="background: url('https://images.unsplash.com/photo-1550583724-b2692b85b150?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1350&q=80'); height: 200px; background-size: cover; background-position: center;"></div>
+                                {% elif project.category == 'Organic' %}
+                                    <div class="card-img-top" style="background: url('https://images.unsplash.com/photo-1574943320219-855726909e01?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1350&q=80'); height: 200px; background-size: cover; background-position: center;"></div>
+                                {% elif project.category == 'Sustainable' %}
+                                    <div class="card-img-top" style="background: url('https://images.unsplash.com/photo-1530836369250-ef72a3f5cda8?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1350&q=80'); height: 200px; background-size: cover; background-position: center;"></div>
+                                {% elif project.category == 'Agroforestry' %}
+                                    <div class="card-img-top" style="background: url('https://images.unsplash.com/photo-1511497584788-876760111969?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1350&q=80'); height: 200px; background-size: cover; background-position: center;"></div>
+                                {% else %}
+                                    <div class="card-img-top" style="background: url('https://images.unsplash.com/photo-1523741543316-beb7fc7023d8?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1350&q=80'); height: 200px; background-size: cover; background-position: center;"></div>
+                                {% endif %}
+                            </div>
+                            <div class="card-body">
+                                <h5 class="card-title">{{ project.title }}</h5>
+                                <p class="text-muted mb-0 small">By {{ project.farmer.farm_name }}</p>
+                                <p class="card-text text-muted my-3">{{ project.description|truncate(100) }}</p>
+                                <div class="d-flex justify-content-between align-items-center mb-3">
+                                    <span class="text-primary fw-bold">${{ project.funding_goal|int }}</span>
+                                    <span class="badge bg-{{ 'success' if project.risk_level == 'Low' else 'warning' if project.risk_level == 'Medium' else 'danger' }}">{{ project.risk_level }} Risk</span>
+                                </div>
+                                <div class="progress mb-3" style="height: 10px;">
+                                    <div class="progress-bar" role="progressbar" style="width: {{ project.calculate_progress() }}%;" 
+                                        aria-valuenow="{{ project.calculate_progress() }}" aria-valuemin="0" aria-valuemax="100">
+                                    </div>
+                                </div>
+                                <div class="d-flex justify-content-between small text-muted mb-3">
+                                    <span>Funded: ${{ project.current_funding|int }}</span>
+                                    <span>{{ project.calculate_progress()|int }}%</span>
+                                </div>
+                                <div class="d-flex gap-2">
+                                    <a href="{{ url_for('project_details', project_id=project.id) }}" class="btn btn-outline-primary flex-grow-1">View Details</a>
+                                    {% if current_user.is_authenticated and current_user.role == 'investor' and project.status == 'Open' %}
+                                        <a href="{{ url_for('project_details', project_id=project.id) }}" class="btn btn-invest btn-invest-shine">
+                                            <i class="fas fa-hand-holding-usd"></i> Invest
+                                        </a>
+                                    {% elif not current_user.is_authenticated and project.status == 'Open' %}
+                                        <a href="{{ url_for('login') }}" class="btn btn-login-invest btn-invest-attention">
+                                            <i class="fas fa-hand-holding-usd"></i>
+                                        </a>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <div class="col-12 text-center py-5">
+                    <div class="mb-3">
+                        <i class="fas fa-search fa-3x text-muted"></i>
+                    </div>
+                    <h5>No Projects Found</h5>
+                    <p class="text-muted">Try adjusting your filters or check back later for new projects.</p>
+                    <button id="reset-filters" class="btn btn-primary">Reset Filters</button>
+                </div>
+            {% endif %}
+        </div>
+
+        <!-- Pagination -->
+        {% if projects.pages > 1 %}
+            <div class="row mt-5">
+                <div class="col-12">
+                    <nav aria-label="Project pagination">
+                        <ul class="pagination justify-content-center">
+                            {% if projects.has_prev %}
+                                <li class="page-item">
+                                    <a class="page-link" href="{{ url_for('projects', page=projects.prev_num, category=selected_category, risk=selected_risk) }}">Previous</a>
+                                </li>
+                            {% else %}
+                                <li class="page-item disabled">
+                                    <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
+                                </li>
+                            {% endif %}
+                            
+                            {% for page_num in range(1, projects.pages + 1) %}
+                                {% if page_num == projects.page %}
+                                    <li class="page-item active" aria-current="page">
+                                        <a class="page-link" href="#">{{ page_num }}</a>
+                                    </li>
+                                {% else %}
+                                    <li class="page-item">
+                                        <a class="page-link" href="{{ url_for('projects', page=page_num, category=selected_category, risk=selected_risk) }}">{{ page_num }}</a>
+                                    </li>
+                                {% endif %}
+                            {% endfor %}
+                            
+                            {% if projects.has_next %}
+                                <li class="page-item">
+                                    <a class="page-link" href="{{ url_for('projects', page=projects.next_num, category=selected_category, risk=selected_risk) }}">Next</a>
+                                </li>
+                            {% else %}
+                                <li class="page-item disabled">
+                                    <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Next</a>
+                                </li>
+                            {% endif %}
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+</section>
+
+{% block extra_js %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const resetButton = document.getElementById('reset-filters');
+        if (resetButton) {
+            resetButton.addEventListener('click', function() {
+                window.location.href = "{{ url_for('projects') }}";
+            });
+        }
+    });
+</script>
+{% endblock %}
+
+{% endblock %}

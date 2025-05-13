@@ -1,0 +1,372 @@
+{% extends 'base.html' %}
+
+{% block title %}Admin - Project Details{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="row mb-4">
+        <div class="col-md-8">
+            <h1>Project Details</h1>
+        </div>
+        <div class="col-md-4 text-end">
+            <a href="{{ url_for('admin_projects') }}" class="btn btn-secondary">
+                <i class="fas fa-arrow-left me-2"></i> Back to Projects
+            </a>
+            <a href="{{ url_for('admin_edit_project', project_id=project.id) }}" class="btn btn-primary">
+                <i class="fas fa-edit me-2"></i> Edit Project
+            </a>
+        </div>
+    </div>
+    
+    <div class="row">
+        <div class="col-md-8">
+            <div class="card mb-4">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0">Basic Information</h5>
+                </div>
+                <div class="card-body">
+                    <h2 class="mb-3">{{ project.title }}</h2>
+                    
+                    <div class="mb-4">
+                        <span class="badge 
+                            {% if project.status == 'Open' %}bg-primary
+                            {% elif project.status == 'Funded' %}bg-success
+                            {% elif project.status == 'Completed' %}bg-info
+                            {% else %}bg-secondary{% endif %} mb-2">
+                            {{ project.status }}
+                        </span>
+                        <span class="badge bg-secondary mb-2">Category: {{ project.category }}</span>
+                        <span class="badge bg-warning text-dark mb-2">Risk: {{ project.risk_level }}</span>
+                        {% if project.tags %}
+                            {% for tag in project.tags.split(',') %}
+                                <span class="badge bg-info mb-2">{{ tag.strip() }}</span>
+                            {% endfor %}
+                        {% endif %}
+                    </div>
+
+                    {% if project.image_url %}
+                    <div class="mb-4">
+                        <img src="{{ project.image_url }}" alt="{{ project.title }}" class="img-fluid rounded" style="max-height: 300px;">
+                    </div>
+                    {% endif %}
+                    
+                    <div class="mb-4">
+                        <h5>Project Description</h5>
+                        <p>{{ project.description }}</p>
+                    </div>
+
+                    {% if project.location %}
+                    <div class="mb-4">
+                        <h5>Location</h5>
+                        <p>{{ project.location }}</p>
+                    </div>
+                    {% endif %}
+                    
+                    <div class="row mb-4">
+                        <div class="col-md-6">
+                            <div class="card h-100">
+                                <div class="card-body">
+                                    <h5 class="card-title">Funding Information</h5>
+                                    <div class="mb-3">
+                                        <label class="form-label text-muted">Funding Goal</label>
+                                        <p class="form-control-plaintext">${{ project.funding_goal }}</p>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label text-muted">Current Funding</label>
+                                        <p class="form-control-plaintext">${{ project.current_funding }}</p>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label text-muted">Progress</label>
+                                        <div class="progress">
+                                            <div class="progress-bar bg-success" role="progressbar" style="width: {{ project.calculate_progress() }}%" aria-valuenow="{{ project.calculate_progress() }}" aria-valuemin="0" aria-valuemax="100">{{ project.calculate_progress()|int }}%</div>
+                                        </div>
+                                    </div>
+                                    {% if project.min_investment %}
+                                    <div class="mb-3">
+                                        <label class="form-label text-muted">Minimum Investment</label>
+                                        <p class="form-control-plaintext">${{ project.min_investment }}</p>
+                                    </div>
+                                    {% endif %}
+                                    {% if project.price_per_unit %}
+                                    <div class="mb-3">
+                                        <label class="form-label text-muted">Price per Unit</label>
+                                        <p class="form-control-plaintext">${{ project.price_per_unit }}</p>
+                                    </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card h-100">
+                                <div class="card-body">
+                                    <h5 class="card-title">Project Details</h5>
+                                    <div class="mb-3">
+                                        <label class="form-label text-muted">Duration</label>
+                                        <p class="form-control-plaintext">{{ project.duration_months }} months</p>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label text-muted">Annual Return</label>
+                                        <p class="form-control-plaintext">{{ project.expected_roi }}%</p>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label text-muted">Timeline</label>
+                                        <p class="form-control-plaintext">
+                                            Start: {{ project.start_date.strftime('%Y-%m-%d') }}<br>
+                                            {% if project.end_date %}
+                                            End: {{ project.end_date.strftime('%Y-%m-%d') }}
+                                            {% else %}
+                                            End: Not set
+                                            {% endif %}
+                                        </p>
+                                    </div>
+                                    {% if project.total_acres %}
+                                    <div class="mb-3">
+                                        <label class="form-label text-muted">Total Acres</label>
+                                        <p class="form-control-plaintext">{{ project.total_acres }}</p>
+                                    </div>
+                                    {% endif %}
+                                    {% if project.estimated_ownership_duration %}
+                                    <div class="mb-3">
+                                        <label class="form-label text-muted">Estimated Ownership Duration</label>
+                                        <p class="form-control-plaintext">{{ project.estimated_ownership_duration }} months</p>
+                                    </div>
+                                    {% endif %}
+                                    {% if project.investment_type %}
+                                    <div class="mb-3">
+                                        <label class="form-label text-muted">Investment Type</label>
+                                        <p class="form-control-plaintext">{{ project.investment_type }}</p>
+                                    </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    {% if project.overview or project.regional_significance or project.why_investment %}
+                    <div class="mb-4">
+                        <h5>Additional Information</h5>
+                        
+                        <div class="accordion" id="projectInfoAccordion">
+                            {% if project.overview %}
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="headingOverview">
+                                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOverview" aria-expanded="true" aria-controls="collapseOverview">
+                                        Overview
+                                    </button>
+                                </h2>
+                                <div id="collapseOverview" class="accordion-collapse collapse show" aria-labelledby="headingOverview" data-bs-parent="#projectInfoAccordion">
+                                    <div class="accordion-body">
+                                        {{ project.overview }}
+                                    </div>
+                                </div>
+                            </div>
+                            {% endif %}
+                            
+                            {% if project.regional_significance %}
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="headingRegional">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseRegional" aria-expanded="false" aria-controls="collapseRegional">
+                                        Regional Significance
+                                    </button>
+                                </h2>
+                                <div id="collapseRegional" class="accordion-collapse collapse" aria-labelledby="headingRegional" data-bs-parent="#projectInfoAccordion">
+                                    <div class="accordion-body">
+                                        {{ project.regional_significance }}
+                                    </div>
+                                </div>
+                            </div>
+                            {% endif %}
+                            
+                            {% if project.why_investment %}
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="headingWhy">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseWhy" aria-expanded="false" aria-controls="collapseWhy">
+                                        Why Invest
+                                    </button>
+                                </h2>
+                                <div id="collapseWhy" class="accordion-collapse collapse" aria-labelledby="headingWhy" data-bs-parent="#projectInfoAccordion">
+                                    <div class="accordion-body">
+                                        {{ project.why_investment }}
+                                    </div>
+                                </div>
+                            </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                    {% endif %}
+
+                    {% if project.documents %}
+                    <div class="mb-4">
+                        <h5>Documents</h5>
+                        <ul class="list-group">
+                            {% for doc in project.documents.split(',') %}
+                            <li class="list-group-item">
+                                <i class="fas fa-file-pdf me-2"></i> {{ doc.strip() }}
+                            </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    {% endif %}
+                    
+                    <div class="mb-3">
+                        <label class="form-label text-muted">Created At</label>
+                        <p class="form-control-plaintext">{{ project.created_at.strftime('%Y-%m-%d %H:%M:%S') }}</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card mb-4">
+                <div class="card-header bg-info text-white">
+                    <h5 class="mb-0">Farmer Information</h5>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label class="form-label text-muted">Farm Name</label>
+                                <p class="form-control-plaintext">{{ project.farmer.farm_name }}</p>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label text-muted">Farm Location</label>
+                                <p class="form-control-plaintext">{{ project.farmer.farm_location }}</p>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label text-muted">Specialization</label>
+                                <p class="form-control-plaintext">{{ project.farmer.specialization or 'Not specified' }}</p>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label class="form-label text-muted">Experience</label>
+                                <p class="form-control-plaintext">{{ project.farmer.experience_years or 0 }} years</p>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label text-muted">Contact</label>
+                                <p class="form-control-plaintext">{{ project.farmer.phone or 'Not provided' }}</p>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label text-muted">Farmer Account</label>
+                                <p class="form-control-plaintext">
+                                    <a href="{{ url_for('admin_user_details', user_id=project.farmer.user_id) }}">
+                                        View Account
+                                    </a>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-4">
+            <div class="card mb-4">
+                <div class="card-header bg-success text-white">
+                    <h5 class="mb-0">Investments ({{ project.investments.count() }})</h5>
+                </div>
+                <div class="card-body">
+                    {% if project.investments.count() > 0 %}
+                    <div class="list-group">
+                        {% for investment in project.investments %}
+                        <a href="{{ url_for('admin_investment_details', investment_id=investment.id) }}" class="list-group-item list-group-item-action">
+                            <div class="d-flex w-100 justify-content-between">
+                                <h6 class="mb-1">{{ investment.investor.full_name }}</h6>
+                                <span class="text-primary">${{ investment.amount }}</span>
+                            </div>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <small>{{ investment.date.strftime('%Y-%m-%d') }}</small>
+                                <span class="badge 
+                                    {% if investment.status == 'Pending' %}bg-warning text-dark
+                                    {% elif investment.status == 'Confirmed' %}bg-primary
+                                    {% elif investment.status == 'Completed' %}bg-success
+                                    {% else %}bg-secondary{% endif %}">
+                                    {{ investment.status }}
+                                </span>
+                            </div>
+                        </a>
+                        {% endfor %}
+                    </div>
+                    {% else %}
+                    <p class="text-muted">No investments found for this project.</p>
+                    {% endif %}
+                </div>
+            </div>
+            
+            <div class="card mb-4">
+                <div class="card-header bg-warning text-dark">
+                    <h5 class="mb-0">Actions</h5>
+                </div>
+                <div class="card-body">
+                    <div class="d-grid gap-2">
+                        <a href="{{ url_for('admin_edit_project', project_id=project.id) }}" class="btn btn-primary">
+                            <i class="fas fa-edit me-2"></i> Edit Project
+                        </a>
+                        
+                        <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#updateStatusModal">
+                            <i class="fas fa-exchange-alt me-2"></i> Update Status
+                        </button>
+                        
+                        <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteProjectModal">
+                            <i class="fas fa-trash me-2"></i> Delete Project
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Update Status Modal -->
+<div class="modal fade" id="updateStatusModal" tabindex="-1" aria-labelledby="updateStatusModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="updateStatusModalLabel">Update Project Status</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form action="{{ url_for('admin_update_project_status', project_id=project.id) }}" method="post">
+                    <div class="mb-3">
+                        <label for="status" class="form-label">Status</label>
+                        <select class="form-select" id="status" name="status" required>
+                            <option value="Open" {% if project.status == 'Open' %}selected{% endif %}>Open</option>
+                            <option value="Funded" {% if project.status == 'Funded' %}selected{% endif %}>Funded</option>
+                            <option value="Completed" {% if project.status == 'Completed' %}selected{% endif %}>Completed</option>
+                            <option value="Cancelled" {% if project.status == 'Cancelled' %}selected{% endif %}>Cancelled</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="notes" class="form-label">Notes</label>
+                        <textarea class="form-control" id="notes" name="notes" rows="3"></textarea>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                        <button type="submit" class="btn btn-primary">Update Status</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Delete Project Modal -->
+<div class="modal fade" id="deleteProjectModal" tabindex="-1" aria-labelledby="deleteProjectModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteProjectModalLabel">Confirm Deletion</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure you want to delete the project <strong>{{ project.title }}</strong>?</p>
+                <p class="text-danger">Warning: This action cannot be undone and will remove all associated investments.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <form action="{{ url_for('admin_delete_project', project_id=project.id) }}" method="post">
+                    <button type="submit" class="btn btn-danger">Delete Project</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
