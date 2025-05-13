@@ -1,0 +1,41 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: ru\n"
+
+msgid "Home"
+msgstr "Главная"
+
+msgid "About"
+msgstr "О нас"
+
+msgid "Projects"
+msgstr "Проекты"
+
+msgid "Contact"
+msgstr "Контакты"
+
+msgid "Login"
+msgstr "Войти"
+
+msgid "Sign Up"
+msgstr "Регистрация"
+
+msgid "Dashboard"
+msgstr "Панель управления"
+
+msgid "Profile"
+msgstr "Профиль"
+
+msgid "Create Project"
+msgstr "Создать проект"
+
+msgid "Admin Dashboard"
+msgstr "Панель администратора"
+
+msgid "Logout"
+msgstr "Выйти"
+
+msgid "You do not have permission to access this page."
+msgstr "У вас нет прав для доступа к этой странице."

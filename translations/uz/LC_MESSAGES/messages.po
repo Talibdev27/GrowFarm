@@ -1,0 +1,41 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: uz\n"
+
+msgid "Home"
+msgstr "Bosh sahifa"
+
+msgid "About"
+msgstr "Biz haqimizda"
+
+msgid "Projects"
+msgstr "Loyihalar"
+
+msgid "Contact"
+msgstr "Aloqa"
+
+msgid "Login"
+msgstr "Kirish"
+
+msgid "Sign Up"
+msgstr "Ro'yxatdan o'tish"
+
+msgid "Dashboard"
+msgstr "Boshqaruv paneli"
+
+msgid "Profile"
+msgstr "Profil"
+
+msgid "Create Project"
+msgstr "Loyiha yaratish"
+
+msgid "Admin Dashboard"
+msgstr "Admin boshqaruv paneli"
+
+msgid "Logout"
+msgstr "Chiqish"
+
+msgid "You do not have permission to access this page."
+msgstr "Sizda ushbu sahifaga kirish uchun ruxsat yo'q."

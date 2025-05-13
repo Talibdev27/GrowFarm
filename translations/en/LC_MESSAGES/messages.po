@@ -1,0 +1,41 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: en\n"
+
+msgid "Home"
+msgstr "Home"
+
+msgid "About"
+msgstr "About"
+
+msgid "Projects"
+msgstr "Projects"
+
+msgid "Contact"
+msgstr "Contact"
+
+msgid "Login"
+msgstr "Login"
+
+msgid "Sign Up"
+msgstr "Sign Up"
+
+msgid "Dashboard"
+msgstr "Dashboard"
+
+msgid "Profile"
+msgstr "Profile"
+
+msgid "Create Project"
+msgstr "Create Project"
+
+msgid "Admin Dashboard"
+msgstr "Admin Dashboard"
+
+msgid "Logout"
+msgstr "Logout"
+
+msgid "You do not have permission to access this page."
+msgstr "You do not have permission to access this page."
