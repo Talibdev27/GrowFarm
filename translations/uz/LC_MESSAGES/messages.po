@@ -1,173 +1,350 @@
+
 msgid ""
 msgstr ""
-"Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"
+"Project-Id-Version: PROJECT VERSION\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2025-05-13 07:38+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: uz\n"
+"Language-Team: uz <LL@li.org>\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.17.0\n"
 
-msgid "Home"
-msgstr "Bosh sahifa"
-
-msgid "About"
-msgstr "Biz haqimizda"
-
-msgid "Projects"
-msgstr "Loyihalar"
-
-msgid "Contact"
-msgstr "Aloqa"
-
-msgid "Login"
-msgstr "Kirish"
-
-msgid "Sign Up"
-msgstr "Ro'yxatdan o'tish"
-
-msgid "Dashboard"
-msgstr "Boshqaruv paneli"
-
-msgid "Profile"
-msgstr "Profil"
-
-msgid "Create Project"
-msgstr "Loyiha yaratish"
-
-msgid "Admin Dashboard"
-msgstr "Admin boshqaruv paneli"
-
-msgid "Logout"
-msgstr "Chiqish"
-
-msgid "View All Projects"
-msgstr "Barcha loyihalarni ko'rish"
-
+#: routes.py:53
 msgid "You do not have permission to access this page."
 msgstr "Sizda ushbu sahifaga kirish uchun ruxsat yo'q."
 
+#: templates/base.html:32 templates/base.html:157
+msgid "Home"
+msgstr "Bosh sahifa"
+
+#: templates/base.html:35 templates/base.html:158
+msgid "About"
+msgstr "Biz haqimizda"
+
+#: templates/base.html:38 templates/base.html:159
+msgid "Projects"
+msgstr "Loyihalar"
+
+#: templates/base.html:41 templates/base.html:160 templates/base.html:173
+msgid "Contact"
+msgstr "Aloqa"
+
+#: templates/base.html:93
+msgid "Dashboard"
+msgstr "Boshqaruv paneli"
+
+#: templates/base.html:94
+msgid "Profile"
+msgstr "Profil"
+
+#: templates/base.html:96
+msgid "Create Project"
+msgstr "Loyiha yaratish"
+
+#: templates/base.html:101
+msgid "Admin Dashboard"
+msgstr "Admin boshqaruv paneli"
+
+#: templates/base.html:105
+msgid "Logout"
+msgstr "Chiqish"
+
+#: templates/base.html:110
+msgid "Login"
+msgstr "Kirish"
+
+#: templates/base.html:113
+msgid "Sign Up"
+msgstr "Ro'yxatdan o'tish"
+
+#: templates/base.html:146
+#, fuzzy
+msgid ""
+"Connecting investors with farmers for sustainable agricultural growth and"
+" shared prosperity."
+msgstr ""
+"Investorlarni fermerlar bilan bog'lab, barqaror qishloq xo'jaligi "
+"o'sishini va umumiy farovonlikni yaratamiz. Jamiyatimizga qo'shiling va "
+"qishloq xo'jaligi inqilobining bir qismi bo'ling."
+
+#: templates/base.html:155
+#, fuzzy
+msgid "Links"
+msgstr "Kirish"
+
+#: templates/base.html:164
+msgid "Resources"
+msgstr "Resurslar"
+
+#: templates/base.html:166
+msgid "How It Works"
+msgstr "Qanday ishlaydi"
+
+#: templates/base.html:167
+msgid "FAQ"
+msgstr "Ko'p so'raladigan savollar"
+
+#: templates/base.html:168
+msgid "Terms & Conditions"
+msgstr "Foydalanish shartlari"
+
+#: templates/base.html:169
+msgid "Privacy Policy"
+msgstr ""
+
+#: templates/base.html:175
+msgid "123 Farm Street, Agritown"
+msgstr ""
+
+#: templates/base.html:176
+msgid "(123) 456-7890"
+msgstr ""
+
+#: templates/base.html:184
+msgid "&copy; 2023 GrowFarm. All rights reserved."
+msgstr ""
+
+#: templates/base.html:187
+msgid "Designed with"
+msgstr ""
+
+#: templates/base.html:187
+#, fuzzy
+msgid "for farmers and investors"
+msgstr "Investorlar uchun"
+
+#: templates/index.html:10
 msgid "Grow Together, Prosper Together"
 msgstr "Birga o'sib, birga ravnaq topamiz"
 
-msgid "Connecting investors with farmers to create sustainable agricultural growth and shared prosperity. Join our community and be part of the agricultural revolution."
-msgstr "Investorlarni fermerlar bilan bog'lab, barqaror qishloq xo'jaligi o'sishini va umumiy farovonlikni yaratamiz. Jamiyatimizga qo'shiling va qishloq xo'jaligi inqilobining bir qismi bo'ling."
+#: templates/index.html:11
+msgid ""
+"Connecting investors with farmers to create sustainable agricultural "
+"growth and shared prosperity. Join our community and be part of the "
+"agricultural revolution."
+msgstr ""
+"Investorlarni fermerlar bilan bog'lab, barqaror qishloq xo'jaligi "
+"o'sishini va umumiy farovonlikni yaratamiz. Jamiyatimizga qo'shiling va "
+"qishloq xo'jaligi inqilobining bir qismi bo'ling."
 
+#: templates/index.html:13
 msgid "Get Started"
 msgstr "Boshlash"
 
+#: templates/index.html:14
 msgid "Explore Projects"
 msgstr "Loyihalarni ko'rib chiqish"
 
+#: templates/index.html:25
 msgid "How GrowFarm Works"
 msgstr "GrowFarm qanday ishlaydi"
 
+#: templates/index.html:26
 msgid "A simple process to connect farmers with investors"
 msgstr "Fermerlarni investorlar bilan bog'lashning oddiy jarayoni"
 
+#: templates/index.html:34
 msgid "1. Create an Account"
 msgstr "1. Hisob yarating"
 
+#: templates/index.html:35
 msgid "Sign up as a farmer or an investor based on your goals and interests."
-msgstr "Maqsadlaringiz va qiziqishlaringizga asoslanib, fermer yoki investor sifatida ro'yxatdan o'ting."
+msgstr ""
+"Maqsadlaringiz va qiziqishlaringizga asoslanib, fermer yoki investor "
+"sifatida ro'yxatdan o'ting."
 
+#: templates/index.html:43
 msgid "2. List or Browse Projects"
 msgstr "2. Loyihalarni ro'yxatlang yoki ko'rib chiqing"
 
-msgid "Farmers list their agricultural projects, while investors browse for opportunities."
-msgstr "Fermerlar o'z qishloq xo'jaligi loyihalarini ro'yxatga olishadi, investorlar esa imkoniyatlarni ko'rib chiqishadi."
+#: templates/index.html:44
+msgid ""
+"Farmers list their agricultural projects, while investors browse for "
+"opportunities."
+msgstr ""
+"Fermerlar o'z qishloq xo'jaligi loyihalarini ro'yxatga olishadi, "
+"investorlar esa imkoniyatlarni ko'rib chiqishadi."
 
+#: templates/index.html:52
 msgid "3. Connect & Collaborate"
 msgstr "3. Bog'laning va hamkorlik qiling"
 
+#: templates/index.html:53
 msgid "Investors fund projects they believe in, and farmers bring them to life."
-msgstr "Investorlar ishongan loyihalarini moliyalashtiradilar, fermerlar esa ularni hayotga tatbiq etadilar."
+msgstr ""
+"Investorlar ishongan loyihalarini moliyalashtiradilar, fermerlar esa "
+"ularni hayotga tatbiq etadilar."
 
+#: templates/index.html:64
 msgid "Featured Projects"
 msgstr "Tanlangan loyihalar"
 
+#: templates/index.html:65
 msgid "Explore some of our highlighted agricultural investment opportunities"
-msgstr "Bizning ajratilgan qishloq xo'jaligi investitsiya imkoniyatlarimizdan ba'zilarini ko'rib chiqing"
+msgstr ""
+"Bizning ajratilgan qishloq xo'jaligi investitsiya imkoniyatlarimizdan "
+"ba'zilarini ko'rib chiqing"
 
-msgid "No featured projects available at the moment. Check back soon!"
-msgstr "Hozirda tanlangan loyihalar mavjud emas. Tez orada qayta tekshiring!"
-
-msgid "Low"
-msgstr "Past"
-
-msgid "Medium"
-msgstr "O'rta"
-
-msgid "High"
-msgstr "Yuqori"
-
+#: templates/index.html:93
 msgid "Risk"
 msgstr "Xavf"
 
+#: templates/index.html:101
 msgid "Funded:"
 msgstr "Moliyalashtirilgan:"
 
+#: templates/index.html:105
 msgid "View Details"
 msgstr "Tafsilotlarni ko'rish"
 
+#: templates/index.html:113
+msgid "No featured projects available at the moment. Check back soon!"
+msgstr "Hozirda tanlangan loyihalar mavjud emas. Tez orada qayta tekshiring!"
+
+#: templates/index.html:118
+msgid "View All Projects"
+msgstr "Barcha loyihalarni ko'rish"
+
+#: templates/index.html:127
 msgid "Benefits of GrowFarm"
 msgstr "GrowFarm afzalliklari"
 
+#: templates/index.html:128
 msgid "Why farmers and investors choose our platform"
 msgstr "Nima uchun fermerlar va investorlar bizning platformani tanlashadi"
 
+#: templates/index.html:137
 msgid "For Farmers"
 msgstr "Fermerlar uchun"
 
-msgid "Access to capital for farm expansion, equipment purchases, or new ventures without traditional bank financing."
-msgstr "Fermani kengaytirish, uskunalar xarid qilish yoki an'anaviy bank moliyalashtirishlarsiz yangi loyihalar uchun kapitalga kirishish."
+#: templates/index.html:138
+msgid ""
+"Access to capital for farm expansion, equipment purchases, or new "
+"ventures without traditional bank financing."
+msgstr ""
+"Fermani kengaytirish, uskunalar xarid qilish yoki an'anaviy bank "
+"moliyalashtirishlarsiz yangi loyihalar uchun kapitalga kirishish."
 
+#: templates/index.html:148
 msgid "For Investors"
 msgstr "Investorlar uchun"
 
-msgid "Diversify your portfolio with agricultural investments that offer competitive returns and support sustainable farming."
-msgstr "Raqobatbardosh daromad taklif etadigan va barqaror dehqonchilikni qo'llab-quvvatlaydigan qishloq xo'jaligi investitsiyalari bilan portfelingizni diversifikatsiya qiling."
+#: templates/index.html:149
+msgid ""
+"Diversify your portfolio with agricultural investments that offer "
+"competitive returns and support sustainable farming."
+msgstr ""
+"Raqobatbardosh daromad taklif etadigan va barqaror dehqonchilikni qo"
+"'llab-quvvatlaydigan qishloq xo'jaligi investitsiyalari bilan "
+"portfelingizni diversifikatsiya qiling."
 
+#: templates/index.html:159
 msgid "Sustainability"
 msgstr "Barqarorlik"
 
-msgid "Support sustainable and regenerative agricultural practices that benefit the environment and local communities."
-msgstr "Atrof-muhit va mahalliy jamoalarga foyda keltiradigan barqaror va regenerativ qishloq xo'jaligi amaliyotlarini qo'llab-quvvatlang."
+#: templates/index.html:160
+msgid ""
+"Support sustainable and regenerative agricultural practices that benefit "
+"the environment and local communities."
+msgstr ""
+"Atrof-muhit va mahalliy jamoalarga foyda keltiradigan barqaror va "
+"regenerativ qishloq xo'jaligi amaliyotlarini qo'llab-quvvatlang."
 
+#: templates/index.html:170
 msgid "Community"
 msgstr "Jamiyat"
 
-msgid "Join a vibrant community of farmers and investors who share knowledge, resources, and success stories."
-msgstr "Bilim, resurslar va muvaffaqiyat hikoyalarini bo'lishuvchi fermerlar va investorlarning faol jamoasiga qo'shiling."
+#: templates/index.html:171
+msgid ""
+"Join a vibrant community of farmers and investors who share knowledge, "
+"resources, and success stories."
+msgstr ""
+"Bilim, resurslar va muvaffaqiyat hikoyalarini bo'lishuvchi fermerlar va "
+"investorlarning faol jamoasiga qo'shiling."
 
+#: templates/index.html:183
 msgid "Success Stories"
 msgstr "Muvaffaqiyat hikoyalari"
 
+#: templates/index.html:184
 msgid "Hear from farmers and investors who have thrived with GrowFarm"
 msgstr "GrowFarm bilan muvaffaqiyat qozongan fermerlar va investorlardan eshiting"
 
+#: templates/index.html:194
 msgid "John Farmer"
 msgstr "Jon Fermer"
 
+#: templates/index.html:195
 msgid "Organic Vegetable Farmer"
 msgstr "Organik sabzavot fermeri"
 
-msgid "GrowFarm helped me expand my organic vegetable farm by connecting me with investors who believe in sustainable agriculture. The funding I received allowed me to purchase new equipment and increase my production capacity by 50%%."
-msgstr "GrowFarm meni barqaror qishloq xo'jaligiga ishonuvchi investorlar bilan bog'lab, organik sabzavot fermamni kengaytirishga yordam berdi. Men olgan moliyalashtirish yangi uskunalar sotib olishga va ishlab chiqarish quvvatimni 50%% ga oshirishga imkon berdi."
+#: templates/index.html:198
+#, python-format
+msgid ""
+"GrowFarm helped me expand my organic vegetable farm by connecting me with"
+" investors who believe in sustainable agriculture. The funding I received"
+" allowed me to purchase new equipment and increase my production capacity"
+" by 50%%."
+msgstr ""
+"GrowFarm meni barqaror qishloq xo'jaligiga ishonuvchi investorlar bilan "
+"bog'lab, organik sabzavot fermamni kengaytirishga yordam berdi. Men olgan"
+" moliyalashtirish yangi uskunalar sotib olishga va ishlab chiqarish "
+"quvvatimni 50%% ga oshirishga imkon berdi."
 
+#: templates/index.html:208
 msgid "Sarah Green"
 msgstr "Sara Grin"
 
+#: templates/index.html:209
 msgid "Investor"
 msgstr "Investor"
 
-msgid "As an investor passionate about sustainable agriculture, GrowFarm provides me with the perfect platform to support farmers while earning healthy returns. I have invested in three projects so far, and the transparency and support provided by the platform has been exceptional."
-msgstr "Barqaror qishloq xo'jaligiga ishtiyoqli investor sifatida, GrowFarm menga sog'lom daromad olish bilan birga fermerlarni qo'llab-quvvatlash uchun mukammal platformani taqdim etadi. Men hozirgacha uchta loyihaga investitsiya qildim va platforma tomonidan taqdim etilgan shaffoflik va qo'llab-quvvatlash ajoyib bo'ldi."
+#: templates/index.html:212
+msgid ""
+"As an investor passionate about sustainable agriculture, GrowFarm "
+"provides me with the perfect platform to support farmers while earning "
+"healthy returns. I have invested in three projects so far, and the "
+"transparency and support provided by the platform has been exceptional."
+msgstr ""
+"Barqaror qishloq xo'jaligiga ishtiyoqli investor sifatida, GrowFarm menga"
+" sog'lom daromad olish bilan birga fermerlarni qo'llab-quvvatlash uchun "
+"mukammal platformani taqdim etadi. Men hozirgacha uchta loyihaga "
+"investitsiya qildim va platforma tomonidan taqdim etilgan shaffoflik va "
+"qo'llab-quvvatlash ajoyib bo'ldi."
 
+#: templates/index.html:226
 msgid "Ready to Join the Agricultural Revolution?"
 msgstr "Qishloq xo'jaligi inqilobiga qo'shilishga tayyormisiz?"
 
-msgid "Whether you're a farmer looking for investment or an investor seeking opportunities, GrowFarm connects you with the right partners for growth and success."
-msgstr "Siz investitsiya qidirayotgan fermer bo'lasizmi yoki imkoniyatlar izlayotgan investor bo'lasizmi, GrowFarm sizni o'sish va muvaffaqiyat uchun to'g'ri hamkorlar bilan bog'laydi."
+#: templates/index.html:227
+msgid ""
+"Whether you're a farmer looking for investment or an investor seeking "
+"opportunities, GrowFarm connects you with the right partners for growth "
+"and success."
+msgstr ""
+"Siz investitsiya qidirayotgan fermer bo'lasizmi yoki imkoniyatlar "
+"izlayotgan investor bo'lasizmi, GrowFarm sizni o'sish va muvaffaqiyat "
+"uchun to'g'ri hamkorlar bilan bog'laydi."
 
+#: templates/index.html:229
 msgid "Create an Account"
 msgstr "Hisob yaratish"
 
+#: templates/index.html:230
 msgid "Learn More"
 msgstr "Ko'proq ma'lumot olish"
+
+#~ msgid "Low"
+#~ msgstr "Past"
+
+#~ msgid "Medium"
+#~ msgstr "O'rta"
+
+#~ msgid "High"
+#~ msgstr "Yuqori"
+

@@ -1,173 +1,343 @@
+
 msgid ""
 msgstr ""
-"Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"
+"Project-Id-Version: PROJECT VERSION\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2025-05-13 07:38+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: en\n"
+"Language-Team: en <LL@li.org>\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.17.0\n"
 
-msgid "Home"
-msgstr "Home"
-
-msgid "About"
-msgstr "About"
-
-msgid "Projects"
-msgstr "Projects"
-
-msgid "Contact"
-msgstr "Contact"
-
-msgid "Login"
-msgstr "Login"
-
-msgid "Sign Up"
-msgstr "Sign Up"
-
-msgid "Dashboard"
-msgstr "Dashboard"
-
-msgid "Profile"
-msgstr "Profile"
-
-msgid "Create Project"
-msgstr "Create Project"
-
-msgid "Admin Dashboard"
-msgstr "Admin Dashboard"
-
-msgid "Logout"
-msgstr "Logout"
-
-msgid "View All Projects"
-msgstr "View All Projects"
-
+#: routes.py:53
 msgid "You do not have permission to access this page."
 msgstr "You do not have permission to access this page."
 
+#: templates/base.html:32 templates/base.html:157
+msgid "Home"
+msgstr "Home"
+
+#: templates/base.html:35 templates/base.html:158
+msgid "About"
+msgstr "About"
+
+#: templates/base.html:38 templates/base.html:159
+msgid "Projects"
+msgstr "Projects"
+
+#: templates/base.html:41 templates/base.html:160 templates/base.html:173
+msgid "Contact"
+msgstr "Contact"
+
+#: templates/base.html:93
+msgid "Dashboard"
+msgstr "Dashboard"
+
+#: templates/base.html:94
+msgid "Profile"
+msgstr "Profile"
+
+#: templates/base.html:96
+msgid "Create Project"
+msgstr "Create Project"
+
+#: templates/base.html:101
+msgid "Admin Dashboard"
+msgstr "Admin Dashboard"
+
+#: templates/base.html:105
+msgid "Logout"
+msgstr "Logout"
+
+#: templates/base.html:110
+msgid "Login"
+msgstr "Login"
+
+#: templates/base.html:113
+msgid "Sign Up"
+msgstr "Sign Up"
+
+#: templates/base.html:146
+#, fuzzy
+msgid ""
+"Connecting investors with farmers for sustainable agricultural growth and"
+" shared prosperity."
+msgstr ""
+"Connecting investors with farmers to create sustainable agricultural "
+"growth and shared prosperity. Join our community and be part of the "
+"agricultural revolution."
+
+#: templates/base.html:155
+#, fuzzy
+msgid "Links"
+msgstr "Login"
+
+#: templates/base.html:164
+msgid "Resources"
+msgstr ""
+
+#: templates/base.html:166
+#, fuzzy
+msgid "How It Works"
+msgstr "How GrowFarm Works"
+
+#: templates/base.html:167
+msgid "FAQ"
+msgstr ""
+
+#: templates/base.html:168
+msgid "Terms & Conditions"
+msgstr ""
+
+#: templates/base.html:169
+msgid "Privacy Policy"
+msgstr ""
+
+#: templates/base.html:175
+msgid "123 Farm Street, Agritown"
+msgstr ""
+
+#: templates/base.html:176
+msgid "(123) 456-7890"
+msgstr ""
+
+#: templates/base.html:184
+msgid "&copy; 2023 GrowFarm. All rights reserved."
+msgstr ""
+
+#: templates/base.html:187
+msgid "Designed with"
+msgstr ""
+
+#: templates/base.html:187
+#, fuzzy
+msgid "for farmers and investors"
+msgstr "For Investors"
+
+#: templates/index.html:10
 msgid "Grow Together, Prosper Together"
 msgstr "Grow Together, Prosper Together"
 
-msgid "Connecting investors with farmers to create sustainable agricultural growth and shared prosperity. Join our community and be part of the agricultural revolution."
-msgstr "Connecting investors with farmers to create sustainable agricultural growth and shared prosperity. Join our community and be part of the agricultural revolution."
+#: templates/index.html:11
+msgid ""
+"Connecting investors with farmers to create sustainable agricultural "
+"growth and shared prosperity. Join our community and be part of the "
+"agricultural revolution."
+msgstr ""
+"Connecting investors with farmers to create sustainable agricultural "
+"growth and shared prosperity. Join our community and be part of the "
+"agricultural revolution."
 
+#: templates/index.html:13
 msgid "Get Started"
 msgstr "Get Started"
 
+#: templates/index.html:14
 msgid "Explore Projects"
 msgstr "Explore Projects"
 
+#: templates/index.html:25
 msgid "How GrowFarm Works"
 msgstr "How GrowFarm Works"
 
+#: templates/index.html:26
 msgid "A simple process to connect farmers with investors"
 msgstr "A simple process to connect farmers with investors"
 
+#: templates/index.html:34
 msgid "1. Create an Account"
 msgstr "1. Create an Account"
 
+#: templates/index.html:35
 msgid "Sign up as a farmer or an investor based on your goals and interests."
 msgstr "Sign up as a farmer or an investor based on your goals and interests."
 
+#: templates/index.html:43
 msgid "2. List or Browse Projects"
 msgstr "2. List or Browse Projects"
 
-msgid "Farmers list their agricultural projects, while investors browse for opportunities."
-msgstr "Farmers list their agricultural projects, while investors browse for opportunities."
+#: templates/index.html:44
+msgid ""
+"Farmers list their agricultural projects, while investors browse for "
+"opportunities."
+msgstr ""
+"Farmers list their agricultural projects, while investors browse for "
+"opportunities."
 
+#: templates/index.html:52
 msgid "3. Connect & Collaborate"
 msgstr "3. Connect & Collaborate"
 
+#: templates/index.html:53
 msgid "Investors fund projects they believe in, and farmers bring them to life."
 msgstr "Investors fund projects they believe in, and farmers bring them to life."
 
+#: templates/index.html:64
 msgid "Featured Projects"
 msgstr "Featured Projects"
 
+#: templates/index.html:65
 msgid "Explore some of our highlighted agricultural investment opportunities"
 msgstr "Explore some of our highlighted agricultural investment opportunities"
 
-msgid "No featured projects available at the moment. Check back soon!"
-msgstr "No featured projects available at the moment. Check back soon!"
-
-msgid "Low"
-msgstr "Low"
-
-msgid "Medium"
-msgstr "Medium"
-
-msgid "High"
-msgstr "High"
-
+#: templates/index.html:93
 msgid "Risk"
 msgstr "Risk"
 
+#: templates/index.html:101
 msgid "Funded:"
 msgstr "Funded:"
 
+#: templates/index.html:105
 msgid "View Details"
 msgstr "View Details"
 
+#: templates/index.html:113
+msgid "No featured projects available at the moment. Check back soon!"
+msgstr "No featured projects available at the moment. Check back soon!"
+
+#: templates/index.html:118
+msgid "View All Projects"
+msgstr "View All Projects"
+
+#: templates/index.html:127
 msgid "Benefits of GrowFarm"
 msgstr "Benefits of GrowFarm"
 
+#: templates/index.html:128
 msgid "Why farmers and investors choose our platform"
 msgstr "Why farmers and investors choose our platform"
 
+#: templates/index.html:137
 msgid "For Farmers"
 msgstr "For Farmers"
 
-msgid "Access to capital for farm expansion, equipment purchases, or new ventures without traditional bank financing."
-msgstr "Access to capital for farm expansion, equipment purchases, or new ventures without traditional bank financing."
+#: templates/index.html:138
+msgid ""
+"Access to capital for farm expansion, equipment purchases, or new "
+"ventures without traditional bank financing."
+msgstr ""
+"Access to capital for farm expansion, equipment purchases, or new "
+"ventures without traditional bank financing."
 
+#: templates/index.html:148
 msgid "For Investors"
 msgstr "For Investors"
 
-msgid "Diversify your portfolio with agricultural investments that offer competitive returns and support sustainable farming."
-msgstr "Diversify your portfolio with agricultural investments that offer competitive returns and support sustainable farming."
+#: templates/index.html:149
+msgid ""
+"Diversify your portfolio with agricultural investments that offer "
+"competitive returns and support sustainable farming."
+msgstr ""
+"Diversify your portfolio with agricultural investments that offer "
+"competitive returns and support sustainable farming."
 
+#: templates/index.html:159
 msgid "Sustainability"
 msgstr "Sustainability"
 
-msgid "Support sustainable and regenerative agricultural practices that benefit the environment and local communities."
-msgstr "Support sustainable and regenerative agricultural practices that benefit the environment and local communities."
+#: templates/index.html:160
+msgid ""
+"Support sustainable and regenerative agricultural practices that benefit "
+"the environment and local communities."
+msgstr ""
+"Support sustainable and regenerative agricultural practices that benefit "
+"the environment and local communities."
 
+#: templates/index.html:170
 msgid "Community"
 msgstr "Community"
 
-msgid "Join a vibrant community of farmers and investors who share knowledge, resources, and success stories."
-msgstr "Join a vibrant community of farmers and investors who share knowledge, resources, and success stories."
+#: templates/index.html:171
+msgid ""
+"Join a vibrant community of farmers and investors who share knowledge, "
+"resources, and success stories."
+msgstr ""
+"Join a vibrant community of farmers and investors who share knowledge, "
+"resources, and success stories."
 
+#: templates/index.html:183
 msgid "Success Stories"
 msgstr "Success Stories"
 
+#: templates/index.html:184
 msgid "Hear from farmers and investors who have thrived with GrowFarm"
 msgstr "Hear from farmers and investors who have thrived with GrowFarm"
 
+#: templates/index.html:194
 msgid "John Farmer"
 msgstr "John Farmer"
 
+#: templates/index.html:195
 msgid "Organic Vegetable Farmer"
 msgstr "Organic Vegetable Farmer"
 
-msgid "GrowFarm helped me expand my organic vegetable farm by connecting me with investors who believe in sustainable agriculture. The funding I received allowed me to purchase new equipment and increase my production capacity by 50%%."
-msgstr "GrowFarm helped me expand my organic vegetable farm by connecting me with investors who believe in sustainable agriculture. The funding I received allowed me to purchase new equipment and increase my production capacity by 50%%."
+#: templates/index.html:198
+#, python-format
+msgid ""
+"GrowFarm helped me expand my organic vegetable farm by connecting me with"
+" investors who believe in sustainable agriculture. The funding I received"
+" allowed me to purchase new equipment and increase my production capacity"
+" by 50%%."
+msgstr ""
+"GrowFarm helped me expand my organic vegetable farm by connecting me with"
+" investors who believe in sustainable agriculture. The funding I received"
+" allowed me to purchase new equipment and increase my production capacity"
+" by 50%%."
 
+#: templates/index.html:208
 msgid "Sarah Green"
 msgstr "Sarah Green"
 
+#: templates/index.html:209
 msgid "Investor"
 msgstr "Investor"
 
-msgid "As an investor passionate about sustainable agriculture, GrowFarm provides me with the perfect platform to support farmers while earning healthy returns. I have invested in three projects so far, and the transparency and support provided by the platform has been exceptional."
-msgstr "As an investor passionate about sustainable agriculture, GrowFarm provides me with the perfect platform to support farmers while earning healthy returns. I have invested in three projects so far, and the transparency and support provided by the platform has been exceptional."
+#: templates/index.html:212
+msgid ""
+"As an investor passionate about sustainable agriculture, GrowFarm "
+"provides me with the perfect platform to support farmers while earning "
+"healthy returns. I have invested in three projects so far, and the "
+"transparency and support provided by the platform has been exceptional."
+msgstr ""
+"As an investor passionate about sustainable agriculture, GrowFarm "
+"provides me with the perfect platform to support farmers while earning "
+"healthy returns. I have invested in three projects so far, and the "
+"transparency and support provided by the platform has been exceptional."
 
+#: templates/index.html:226
 msgid "Ready to Join the Agricultural Revolution?"
 msgstr "Ready to Join the Agricultural Revolution?"
 
-msgid "Whether you're a farmer looking for investment or an investor seeking opportunities, GrowFarm connects you with the right partners for growth and success."
-msgstr "Whether you're a farmer looking for investment or an investor seeking opportunities, GrowFarm connects you with the right partners for growth and success."
+#: templates/index.html:227
+msgid ""
+"Whether you're a farmer looking for investment or an investor seeking "
+"opportunities, GrowFarm connects you with the right partners for growth "
+"and success."
+msgstr ""
+"Whether you're a farmer looking for investment or an investor seeking "
+"opportunities, GrowFarm connects you with the right partners for growth "
+"and success."
 
+#: templates/index.html:229
 msgid "Create an Account"
 msgstr "Create an Account"
 
+#: templates/index.html:230
 msgid "Learn More"
 msgstr "Learn More"
+
+#~ msgid "Low"
+#~ msgstr "Low"
+
+#~ msgid "Medium"
+#~ msgstr "Medium"
+
+#~ msgid "High"
+#~ msgstr "High"
+

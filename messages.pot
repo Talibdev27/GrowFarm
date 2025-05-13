@@ -1,0 +1,306 @@
+# Translations template for PROJECT.
+# Copyright (C) 2025 ORGANIZATION
+# This file is distributed under the same license as the PROJECT project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2025.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2025-05-13 07:38+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.17.0\n"
+
+#: routes.py:53
+msgid "You do not have permission to access this page."
+msgstr ""
+
+#: templates/base.html:32 templates/base.html:157
+msgid "Home"
+msgstr ""
+
+#: templates/base.html:35 templates/base.html:158
+msgid "About"
+msgstr ""
+
+#: templates/base.html:38 templates/base.html:159
+msgid "Projects"
+msgstr ""
+
+#: templates/base.html:41 templates/base.html:160 templates/base.html:173
+msgid "Contact"
+msgstr ""
+
+#: templates/base.html:93
+msgid "Dashboard"
+msgstr ""
+
+#: templates/base.html:94
+msgid "Profile"
+msgstr ""
+
+#: templates/base.html:96
+msgid "Create Project"
+msgstr ""
+
+#: templates/base.html:101
+msgid "Admin Dashboard"
+msgstr ""
+
+#: templates/base.html:105
+msgid "Logout"
+msgstr ""
+
+#: templates/base.html:110
+msgid "Login"
+msgstr ""
+
+#: templates/base.html:113
+msgid "Sign Up"
+msgstr ""
+
+#: templates/base.html:146
+msgid ""
+"Connecting investors with farmers for sustainable agricultural growth and"
+" shared prosperity."
+msgstr ""
+
+#: templates/base.html:155
+msgid "Links"
+msgstr ""
+
+#: templates/base.html:164
+msgid "Resources"
+msgstr ""
+
+#: templates/base.html:166
+msgid "How It Works"
+msgstr ""
+
+#: templates/base.html:167
+msgid "FAQ"
+msgstr ""
+
+#: templates/base.html:168
+msgid "Terms & Conditions"
+msgstr ""
+
+#: templates/base.html:169
+msgid "Privacy Policy"
+msgstr ""
+
+#: templates/base.html:175
+msgid "123 Farm Street, Agritown"
+msgstr ""
+
+#: templates/base.html:176
+msgid "(123) 456-7890"
+msgstr ""
+
+#: templates/base.html:184
+msgid "&copy; 2023 GrowFarm. All rights reserved."
+msgstr ""
+
+#: templates/base.html:187
+msgid "Designed with"
+msgstr ""
+
+#: templates/base.html:187
+msgid "for farmers and investors"
+msgstr ""
+
+#: templates/index.html:10
+msgid "Grow Together, Prosper Together"
+msgstr ""
+
+#: templates/index.html:11
+msgid ""
+"Connecting investors with farmers to create sustainable agricultural "
+"growth and shared prosperity. Join our community and be part of the "
+"agricultural revolution."
+msgstr ""
+
+#: templates/index.html:13
+msgid "Get Started"
+msgstr ""
+
+#: templates/index.html:14
+msgid "Explore Projects"
+msgstr ""
+
+#: templates/index.html:25
+msgid "How GrowFarm Works"
+msgstr ""
+
+#: templates/index.html:26
+msgid "A simple process to connect farmers with investors"
+msgstr ""
+
+#: templates/index.html:34
+msgid "1. Create an Account"
+msgstr ""
+
+#: templates/index.html:35
+msgid "Sign up as a farmer or an investor based on your goals and interests."
+msgstr ""
+
+#: templates/index.html:43
+msgid "2. List or Browse Projects"
+msgstr ""
+
+#: templates/index.html:44
+msgid ""
+"Farmers list their agricultural projects, while investors browse for "
+"opportunities."
+msgstr ""
+
+#: templates/index.html:52
+msgid "3. Connect & Collaborate"
+msgstr ""
+
+#: templates/index.html:53
+msgid "Investors fund projects they believe in, and farmers bring them to life."
+msgstr ""
+
+#: templates/index.html:64
+msgid "Featured Projects"
+msgstr ""
+
+#: templates/index.html:65
+msgid "Explore some of our highlighted agricultural investment opportunities"
+msgstr ""
+
+#: templates/index.html:93
+msgid "Risk"
+msgstr ""
+
+#: templates/index.html:101
+msgid "Funded:"
+msgstr ""
+
+#: templates/index.html:105
+msgid "View Details"
+msgstr ""
+
+#: templates/index.html:113
+msgid "No featured projects available at the moment. Check back soon!"
+msgstr ""
+
+#: templates/index.html:118
+msgid "View All Projects"
+msgstr ""
+
+#: templates/index.html:127
+msgid "Benefits of GrowFarm"
+msgstr ""
+
+#: templates/index.html:128
+msgid "Why farmers and investors choose our platform"
+msgstr ""
+
+#: templates/index.html:137
+msgid "For Farmers"
+msgstr ""
+
+#: templates/index.html:138
+msgid ""
+"Access to capital for farm expansion, equipment purchases, or new "
+"ventures without traditional bank financing."
+msgstr ""
+
+#: templates/index.html:148
+msgid "For Investors"
+msgstr ""
+
+#: templates/index.html:149
+msgid ""
+"Diversify your portfolio with agricultural investments that offer "
+"competitive returns and support sustainable farming."
+msgstr ""
+
+#: templates/index.html:159
+msgid "Sustainability"
+msgstr ""
+
+#: templates/index.html:160
+msgid ""
+"Support sustainable and regenerative agricultural practices that benefit "
+"the environment and local communities."
+msgstr ""
+
+#: templates/index.html:170
+msgid "Community"
+msgstr ""
+
+#: templates/index.html:171
+msgid ""
+"Join a vibrant community of farmers and investors who share knowledge, "
+"resources, and success stories."
+msgstr ""
+
+#: templates/index.html:183
+msgid "Success Stories"
+msgstr ""
+
+#: templates/index.html:184
+msgid "Hear from farmers and investors who have thrived with GrowFarm"
+msgstr ""
+
+#: templates/index.html:194
+msgid "John Farmer"
+msgstr ""
+
+#: templates/index.html:195
+msgid "Organic Vegetable Farmer"
+msgstr ""
+
+#: templates/index.html:198
+#, python-format
+msgid ""
+"GrowFarm helped me expand my organic vegetable farm by connecting me with"
+" investors who believe in sustainable agriculture. The funding I received"
+" allowed me to purchase new equipment and increase my production capacity"
+" by 50%%."
+msgstr ""
+
+#: templates/index.html:208
+msgid "Sarah Green"
+msgstr ""
+
+#: templates/index.html:209
+msgid "Investor"
+msgstr ""
+
+#: templates/index.html:212
+msgid ""
+"As an investor passionate about sustainable agriculture, GrowFarm "
+"provides me with the perfect platform to support farmers while earning "
+"healthy returns. I have invested in three projects so far, and the "
+"transparency and support provided by the platform has been exceptional."
+msgstr ""
+
+#: templates/index.html:226
+msgid "Ready to Join the Agricultural Revolution?"
+msgstr ""
+
+#: templates/index.html:227
+msgid ""
+"Whether you're a farmer looking for investment or an investor seeking "
+"opportunities, GrowFarm connects you with the right partners for growth "
+"and success."
+msgstr ""
+
+#: templates/index.html:229
+msgid "Create an Account"
+msgstr ""
+
+#: templates/index.html:230
+msgid "Learn More"
+msgstr ""
+
