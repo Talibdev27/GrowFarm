@@ -283,7 +283,7 @@
                                     }
                                     
                                     // Make the spotlight effect work on this button too
-                                    const sidebarSpotlightEl = document.querySelector('.investment-details .spotlight-container');
+                                    const sidebarSpotlightEl = document.querySelector('.card-body .spotlight-container');
                                     if (sidebarSpotlightEl) {
                                         const spotlight = sidebarSpotlightEl.querySelector('.spotlight');
                                         
@@ -379,20 +379,77 @@
                         <p>Minimum Investment: <strong>$100</strong></p>
                     </div>
                     
-                    <div class="mb-3">
+                    <div class="mb-3 position-relative">
                         {{ investment_form.amount.label(class="form-label") }}
-                        {% if investment_form.amount.errors %}
-                            {{ investment_form.amount(class="form-control is-invalid", id="amount") }}
-                            <div class="invalid-feedback">
-                                {% for error in investment_form.amount.errors %}
-                                    {{ error }}
-                                {% endfor %}
-                            </div>
-                        {% else %}
-                            {{ investment_form.amount(class="form-control", id="amount", placeholder="Enter investment amount") }}
-                        {% endif %}
+                        <div class="input-group investment-input-group">
+                            <span class="input-group-text">$</span>
+                            {% if investment_form.amount.errors %}
+                                {{ investment_form.amount(class="form-control is-invalid", id="amount") }}
+                                <div class="invalid-feedback">
+                                    {% for error in investment_form.amount.errors %}
+                                        {{ error }}
+                                    {% endfor %}
+                                </div>
+                            {% else %}
+                                {{ investment_form.amount(class="form-control investment-amount", id="amount", placeholder="Enter investment amount") }}
+                            {% endif %}
+                        </div>
                         <div class="form-text">Minimum investment is $100.</div>
+                        <div id="investment-feedback" class="text-success mt-2 d-none">
+                            <i class="fas fa-check-circle me-1"></i> Great investment! You're helping sustainable farming.
+                        </div>
+                        <div class="investment-animation d-none position-absolute" style="right: -30px; top: 30px;">
+                            <i class="fas fa-seedling text-success animation-grow"></i>
+                        </div>
                     </div>
+                    
+                    <style>
+                        .investment-amount:focus {
+                            border-color: #28a745;
+                            box-shadow: 0 0 0 0.25rem rgba(40, 167, 69, 0.25);
+                        }
+                        
+                        .animation-grow {
+                            animation: grow 1.5s ease-in-out infinite;
+                            transform-origin: bottom center;
+                        }
+                        
+                        @keyframes grow {
+                            0% {
+                                transform: scale(0.8);
+                                opacity: 0.3;
+                            }
+                            50% {
+                                transform: scale(1.2);
+                                opacity: 1;
+                            }
+                            100% {
+                                transform: scale(0.8);
+                                opacity: 0.3;
+                            }
+                        }
+                    </style>
+                    
+                    <script>
+                        document.addEventListener('DOMContentLoaded', function() {
+                            const amountInput = document.getElementById('amount');
+                            const feedbackEl = document.getElementById('investment-feedback');
+                            const animationEl = document.querySelector('.investment-animation');
+                            
+                            if (amountInput && feedbackEl && animationEl) {
+                                amountInput.addEventListener('input', function() {
+                                    const value = parseInt(this.value);
+                                    if (value && value >= 100) {
+                                        feedbackEl.classList.remove('d-none');
+                                        animationEl.classList.remove('d-none');
+                                    } else {
+                                        feedbackEl.classList.add('d-none');
+                                        animationEl.classList.add('d-none');
+                                    }
+                                });
+                            }
+                        });
+                    </script>
                     
                     <div class="alert alert-info">
                         <i class="fas fa-info-circle me-2"></i>
