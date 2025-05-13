@@ -143,7 +143,7 @@
             <div class="row">
                 <div class="col-md-4 mb-4 mb-md-0">
                     <h5 class="footer-heading">GrowFarm</h5>
-                    <p>Connecting investors with farmers for sustainable agricultural growth and shared prosperity.</p>
+                    <p>{{ _('Connecting investors with farmers for sustainable agricultural growth and shared prosperity.') }}</p>
                     <div class="social-icons mt-3">
                         <a href="#"><i class="fab fa-facebook-f"></i></a>
                         <a href="#"><i class="fab fa-twitter"></i></a>
@@ -152,28 +152,28 @@
                     </div>
                 </div>
                 <div class="col-md-2 mb-4 mb-md-0">
-                    <h5 class="footer-heading">Links</h5>
+                    <h5 class="footer-heading">{{ _('Links') }}</h5>
                     <ul class="list-unstyled">
-                        <li><a href="{{ url_for('index') }}">Home</a></li>
-                        <li><a href="{{ url_for('about') }}">About</a></li>
-                        <li><a href="{{ url_for('projects') }}">Projects</a></li>
-                        <li><a href="{{ url_for('contact') }}">Contact</a></li>
+                        <li><a href="{{ url_for('index') }}">{{ _('Home') }}</a></li>
+                        <li><a href="{{ url_for('about') }}">{{ _('About') }}</a></li>
+                        <li><a href="{{ url_for('projects') }}">{{ _('Projects') }}</a></li>
+                        <li><a href="{{ url_for('contact') }}">{{ _('Contact') }}</a></li>
                     </ul>
                 </div>
                 <div class="col-md-3 mb-4 mb-md-0">
-                    <h5 class="footer-heading">Resources</h5>
+                    <h5 class="footer-heading">{{ _('Resources') }}</h5>
                     <ul class="list-unstyled">
-                        <li><a href="#">How It Works</a></li>
-                        <li><a href="#">FAQ</a></li>
-                        <li><a href="#">Terms & Conditions</a></li>
-                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">{{ _('How It Works') }}</a></li>
+                        <li><a href="#">{{ _('FAQ') }}</a></li>
+                        <li><a href="#">{{ _('Terms & Conditions') }}</a></li>
+                        <li><a href="#">{{ _('Privacy Policy') }}</a></li>
                     </ul>
                 </div>
                 <div class="col-md-3">
-                    <h5 class="footer-heading">Contact</h5>
+                    <h5 class="footer-heading">{{ _('Contact') }}</h5>
                     <ul class="list-unstyled">
-                        <li><i class="fas fa-map-marker-alt me-2"></i> 123 Farm Street, Agritown</li>
-                        <li><i class="fas fa-phone me-2"></i> (123) 456-7890</li>
+                        <li><i class="fas fa-map-marker-alt me-2"></i> {{ _('123 Farm Street, Agritown') }}</li>
+                        <li><i class="fas fa-phone me-2"></i> {{ _('(123) 456-7890') }}</li>
                         <li><i class="fas fa-envelope me-2"></i> info@growfarm.com</li>
                     </ul>
                 </div>
@@ -181,10 +181,10 @@
             <hr class="mt-4 mb-4 bg-light">
             <div class="row">
                 <div class="col-md-6 text-center text-md-start">
-                    <p class="mb-0">&copy; 2023 GrowFarm. All rights reserved.</p>
+                    <p class="mb-0">{{ _('&copy; 2023 GrowFarm. All rights reserved.') }}</p>
                 </div>
                 <div class="col-md-6 text-center text-md-end">
-                    <p class="mb-0">Designed with <i class="fas fa-heart text-danger"></i> for farmers and investors</p>
+                    <p class="mb-0">{{ _('Designed with') }} <i class="fas fa-heart text-danger"></i> {{ _('for farmers and investors') }}</p>
                 </div>
             </div>
         </div>
