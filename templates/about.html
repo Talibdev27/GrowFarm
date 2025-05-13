@@ -2,19 +2,91 @@
 
 {% block title %}About Us - GrowFarm{% endblock %}
 
+{% block extra_css %}
+<style>
+    .animated-counter {
+        font-size: 2.5rem;
+        font-weight: bold;
+        color: #2e7d32;
+    }
+    
+    .fade-in {
+        opacity: 0;
+        animation: fadeIn 0.8s forwards;
+    }
+    
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+    
+    .farm-type-icon {
+        transition: all 0.3s ease;
+        cursor: pointer;
+    }
+    
+    .farm-type-icon:hover {
+        transform: scale(1.1);
+        color: #2e7d32;
+    }
+    
+    .bg-primary-gradient {
+        background: linear-gradient(135deg, #2e7d32 0%, #81c784 100%);
+    }
+    
+    .hero-image-container {
+        position: relative;
+        border-radius: 10px;
+        overflow: hidden;
+        height: 400px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    }
+    
+    .hero-image-container::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(46, 125, 50, 0.1);
+        border-radius: 10px;
+    }
+    
+    .animate-on-scroll {
+        opacity: 0;
+        transform: translateY(30px);
+        transition: all 0.8s ease;
+    }
+    
+    .animate-on-scroll.visible {
+        opacity: 1;
+        transform: translateY(0);
+    }
+</style>
+{% endblock %}
+
 {% block content %}
-<!-- Hero Section -->
+<!-- Hero Section with Enhanced Visuals -->
 <section class="py-5 bg-light">
     <div class="container">
         <div class="row align-items-center">
-            <div class="col-lg-6 mb-4 mb-lg-0">
-                <h1 class="fw-bold mb-4">About GrowFarm</h1>
+            <div class="col-lg-6 mb-4 mb-lg-0 fade-in" style="animation-delay: 0.2s;">
+                <span class="badge bg-primary-gradient text-white px-3 py-2 mb-3">Growing Together</span>
+                <h1 class="fw-bold mb-4 display-4">About GrowFarm</h1>
                 <p class="lead">We're on a mission to transform agricultural financing by directly connecting farmers with investors who believe in sustainable agriculture.</p>
                 <p>GrowFarm was founded with a simple idea: to create a platform where farmers can access the capital they need to grow their operations, and investors can support sustainable agriculture while earning returns.</p>
                 <p>By removing the middlemen and traditional barriers to agricultural financing, we're creating a more efficient, transparent, and mutually beneficial ecosystem for all participants.</p>
+                <div class="mt-4">
+                    <a href="{{ url_for('register') }}" class="btn btn-primary rounded-pill px-4 me-2">
+                        <i class="fas fa-seedling me-2"></i>Join Our Community
+                    </a>
+                </div>
             </div>
-            <div class="col-lg-6">
-                <div style="border-radius: 10px; overflow: hidden; height: 400px; background: url('https://images.unsplash.com/photo-1595508064774-5ff825520ba8?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1350&q=80'); background-size: cover; background-position: center;"></div>
+            <div class="col-lg-6 fade-in" style="animation-delay: 0.4s;">
+                <div class="hero-image-container">
+                    <div style="height: 100%; background: url('https://images.unsplash.com/photo-1595508064774-5ff825520ba8?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1350&q=80'); background-size: cover; background-position: center;"></div>
+                </div>
             </div>
         </div>
     </div>
