@@ -22,10 +22,14 @@ babel = Babel()
 def get_locale():
     # Check if user has explicitly set a language in the session
     if 'language' in session:
-        return session['language']
+        selected_lang = session['language']
+        print(f"Using language from session: {selected_lang}")
+        return selected_lang
     
     # Otherwise try to detect from request header
-    return request.accept_languages.best_match(['en', 'ru', 'uz'])
+    detected_lang = request.accept_languages.best_match(['en', 'ru', 'uz'])
+    print(f"Detected language from headers: {detected_lang}")
+    return detected_lang
 
 # Create the app
 app = Flask(__name__)
