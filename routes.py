@@ -68,18 +68,43 @@ def register_routes(app):
     
     @app.route('/login', methods=['GET', 'POST'])
     def login():
+        import logging
+        
         if current_user.is_authenticated:
             return redirect(url_for('dashboard'))
         
         form = LoginForm()
+        
+        # Log login attempt
+        logging.info(f"Login form submitted: {request.method}")
+        
         if form.validate_on_submit():
+            logging.info(f"Form validated, email: {form.email.data}")
+            
             user = User.query.filter_by(email=form.email.data).first()
-            if user and user.check_password(form.password.data):
-                login_user(user, remember=form.remember.data)
-                next_page = request.args.get('next')
-                return redirect(next_page) if next_page else redirect(url_for('dashboard'))
+            if user:
+                logging.info(f"User found: {user.username}, id: {user.id}, role: {user.role}")
+                
+                # Log password check
+                password_valid = user.check_password(form.password.data)
+                logging.info(f"Password check result: {password_valid}")
+                
+                if password_valid:
+                    login_user(user, remember=form.remember.data)
+                    logging.info(f"User logged in successfully: {user.username}")
+                    
+                    next_page = request.args.get('next')
+                    return redirect(next_page) if next_page else redirect(url_for('dashboard'))
+                else:
+                    logging.info(f"Invalid password for user: {user.username}")
+                    flash('Login unsuccessful. Please check email and password', 'danger')
             else:
+                logging.info(f"No user found with email: {form.email.data}")
                 flash('Login unsuccessful. Please check email and password', 'danger')
+        else:
+            # Log form errors if validation failed
+            if form.errors:
+                logging.info(f"Form validation errors: {form.errors}")
         
         return render_template('login.html', form=form)
     
