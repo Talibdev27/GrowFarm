@@ -310,7 +310,7 @@ def register_routes(app):
     @login_required
     def invest():
         if current_user.role != 'investor':
-            flash('Only investors can make investments', 'danger')
+            flash(_('Only investors can make investments'), 'danger')
             return redirect(url_for('dashboard'))
         
         form = InvestmentForm()
@@ -319,22 +319,86 @@ def register_routes(app):
             project = Project.query.get_or_404(form.project_id.data)
             
             if project.status != 'Open':
-                flash('This project is not open for investment', 'danger')
+                flash(_('This project is not open for investment'), 'danger')
                 return redirect(url_for('project_details', project_id=project.id))
             
+            # Create initial investment record with 'Awaiting Payment' status
             investment = Investment(
                 investor_id=current_user.investor.id,
                 project_id=project.id,
                 amount=form.amount.data,
-                status='Confirmed'
+                status='Pending',
+                payment_status='Awaiting Payment'
             )
             
-            project.current_funding += form.amount.data
+            db.session.add(investment)
+            db.session.commit()
+            
+            # Create Stripe checkout session
+            checkout_url = create_checkout_session(
+                project_id=project.id, 
+                investor_id=current_user.investor.id,
+                amount=form.amount.data
+            )
+            
+            if checkout_url:
+                # Store the investment ID in the session for later reference
+                session['investment_id'] = investment.id
+                return redirect(checkout_url)
+            else:
+                # If there was an error creating the checkout session
+                flash(_('There was an error processing your payment. Please try again.'), 'danger')
+                # Delete the investment record since payment failed
+                db.session.delete(investment)
+                db.session.commit()
+                return redirect(url_for('project_details', project_id=project.id))
+    
+    @app.route('/investment_success')
+    @login_required
+    def investment_success():
+        # Get the session ID from Stripe
+        session_id = request.args.get('session_id')
+        
+        if not session_id:
+            flash(_('Invalid payment session'), 'danger')
+            return redirect(url_for('dashboard'))
+            
+        # Get the investment ID from our session
+        investment_id = session.get('investment_id')
+        
+        if not investment_id:
+            flash(_('Investment information not found'), 'danger')
+            return redirect(url_for('dashboard'))
+            
+        # Get the investment from the database
+        investment = Investment.query.get(investment_id)
+        
+        if not investment:
+            flash(_('Investment not found'), 'danger')
+            return redirect(url_for('dashboard'))
+            
+        # Get the checkout session from Stripe
+        checkout_session = retrieve_checkout_session(session_id)
+        
+        if not checkout_session:
+            flash(_('Could not verify payment information'), 'warning')
+            return redirect(url_for('dashboard'))
+            
+        # Verify payment was successful
+        if checkout_session.payment_status == 'paid':
+            # Update the investment record
+            investment.payment_status = 'Paid'
+            investment.status = 'Confirmed'
+            investment.payment_id = session_id
+            investment.payment_date = datetime.utcnow()
+            
+            # Update the project funding
+            project = investment.project
+            project.current_funding += investment.amount
             
             if project.current_funding >= project.funding_goal:
                 project.status = 'Funded'
-            
-            db.session.add(investment)
+                
             db.session.commit()
             
             # Send message to the farmer
@@ -342,16 +406,109 @@ def register_routes(app):
                 sender_id=current_user.id,
                 recipient_id=project.farmer.user.id,
                 subject=f"New Investment in {project.title}",
-                body=f"Hello! I have invested ${form.amount.data} in your project '{project.title}'. Looking forward to its success!"
+                body=f"Hello! I have invested ${investment.amount} in your project '{project.title}'. Looking forward to its success!"
             )
             db.session.add(message)
             db.session.commit()
             
-            flash(f'Successfully invested ${form.amount.data} in {project.title}', 'success')
+            # Clear the session investment ID
+            session.pop('investment_id', None)
+            
+            return render_template('payment_success.html')
+        else:
+            flash(_('Your payment is still being processed. We will update you when it completes.'), 'info')
+            # Clear the session investment ID
+            session.pop('investment_id', None)
             return redirect(url_for('dashboard'))
         
-        flash('There was an error processing your investment', 'danger')
-        return redirect(url_for('projects'))
+    @app.route('/investment_cancel')
+    @login_required
+    def investment_cancel():
+        # Get the project ID from the query string
+        project_id = request.args.get('project_id')
+        
+        # Get the investment ID from our session
+        investment_id = session.get('investment_id')
+        
+        if investment_id:
+            # Get the investment from the database
+            investment = Investment.query.get(investment_id)
+            
+            if investment:
+                # Update the investment record
+                investment.payment_status = 'Failed'
+                investment.status = 'Cancelled'
+                db.session.commit()
+            
+            # Clear the session investment ID
+            session.pop('investment_id', None)
+        
+        return render_template('payment_cancel.html', project_id=project_id)
+        
+    @app.route('/webhook', methods=['POST'])
+    def webhook():
+        """Handle Stripe webhook events for asynchronous payment updates"""
+        import stripe
+        
+        payload = request.get_data(as_text=True)
+        sig_header = request.headers.get('Stripe-Signature')
+        
+        # Verify webhook signature and extract the event
+        # You would use your webhook secret here
+        # For this example, we'll skip verification since we don't have a webhook secret
+        
+        try:
+            event = stripe.Event.construct_from(
+                request.get_json(), stripe.api_key
+            )
+        except ValueError as e:
+            # Invalid payload
+            print(f"Webhook error: {str(e)}")
+            return jsonify({'status': 'error'}), 400
+        except stripe.error.SignatureVerificationError as e:
+            # Invalid signature
+            print(f"Webhook signature verification failed: {str(e)}")
+            return jsonify({'status': 'error'}), 400
+        
+        # Handle the event
+        if event.type == 'checkout.session.completed':
+            session = event.data.object  # contains a stripe.checkout.Session
+            
+            # Get the metadata from the session
+            project_id = session.metadata.get('project_id')
+            investor_id = session.metadata.get('investor_id')
+            amount = session.metadata.get('amount')
+            
+            if project_id and investor_id and amount:
+                # Find the investment in our database
+                investment = Investment.query.filter_by(
+                    project_id=project_id,
+                    investor_id=investor_id,
+                    amount=float(amount),
+                    payment_status='Awaiting Payment'
+                ).first()
+                
+                if investment:
+                    # Update the investment record
+                    investment.payment_status = 'Paid'
+                    investment.status = 'Confirmed'
+                    investment.payment_id = session.id
+                    investment.payment_date = datetime.utcnow()
+                    
+                    # Update the project funding
+                    project = Project.query.get(project_id)
+                    if project:
+                        project.current_funding += investment.amount
+                        
+                        if project.current_funding >= project.funding_goal:
+                            project.status = 'Funded'
+                    
+                    db.session.commit()
+                    
+                    # Could send an email notification here
+                    print(f"Payment for investment {investment.id} completed via webhook")
+        
+        return jsonify({'status': 'success'})
     
     @app.route('/contact', methods=['GET', 'POST'])
     def contact():
