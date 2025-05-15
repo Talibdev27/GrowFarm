@@ -87,9 +87,11 @@ def register_routes(app):
             
             # Try to validate form with explicit data
             if form.validate_on_submit():
-                logging.info(f"Form validated, email: {form.email.data}")
+                # Clean the email data (remove whitespace)
+                email = form.email.data.strip() if form.email.data else ""
+                logging.info(f"Form validated, email: '{email}'")
                 
-                user = User.query.filter_by(email=form.email.data).first()
+                user = User.query.filter_by(email=email).first()
                 if user:
                     logging.info(f"User found: {user.username}, id: {user.id}, role: {user.role}")
                     
@@ -108,7 +110,7 @@ def register_routes(app):
                         logging.info(f"Invalid password for user: {user.username}")
                         flash('Login unsuccessful. Please check your password', 'danger')
                 else:
-                    logging.info(f"No user found with email: {form.email.data}")
+                    logging.info(f"No user found with email: '{email}'")
                     flash('No account found with this email address', 'danger')
             else:
                 # Log detailed form errors
@@ -139,11 +141,12 @@ def register_routes(app):
             return redirect(url_for('dashboard'))
             
         if request.method == 'POST':
-            email = request.form.get('email')
-            password = request.form.get('password')
+            # Get form data and strip whitespace
+            email = request.form.get('email', '').strip()
+            password = request.form.get('password', '')
             remember = 'remember' in request.form
             
-            logging.info(f"Simple login attempt for email: {email}")
+            logging.info(f"Simple login attempt for email: '{email}'")
             
             if email and password:
                 user = User.query.filter_by(email=email).first()
@@ -160,7 +163,7 @@ def register_routes(app):
                         logging.info("Invalid password")
                         flash('Invalid email or password', 'danger')
                 else:
-                    logging.info(f"No user found with email: {email}")
+                    logging.info(f"No user found with email: '{email}'")
                     flash('Invalid email or password', 'danger')
             else:
                 flash('Please provide both email and password', 'danger')
