@@ -70,43 +70,102 @@ def register_routes(app):
     def login():
         import logging
         
+        # Detailed request logging
+        logging.info(f"Login route accessed: Method={request.method}, Path={request.path}")
+        logging.info(f"Request form data: {request.form}")
+        logging.info(f"Request headers: {dict(request.headers)}")
+        
         if current_user.is_authenticated:
+            logging.info(f"User already authenticated: {current_user.username}")
             return redirect(url_for('dashboard'))
         
         form = LoginForm()
         
-        # Log login attempt
-        logging.info(f"Login form submitted: {request.method}")
-        
-        if form.validate_on_submit():
-            logging.info(f"Form validated, email: {form.email.data}")
+        # Handle form submission
+        if request.method == 'POST':
+            logging.info("Processing POST request")
             
-            user = User.query.filter_by(email=form.email.data).first()
-            if user:
-                logging.info(f"User found: {user.username}, id: {user.id}, role: {user.role}")
+            # Try to validate form with explicit data
+            if form.validate_on_submit():
+                logging.info(f"Form validated, email: {form.email.data}")
                 
-                # Log password check
-                password_valid = user.check_password(form.password.data)
-                logging.info(f"Password check result: {password_valid}")
-                
-                if password_valid:
-                    login_user(user, remember=form.remember.data)
-                    logging.info(f"User logged in successfully: {user.username}")
+                user = User.query.filter_by(email=form.email.data).first()
+                if user:
+                    logging.info(f"User found: {user.username}, id: {user.id}, role: {user.role}")
                     
-                    next_page = request.args.get('next')
-                    return redirect(next_page) if next_page else redirect(url_for('dashboard'))
+                    # Test login directly
+                    password_valid = user.check_password(form.password.data)
+                    logging.info(f"Password check result: {password_valid}")
+                    
+                    if password_valid:
+                        # Force login the user
+                        login_user(user, remember=form.remember.data)
+                        logging.info(f"User logged in successfully: {user.username}")
+                        
+                        next_page = request.args.get('next')
+                        return redirect(next_page) if next_page else redirect(url_for('dashboard'))
+                    else:
+                        logging.info(f"Invalid password for user: {user.username}")
+                        flash('Login unsuccessful. Please check your password', 'danger')
                 else:
-                    logging.info(f"Invalid password for user: {user.username}")
-                    flash('Login unsuccessful. Please check email and password', 'danger')
+                    logging.info(f"No user found with email: {form.email.data}")
+                    flash('No account found with this email address', 'danger')
             else:
-                logging.info(f"No user found with email: {form.email.data}")
-                flash('Login unsuccessful. Please check email and password', 'danger')
-        else:
-            # Log form errors if validation failed
-            if form.errors:
-                logging.info(f"Form validation errors: {form.errors}")
+                # Log detailed form errors
+                logging.info(f"Form validation failed with errors: {form.errors}")
+                
+                # Log CSRF token status
+                if hasattr(form, 'csrf_token'):
+                    csrf_token = form.csrf_token._value()
+                    logging.info(f"CSRF token: {csrf_token}")
+                else:
+                    logging.info("CSRF protection disabled")
+                
+                # Flash form errors
+                for field_name, field_errors in form.errors.items():
+                    error_msg = ', '.join(str(err) for err in field_errors)
+                    flash(f"Error in {field_name}: {error_msg}", 'danger')
         
         return render_template('login.html', form=form)
+        
+    @app.route('/simple_login', methods=['GET', 'POST'])
+    def simple_login():
+        """A simplified login route that bypasses WTForms for direct authentication"""
+        import logging
+        
+        logging.info("Simple login route accessed")
+        
+        if current_user.is_authenticated:
+            return redirect(url_for('dashboard'))
+            
+        if request.method == 'POST':
+            email = request.form.get('email')
+            password = request.form.get('password')
+            remember = 'remember' in request.form
+            
+            logging.info(f"Simple login attempt for email: {email}")
+            
+            if email and password:
+                user = User.query.filter_by(email=email).first()
+                
+                if user:
+                    logging.info(f"User found: {user.username}")
+                    
+                    if user.check_password(password):
+                        logging.info("Password correct, logging in user")
+                        login_user(user, remember=remember)
+                        flash(f'Welcome back, {user.username}!', 'success')
+                        return redirect(url_for('dashboard'))
+                    else:
+                        logging.info("Invalid password")
+                        flash('Invalid email or password', 'danger')
+                else:
+                    logging.info(f"No user found with email: {email}")
+                    flash('Invalid email or password', 'danger')
+            else:
+                flash('Please provide both email and password', 'danger')
+                
+        return render_template('simple_login.html')
     
     @app.route('/register', methods=['GET', 'POST'])
     def register():
