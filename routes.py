@@ -4,12 +4,14 @@ from datetime import datetime, timedelta
 from functools import wraps
 from sqlalchemy import func, desc
 import io
+import os
 import csv
 from flask_babel import _, get_locale
 from app import app, db
 from models import User, Farmer, Investor, Project, Investment, Message
 from forms import (LoginForm, RegistrationForm, FarmerProfileForm, InvestorProfileForm, 
                    ProjectForm, InvestmentForm, ContactForm, MessageForm)
+from stripe_service import create_checkout_session, retrieve_checkout_session
 
 # Custom Jinja2 filter to add months to a date
 def monthsdelta(months):

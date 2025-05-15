@@ -116,6 +116,9 @@ class Investment(db.Model):
     amount = db.Column(db.Float, nullable=False)
     date = db.Column(db.DateTime, default=datetime.utcnow)
     status = db.Column(db.String(20), default='Pending')  # 'Pending', 'Confirmed', 'Completed', 'Cancelled'
+    payment_status = db.Column(db.String(20), default='Awaiting Payment')  # 'Awaiting Payment', 'Processing', 'Paid', 'Failed'
+    payment_id = db.Column(db.String(100))  # Stripe payment ID or session ID
+    payment_date = db.Column(db.DateTime)  # When payment was completed
 
     def __repr__(self):
         return f'<Investment ${self.amount} in Project {self.project_id}>'
