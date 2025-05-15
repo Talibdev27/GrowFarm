@@ -40,7 +40,6 @@ def get_locale():
 # Create the app
 app = Flask(__name__)
 app.secret_key = os.environ.get("SESSION_SECRET", "dev-secret-key")
-app.config['WTF_CSRF_ENABLED'] = False  # Temporarily disable CSRF protection
 app.wsgi_app = ProxyFix(app.wsgi_app, x_proto=1, x_host=1)  # needed for url_for to generate with https
 
 # Configure Babel - Use absolute paths for reliability

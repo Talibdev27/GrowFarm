@@ -4,15 +4,10 @@ from wtforms.validators import DataRequired, Email, EqualTo, Length, ValidationE
 from models import User
 
 class LoginForm(FlaskForm):
-    email = StringField('Email', validators=[DataRequired()])  # Removed strict Email validator for flexibility
+    email = StringField('Email', validators=[DataRequired()])  # Removed strict Email validator
     password = PasswordField('Password', validators=[DataRequired()])
     remember = BooleanField('Remember Me')
     submit = SubmitField('Login')
-    
-    def __init__(self, *args, **kwargs):
-        super(LoginForm, self).__init__(*args, **kwargs)
-        # Add debugging print
-        print(f"LoginForm initialized with: {args}, {kwargs}")
 
 class RegistrationForm(FlaskForm):
     username = StringField('Username', validators=[DataRequired(), Length(min=3, max=25)])

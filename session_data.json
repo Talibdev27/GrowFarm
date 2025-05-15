@@ -1,9 +1,0 @@
-{
-  "_fresh": true,
-  "_id": "1234567890abcdef",
-  "_permanent": true,
-  "_user_id": "1",
-  "user_id": 1,
-  "csrf_token": "dummy_csrf_token",
-  "language": "en"
-}

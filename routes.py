@@ -68,107 +68,20 @@ def register_routes(app):
     
     @app.route('/login', methods=['GET', 'POST'])
     def login():
-        import logging
-        
-        # Detailed request logging
-        logging.info(f"Login route accessed: Method={request.method}, Path={request.path}")
-        logging.info(f"Request form data: {request.form}")
-        logging.info(f"Request headers: {dict(request.headers)}")
-        
         if current_user.is_authenticated:
-            logging.info(f"User already authenticated: {current_user.username}")
             return redirect(url_for('dashboard'))
         
         form = LoginForm()
-        
-        # Handle form submission
-        if request.method == 'POST':
-            logging.info("Processing POST request")
-            
-            # Try to validate form with explicit data
-            if form.validate_on_submit():
-                # Clean the email data (remove whitespace)
-                email = form.email.data.strip() if form.email.data else ""
-                logging.info(f"Form validated, email: '{email}'")
-                
-                user = User.query.filter_by(email=email).first()
-                if user:
-                    logging.info(f"User found: {user.username}, id: {user.id}, role: {user.role}")
-                    
-                    # Test login directly
-                    password_valid = user.check_password(form.password.data)
-                    logging.info(f"Password check result: {password_valid}")
-                    
-                    if password_valid:
-                        # Force login the user
-                        login_user(user, remember=form.remember.data)
-                        logging.info(f"User logged in successfully: {user.username}")
-                        
-                        next_page = request.args.get('next')
-                        return redirect(next_page) if next_page else redirect(url_for('dashboard'))
-                    else:
-                        logging.info(f"Invalid password for user: {user.username}")
-                        flash('Login unsuccessful. Please check your password', 'danger')
-                else:
-                    logging.info(f"No user found with email: '{email}'")
-                    flash('No account found with this email address', 'danger')
+        if form.validate_on_submit():
+            user = User.query.filter_by(email=form.email.data).first()
+            if user and user.check_password(form.password.data):
+                login_user(user, remember=form.remember.data)
+                next_page = request.args.get('next')
+                return redirect(next_page) if next_page else redirect(url_for('dashboard'))
             else:
-                # Log detailed form errors
-                logging.info(f"Form validation failed with errors: {form.errors}")
-                
-                # Log CSRF token status
-                if hasattr(form, 'csrf_token'):
-                    csrf_token = form.csrf_token._value()
-                    logging.info(f"CSRF token: {csrf_token}")
-                else:
-                    logging.info("CSRF protection disabled")
-                
-                # Flash form errors
-                for field_name, field_errors in form.errors.items():
-                    error_msg = ', '.join(str(err) for err in field_errors)
-                    flash(f"Error in {field_name}: {error_msg}", 'danger')
+                flash('Login unsuccessful. Please check email and password', 'danger')
         
         return render_template('login.html', form=form)
-        
-    @app.route('/simple_login', methods=['GET', 'POST'])
-    def simple_login():
-        """A simplified login route that bypasses WTForms for direct authentication"""
-        import logging
-        
-        logging.info("Simple login route accessed")
-        
-        if current_user.is_authenticated:
-            return redirect(url_for('dashboard'))
-            
-        if request.method == 'POST':
-            # Get form data and strip whitespace
-            email = request.form.get('email', '').strip()
-            password = request.form.get('password', '')
-            remember = 'remember' in request.form
-            
-            logging.info(f"Simple login attempt for email: '{email}'")
-            
-            if email and password:
-                user = User.query.filter_by(email=email).first()
-                
-                if user:
-                    logging.info(f"User found: {user.username}")
-                    
-                    if user.check_password(password):
-                        logging.info("Password correct, logging in user")
-                        login_user(user, remember=remember)
-                        flash(f'Welcome back, {user.username}!', 'success')
-                        return redirect(url_for('dashboard'))
-                    else:
-                        logging.info("Invalid password")
-                        flash('Invalid email or password', 'danger')
-                else:
-                    logging.info(f"No user found with email: '{email}'")
-                    flash('Invalid email or password', 'danger')
-            else:
-                flash('Please provide both email and password', 'danger')
-                
-        return render_template('simple_login.html')
     
     @app.route('/register', methods=['GET', 'POST'])
     def register():
