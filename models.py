@@ -23,7 +23,7 @@ class User(UserMixin, db.Model):
     messages_received = db.relationship('Message', foreign_keys='Message.recipient_id', backref='recipient', lazy='dynamic')
 
     def set_password(self, password):
-        self.password_hash = generate_password_hash(password)
+        self.password_hash = generate_password_hash(password, method="pbkdf2:sha512")
 
     def check_password(self, password):
         return check_password_hash(self.password_hash, password)
