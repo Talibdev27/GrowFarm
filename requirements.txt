@@ -14,3 +14,4 @@ pyjwt>=2.10.1
 flask-babel>=4.0.0
 babel>=2.17.0
 stripe>=12.1.0
+python-dotenv>=1.0.0
